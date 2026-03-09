@@ -11,12 +11,15 @@ import jetbrains.mps.smodel.runtime.ConceptPresentationBuilder;
 public class ConceptPresentationAspectImpl extends ConceptPresentationAspectBase {
   private ConceptPresentation props_Entity;
   private ConceptPresentation props_EntityOperationHolder;
+  private ConceptPresentation props_EntityRef;
   private ConceptPresentation props_Field;
-  private ConceptPresentation props_FieldAnotationHolder;
+  private ConceptPresentation props_FieldAnnotationHolder;
   private ConceptPresentation props_FieldTypeHolder;
   private ConceptPresentation props_NatsServer;
   private ConceptPresentation props_Relation;
   private ConceptPresentation props_RelationOperationHolder;
+  private ConceptPresentation props_RelationRef;
+  private ConceptPresentation props_SqlSchem;
 
   @Override
   @Nullable
@@ -37,20 +40,27 @@ public class ConceptPresentationAspectImpl extends ConceptPresentationAspectBase
           props_EntityOperationHolder = cpb.create();
         }
         return props_EntityOperationHolder;
+      case LanguageConceptSwitch.EntityRef:
+        if (props_EntityRef == null) {
+          ConceptPresentationBuilder cpb = new ConceptPresentationBuilder();
+          cpb.presentationByReference(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4ec1L, 0x6a6f5a6f243a4ec2L, "entity", "", "");
+          props_EntityRef = cpb.create();
+        }
+        return props_EntityRef;
       case LanguageConceptSwitch.Field:
         if (props_Field == null) {
           ConceptPresentationBuilder cpb = new ConceptPresentationBuilder();
-          cpb.rawPresentation("f");
+          cpb.presentationByName();
           props_Field = cpb.create();
         }
         return props_Field;
-      case LanguageConceptSwitch.FieldAnotationHolder:
-        if (props_FieldAnotationHolder == null) {
+      case LanguageConceptSwitch.FieldAnnotationHolder:
+        if (props_FieldAnnotationHolder == null) {
           ConceptPresentationBuilder cpb = new ConceptPresentationBuilder();
-          cpb.rawPresentation("FieldAnotationHolder");
-          props_FieldAnotationHolder = cpb.create();
+          cpb.rawPresentation("FieldAnnotationHolder");
+          props_FieldAnnotationHolder = cpb.create();
         }
-        return props_FieldAnotationHolder;
+        return props_FieldAnnotationHolder;
       case LanguageConceptSwitch.FieldTypeHolder:
         if (props_FieldTypeHolder == null) {
           ConceptPresentationBuilder cpb = new ConceptPresentationBuilder();
@@ -79,6 +89,20 @@ public class ConceptPresentationAspectImpl extends ConceptPresentationAspectBase
           props_RelationOperationHolder = cpb.create();
         }
         return props_RelationOperationHolder;
+      case LanguageConceptSwitch.RelationRef:
+        if (props_RelationRef == null) {
+          ConceptPresentationBuilder cpb = new ConceptPresentationBuilder();
+          cpb.presentationByReference(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4ec5L, 0x6a6f5a6f243a4ec6L, "relation", "", "");
+          props_RelationRef = cpb.create();
+        }
+        return props_RelationRef;
+      case LanguageConceptSwitch.SqlSchem:
+        if (props_SqlSchem == null) {
+          ConceptPresentationBuilder cpb = new ConceptPresentationBuilder();
+          cpb.presentationByName();
+          props_SqlSchem = cpb.create();
+        }
+        return props_SqlSchem;
     }
     return null;
   }

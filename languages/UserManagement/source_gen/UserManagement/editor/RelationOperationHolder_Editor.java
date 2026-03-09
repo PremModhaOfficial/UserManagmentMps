@@ -7,8 +7,8 @@ import jetbrains.mps.openapi.editor.cells.EditorCell;
 import jetbrains.mps.openapi.editor.EditorContext;
 import org.jetbrains.mps.openapi.model.SNode;
 
-public class FieldAnotationHolder_Editor extends DefaultNodeEditor {
+public class RelationOperationHolder_Editor extends DefaultNodeEditor {
   public EditorCell createEditorCell(EditorContext editorContext, SNode node) {
-    return new FieldAnotationHolder_EditorBuilder_a(editorContext, node).createCell();
+    return new RelationOperationHolder_EditorBuilder_a(editorContext, node).createCell();
   }
 }

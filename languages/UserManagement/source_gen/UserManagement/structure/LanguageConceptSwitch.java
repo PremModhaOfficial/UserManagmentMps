@@ -11,23 +11,29 @@ public final class LanguageConceptSwitch {
   private final LanguageConceptIndex myIndex;
   public static final int Entity = 0;
   public static final int EntityOperationHolder = 1;
-  public static final int Field = 2;
-  public static final int FieldAnotationHolder = 3;
-  public static final int FieldTypeHolder = 4;
-  public static final int NatsServer = 5;
-  public static final int Relation = 6;
-  public static final int RelationOperationHolder = 7;
+  public static final int EntityRef = 2;
+  public static final int Field = 3;
+  public static final int FieldAnnotationHolder = 4;
+  public static final int FieldTypeHolder = 5;
+  public static final int NatsServer = 6;
+  public static final int Relation = 7;
+  public static final int RelationOperationHolder = 8;
+  public static final int RelationRef = 9;
+  public static final int SqlSchem = 10;
 
   public LanguageConceptSwitch() {
     LanguageConceptIndexBuilder builder = new LanguageConceptIndexBuilder(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L);
     builder.put(0x6a6f5a6f2407ac7eL, Entity);
     builder.put(0x6a6f5a6f2407ac89L, EntityOperationHolder);
+    builder.put(0x6a6f5a6f243a4ec1L, EntityRef);
     builder.put(0x6a6f5a6f2407ac68L, Field);
-    builder.put(0x6a6f5a6f2407ac73L, FieldAnotationHolder);
+    builder.put(0x6a6f5a6f2407ac73L, FieldAnnotationHolder);
     builder.put(0x6a6f5a6f2407ac7aL, FieldTypeHolder);
     builder.put(0x6a6f5a6f2407ac21L, NatsServer);
     builder.put(0x6a6f5a6f2407ac8fL, Relation);
     builder.put(0x6a6f5a6f2407ac9cL, RelationOperationHolder);
+    builder.put(0x6a6f5a6f243a4ec5L, RelationRef);
+    builder.put(0x6a6f5a6f243a4eceL, SqlSchem);
     myIndex = builder.seal();
   }
 

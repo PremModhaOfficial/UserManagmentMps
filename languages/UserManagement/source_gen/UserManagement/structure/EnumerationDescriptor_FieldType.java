@@ -22,9 +22,12 @@ public class EnumerationDescriptor_FieldType extends EnumerationDescriptorBase {
   private final EnumerationDescriptor.MemberDescriptor myMember_bool_0 = new EnumerationDescriptor.MemberDescriptor("bool", "bool", 0x6a6f5a6f2407ac41L, "r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596353");
   private final EnumerationDescriptor.MemberDescriptor myMember_time_0 = new EnumerationDescriptor.MemberDescriptor("time", "time", 0x6a6f5a6f2407ac42L, "r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596354");
   private final EnumerationDescriptor.MemberDescriptor myMember_json_0 = new EnumerationDescriptor.MemberDescriptor("json", "json", 0x6a6f5a6f2407ac44L, "r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596356");
+  private final EnumerationDescriptor.MemberDescriptor myMember_email_0 = new EnumerationDescriptor.MemberDescriptor("email", "email", 0x6a6f5a6f242a92b3L, "r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123829883571");
+  private final EnumerationDescriptor.MemberDescriptor myMember_password_0 = new EnumerationDescriptor.MemberDescriptor("password", "password", 0x6a6f5a6f242a92b4L, "r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123829883572");
+  private final EnumerationDescriptor.MemberDescriptor myMember_entityRef_0 = new EnumerationDescriptor.MemberDescriptor("entityRef", "entityRef", 0x6a6f5a6f242a92b6L, "r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123829883574");
 
-  private final EnumerationLiteralsIndex myIndex = EnumerationLiteralsIndex.build(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac38L, 0x6a6f5a6f2407ac39L, 0x6a6f5a6f2407ac3bL, 0x6a6f5a6f2407ac3dL, 0x6a6f5a6f2407ac3fL, 0x6a6f5a6f2407ac41L, 0x6a6f5a6f2407ac42L, 0x6a6f5a6f2407ac44L);
-  private final List<EnumerationDescriptor.MemberDescriptor> myMembers = new EnumerationDescriptorBase.MembersList0(myIndex, myMember_uuid_0, myMember_string_0, myMember_text_0, myMember_int_0, myMember_bool_0, myMember_time_0, myMember_json_0);
+  private final EnumerationLiteralsIndex myIndex = EnumerationLiteralsIndex.build(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac38L, 0x6a6f5a6f2407ac39L, 0x6a6f5a6f2407ac3bL, 0x6a6f5a6f2407ac3dL, 0x6a6f5a6f2407ac3fL, 0x6a6f5a6f2407ac41L, 0x6a6f5a6f2407ac42L, 0x6a6f5a6f2407ac44L, 0x6a6f5a6f242a92b3L, 0x6a6f5a6f242a92b4L, 0x6a6f5a6f242a92b6L);
+  private final List<EnumerationDescriptor.MemberDescriptor> myMembers = new EnumerationDescriptorBase.MembersList0(myIndex, myMember_uuid_0, myMember_string_0, myMember_text_0, myMember_int_0, myMember_bool_0, myMember_time_0, myMember_json_0, myMember_email_0, myMember_password_0, myMember_entityRef_0);
 
   @Nullable
   @Override
@@ -59,6 +62,12 @@ public class EnumerationDescriptor_FieldType extends EnumerationDescriptorBase {
         return myMember_time_0;
       case "json":
         return myMember_json_0;
+      case "email":
+        return myMember_email_0;
+      case "password":
+        return myMember_password_0;
+      case "entityRef":
+        return myMember_entityRef_0;
     }
     return null;
   }

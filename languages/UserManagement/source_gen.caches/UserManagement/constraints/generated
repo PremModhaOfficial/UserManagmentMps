@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<product version="3" modelHash="-bd712r2c2404yw0y7xfyd6omcod8oqu">
-  <files names="ConstraintsAspectDescriptor.java" />
+<product version="3" modelHash="bh9ez4cpgn69w6vpkbs04medmbbzu4g">
+  <files names="ConstraintsAspectDescriptor.java:FieldAnnotationHolder_Constraints.java" />
 </product>
 

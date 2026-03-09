@@ -12,20 +12,23 @@ import jetbrains.mps.smodel.adapter.ids.SConceptId;
 import jetbrains.mps.smodel.runtime.DataTypeDescriptor;
 import org.jetbrains.mps.openapi.language.SAbstractConcept;
 import jetbrains.mps.smodel.runtime.impl.ConceptDescriptorBuilder2;
-import jetbrains.mps.smodel.adapter.ids.PrimitiveTypeId;
 import jetbrains.mps.smodel.adapter.ids.MetaIdFactory;
+import jetbrains.mps.smodel.adapter.ids.PrimitiveTypeId;
 
 public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
   /*package*/ final ConceptDescriptor myConceptEntity = createDescriptorForEntity();
   /*package*/ final ConceptDescriptor myConceptEntityOperationHolder = createDescriptorForEntityOperationHolder();
+  /*package*/ final ConceptDescriptor myConceptEntityRef = createDescriptorForEntityRef();
   /*package*/ final ConceptDescriptor myConceptField = createDescriptorForField();
-  /*package*/ final ConceptDescriptor myConceptFieldAnotationHolder = createDescriptorForFieldAnotationHolder();
+  /*package*/ final ConceptDescriptor myConceptFieldAnnotationHolder = createDescriptorForFieldAnnotationHolder();
   /*package*/ final ConceptDescriptor myConceptFieldTypeHolder = createDescriptorForFieldTypeHolder();
   /*package*/ final ConceptDescriptor myConceptNatsServer = createDescriptorForNatsServer();
   /*package*/ final ConceptDescriptor myConceptRelation = createDescriptorForRelation();
   /*package*/ final ConceptDescriptor myConceptRelationOperationHolder = createDescriptorForRelationOperationHolder();
+  /*package*/ final ConceptDescriptor myConceptRelationRef = createDescriptorForRelationRef();
+  /*package*/ final ConceptDescriptor myConceptSqlSchem = createDescriptorForSqlSchem();
   /*package*/ final EnumerationDescriptor myEnumerationEntityOperation = new EnumerationDescriptor_EntityOperation();
-  /*package*/ final EnumerationDescriptor myEnumerationFieldAnotation = new EnumerationDescriptor_FieldAnotation();
+  /*package*/ final EnumerationDescriptor myEnumerationFieldAnnotation = new EnumerationDescriptor_FieldAnnotation();
   /*package*/ final EnumerationDescriptor myEnumerationFieldType = new EnumerationDescriptor_FieldType();
   /*package*/ final EnumerationDescriptor myEnumerationRelationOperation = new EnumerationDescriptor_RelationOperation();
   private final LanguageConceptSwitch myIndexSwitch;
@@ -42,7 +45,7 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
 
   @Override
   public Collection<ConceptDescriptor> getDescriptors() {
-    return Arrays.asList(myConceptEntity, myConceptEntityOperationHolder, myConceptField, myConceptFieldAnotationHolder, myConceptFieldTypeHolder, myConceptNatsServer, myConceptRelation, myConceptRelationOperationHolder);
+    return Arrays.asList(myConceptEntity, myConceptEntityOperationHolder, myConceptEntityRef, myConceptField, myConceptFieldAnnotationHolder, myConceptFieldTypeHolder, myConceptNatsServer, myConceptRelation, myConceptRelationOperationHolder, myConceptRelationRef, myConceptSqlSchem);
   }
 
   @Override
@@ -53,10 +56,12 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
         return myConceptEntity;
       case LanguageConceptSwitch.EntityOperationHolder:
         return myConceptEntityOperationHolder;
+      case LanguageConceptSwitch.EntityRef:
+        return myConceptEntityRef;
       case LanguageConceptSwitch.Field:
         return myConceptField;
-      case LanguageConceptSwitch.FieldAnotationHolder:
-        return myConceptFieldAnotationHolder;
+      case LanguageConceptSwitch.FieldAnnotationHolder:
+        return myConceptFieldAnnotationHolder;
       case LanguageConceptSwitch.FieldTypeHolder:
         return myConceptFieldTypeHolder;
       case LanguageConceptSwitch.NatsServer:
@@ -65,6 +70,10 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
         return myConceptRelation;
       case LanguageConceptSwitch.RelationOperationHolder:
         return myConceptRelationOperationHolder;
+      case LanguageConceptSwitch.RelationRef:
+        return myConceptRelationRef;
+      case LanguageConceptSwitch.SqlSchem:
+        return myConceptSqlSchem;
       default:
         return null;
     }
@@ -72,7 +81,7 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
 
   @Override
   public Collection<DataTypeDescriptor> getDataTypeDescriptors() {
-    return Arrays.asList(myEnumerationEntityOperation, myEnumerationFieldAnotation, myEnumerationFieldType, myEnumerationRelationOperation);
+    return Arrays.asList(myEnumerationEntityOperation, myEnumerationFieldAnnotation, myEnumerationFieldType, myEnumerationRelationOperation);
   }
 
   /*package*/ int internalIndex(SAbstractConcept c) {
@@ -81,11 +90,11 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
 
   private static ConceptDescriptor createDescriptorForEntity() {
     ConceptDescriptorBuilder2 b = new ConceptDescriptorBuilder2("UserManagement", "Entity", 0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL);
-    b.class_(false, false, false);
+    b.class_(false, false, true);
     b.parent(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L);
     b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596414");
     b.version(3);
-    b.property("tableName", 0x6a6f5a6f2407ac82L).type(PrimitiveTypeId.STRING).origin("7669448123827596418").done();
+    b.associate("server", 0x6a6f5a6f243a4ec9L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L).optional(true).origin("7669448123830914761").done();
     b.aggregate("fields", 0x6a6f5a6f2407ac84L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L).optional(false).ordered(true).multiple(true).origin("7669448123827596420").done();
     b.aggregate("operations", 0x6a6f5a6f2407ac86L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac89L).optional(false).ordered(true).multiple(true).origin("7669448123827596422").done();
     return b.create();
@@ -98,25 +107,32 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
     b.property("entityOperation", 0x6a6f5a6f2407ac8bL).type(MetaIdFactory.dataTypeId(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac57L)).origin("7669448123827596427").done();
     return b.create();
   }
+  private static ConceptDescriptor createDescriptorForEntityRef() {
+    ConceptDescriptorBuilder2 b = new ConceptDescriptorBuilder2("UserManagement", "EntityRef", 0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4ec1L);
+    b.class_(false, false, false);
+    b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123830914753");
+    b.version(3);
+    b.associate("entity", 0x6a6f5a6f243a4ec2L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL).optional(false).origin("7669448123830914754").done();
+    return b.create();
+  }
   private static ConceptDescriptor createDescriptorForField() {
     ConceptDescriptorBuilder2 b = new ConceptDescriptorBuilder2("UserManagement", "Field", 0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L);
     b.class_(false, false, false);
+    b.parent(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L);
     b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596392");
     b.version(3);
-    b.property("name", 0x6a6f5a6f2407ac6bL).type(PrimitiveTypeId.STRING).origin("7669448123827596395").done();
-    b.property("jsonName", 0x6a6f5a6f2407ac6cL).type(PrimitiveTypeId.STRING).origin("7669448123827596396").done();
-    b.property("dbName", 0x6a6f5a6f2407ac6dL).type(PrimitiveTypeId.STRING).origin("7669448123827596397").done();
-    b.aggregate("anotation", 0x6a6f5a6f2407ac76L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac73L).optional(true).ordered(true).multiple(true).origin("7669448123827596406").done();
+    b.associate("targetEntity", 0x6a6f5a6f242a92c6L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL).optional(true).origin("7669448123829883590").done();
+    b.aggregate("anotations", 0x6a6f5a6f2407ac76L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac73L).optional(true).ordered(true).multiple(true).origin("7669448123827596406").done();
     b.aggregate("type", 0x6a6f5a6f240f1046L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7aL).optional(false).ordered(true).multiple(false).origin("7669448123828080710").done();
     b.alias("f");
     return b.create();
   }
-  private static ConceptDescriptor createDescriptorForFieldAnotationHolder() {
-    ConceptDescriptorBuilder2 b = new ConceptDescriptorBuilder2("UserManagement", "FieldAnotationHolder", 0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac73L);
+  private static ConceptDescriptor createDescriptorForFieldAnnotationHolder() {
+    ConceptDescriptorBuilder2 b = new ConceptDescriptorBuilder2("UserManagement", "FieldAnnotationHolder", 0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac73L);
     b.class_(false, false, false);
     b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596403");
     b.version(3);
-    b.property("anotation", 0x6a6f5a6f2407ac74L).type(MetaIdFactory.dataTypeId(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac46L)).origin("7669448123827596404").done();
+    b.property("annotation", 0x6a6f5a6f2407ac74L).type(MetaIdFactory.dataTypeId(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac46L)).origin("7669448123827596404").done();
     return b.create();
   }
   private static ConceptDescriptor createDescriptorForFieldTypeHolder() {
@@ -133,24 +149,23 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
     b.parent(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L);
     b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596321");
     b.version(3);
-    b.property("serverName", 0x6a6f5a6f2407ac25L).type(PrimitiveTypeId.STRING).origin("7669448123827596325").done();
     b.property("tenentID", 0x6a6f5a6f2407ac27L).type(PrimitiveTypeId.STRING).origin("7669448123827596327").done();
-    b.property("defaultUrl", 0x6a6f5a6f2407ac29L).type(PrimitiveTypeId.STRING).origin("7669448123827596329").done();
+    b.property("defaultNatsUrl", 0x6a6f5a6f2407ac29L).type(PrimitiveTypeId.STRING).origin("7669448123827596329").done();
     b.property("subjectPrefix", 0x6a6f5a6f2407ac35L).type(PrimitiveTypeId.STRING).origin("7669448123827596341").done();
     b.property("dbSchema", 0x6a6f5a6f2407ac36L).type(PrimitiveTypeId.STRING).origin("7669448123827596342").done();
-    b.aggregate("entities", 0x6a6f5a6f2407acacL).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL).optional(false).ordered(true).multiple(true).origin("7669448123827596460").done();
-    b.aggregate("relations", 0x6a6f5a6f2407acaeL).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL).optional(true).ordered(true).multiple(true).origin("7669448123827596462").done();
+    b.aggregate("entities", 0x6a6f5a6f2407acacL).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4ec1L).optional(false).ordered(true).multiple(true).origin("7669448123827596460").done();
+    b.aggregate("relations", 0x6a6f5a6f2407acaeL).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4ec5L).optional(true).ordered(true).multiple(true).origin("7669448123827596462").done();
     return b.create();
   }
   private static ConceptDescriptor createDescriptorForRelation() {
     ConceptDescriptorBuilder2 b = new ConceptDescriptorBuilder2("UserManagement", "Relation", 0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL);
-    b.class_(false, false, false);
+    b.class_(false, false, true);
     b.parent(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L);
     b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596431");
     b.version(3);
-    b.property("tableName", 0x6a6f5a6f2407ac93L).type(PrimitiveTypeId.STRING).origin("7669448123827596435").done();
     b.associate("from", 0x6a6f5a6f2407ac95L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL).optional(false).origin("7669448123827596437").done();
     b.associate("to", 0x6a6f5a6f2407ac97L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL).optional(false).origin("7669448123827596439").done();
+    b.associate("server", 0x6a6f5a6f243a4eccL).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L).optional(true).origin("7669448123830914764").done();
     b.aggregate("operations", 0x6a6f5a6f2407ac9aL).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac9cL).optional(false).ordered(true).multiple(true).origin("7669448123827596442").done();
     b.aggregate("extraFields", 0x6a6f5a6f2407aca2L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L).optional(true).ordered(true).multiple(true).origin("7669448123827596450").done();
     return b.create();
@@ -161,6 +176,25 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
     b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596444");
     b.version(3);
     b.property("relationOperation", 0x6a6f5a6f2407ac9eL).type(MetaIdFactory.dataTypeId(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac61L)).origin("7669448123827596446").done();
+    return b.create();
+  }
+  private static ConceptDescriptor createDescriptorForRelationRef() {
+    ConceptDescriptorBuilder2 b = new ConceptDescriptorBuilder2("UserManagement", "RelationRef", 0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4ec5L);
+    b.class_(false, false, false);
+    b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123830914757");
+    b.version(3);
+    b.associate("relation", 0x6a6f5a6f243a4ec6L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL).optional(false).origin("7669448123830914758").done();
+    return b.create();
+  }
+  private static ConceptDescriptor createDescriptorForSqlSchem() {
+    ConceptDescriptorBuilder2 b = new ConceptDescriptorBuilder2("UserManagement", "SqlSchem", 0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4eceL);
+    b.class_(false, false, true);
+    b.parent(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L);
+    b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123830914766");
+    b.version(3);
+    b.property("dbSchema", 0x6a6f5a6f243a4ed2L).type(PrimitiveTypeId.STRING).origin("7669448123830914770").done();
+    b.aggregate("entityrefs", 0x6a6f5a6f243a4ed6L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4ec1L).optional(true).ordered(true).multiple(true).origin("7669448123830914774").done();
+    b.aggregate("relations", 0x6a6f5a6f243a4ed7L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4ec5L).optional(true).ordered(true).multiple(true).origin("7669448123830914775").done();
     return b.create();
   }
 }

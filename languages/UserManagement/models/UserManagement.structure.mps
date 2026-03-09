@@ -55,13 +55,15 @@
     <property role="TrG5h" value="NatsServer" />
     <property role="19KtqR" value="true" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <node concept="1TJgyj" id="6DJmAW$1UMG" role="1TKVEi">
+      <property role="IQ2ns" value="7669448123827596460" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="entities" />
+      <property role="20lbJX" value="fLJekj6/_1__n" />
+      <ref role="20lvS9" node="6DJmAW$e$V1" resolve="EntityRef" />
+    </node>
     <node concept="PrWs8" id="6DJmAW$1UKz" role="PzmwI">
       <ref role="PrY4T" to="tpck:h0TrEE$" resolve="INamedConcept" />
-    </node>
-    <node concept="1TJgyi" id="6DJmAW$1UK_" role="1TKVEl">
-      <property role="IQ2nx" value="7669448123827596325" />
-      <property role="TrG5h" value="serverName" />
-      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
     </node>
     <node concept="1TJgyi" id="6DJmAW$1UKB" role="1TKVEl">
       <property role="IQ2nx" value="7669448123827596327" />
@@ -70,7 +72,7 @@
     </node>
     <node concept="1TJgyi" id="6DJmAW$1UKD" role="1TKVEl">
       <property role="IQ2nx" value="7669448123827596329" />
-      <property role="TrG5h" value="defaultUrl" />
+      <property role="TrG5h" value="defaultNatsUrl" />
       <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
     </node>
     <node concept="1TJgyi" id="6DJmAW$1UKP" role="1TKVEl">
@@ -83,19 +85,12 @@
       <property role="TrG5h" value="dbSchema" />
       <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
     </node>
-    <node concept="1TJgyj" id="6DJmAW$1UMG" role="1TKVEi">
-      <property role="IQ2ns" value="7669448123827596460" />
-      <property role="20lmBu" value="fLJjDmT/aggregation" />
-      <property role="20kJfa" value="entities" />
-      <property role="20lbJX" value="fLJekj6/_1__n" />
-      <ref role="20lvS9" node="6DJmAW$1ULY" resolve="Entity" />
-    </node>
     <node concept="1TJgyj" id="6DJmAW$1UMI" role="1TKVEi">
       <property role="IQ2ns" value="7669448123827596462" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
       <property role="20kJfa" value="relations" />
       <property role="20lbJX" value="fLJekj5/_0__n" />
-      <ref role="20lvS9" node="6DJmAW$1UMf" resolve="Relation" />
+      <ref role="20lvS9" node="6DJmAW$e$V5" resolve="RelationRef" />
     </node>
   </node>
   <node concept="25R3W" id="6DJmAW$1UKS">
@@ -129,10 +124,22 @@
       <property role="3tVfz5" value="7669448123827596356" />
       <property role="TrG5h" value="json" />
     </node>
+    <node concept="25R33" id="6DJmAW$aDaN" role="25R1y">
+      <property role="3tVfz5" value="7669448123829883571" />
+      <property role="TrG5h" value="email" />
+    </node>
+    <node concept="25R33" id="6DJmAW$aDaO" role="25R1y">
+      <property role="3tVfz5" value="7669448123829883572" />
+      <property role="TrG5h" value="password" />
+    </node>
+    <node concept="25R33" id="6DJmAW$aDaQ" role="25R1y">
+      <property role="3tVfz5" value="7669448123829883574" />
+      <property role="TrG5h" value="entityRef" />
+    </node>
   </node>
   <node concept="25R3W" id="6DJmAW$1UL6">
     <property role="3F6X1D" value="7669448123827596358" />
-    <property role="TrG5h" value="FieldAnotation" />
+    <property role="TrG5h" value="FieldAnnotation" />
     <node concept="25R33" id="6DJmAW$1UL7" role="25R1y">
       <property role="3tVfz5" value="7669448123827596359" />
       <property role="TrG5h" value="primaryKey" />
@@ -207,27 +214,12 @@
     <property role="TrG5h" value="Field" />
     <property role="34LRSv" value="f" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
-    <node concept="1TJgyi" id="6DJmAW$1ULF" role="1TKVEl">
-      <property role="IQ2nx" value="7669448123827596395" />
-      <property role="TrG5h" value="name" />
-      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
-    </node>
-    <node concept="1TJgyi" id="6DJmAW$1ULG" role="1TKVEl">
-      <property role="IQ2nx" value="7669448123827596396" />
-      <property role="TrG5h" value="jsonName" />
-      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
-    </node>
-    <node concept="1TJgyi" id="6DJmAW$1ULH" role="1TKVEl">
-      <property role="IQ2nx" value="7669448123827596397" />
-      <property role="TrG5h" value="dbName" />
-      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
-    </node>
     <node concept="1TJgyj" id="6DJmAW$1ULQ" role="1TKVEi">
       <property role="IQ2ns" value="7669448123827596406" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
       <property role="20lbJX" value="fLJekj5/_0__n" />
-      <property role="20kJfa" value="anotation" />
-      <ref role="20lvS9" node="6DJmAW$1ULN" resolve="FieldAnotationHolder" />
+      <property role="20kJfa" value="anotations" />
+      <ref role="20lvS9" node="6DJmAW$1ULN" resolve="FieldAnnotationHolder" />
     </node>
     <node concept="1TJgyj" id="6DJmAW$3L16" role="1TKVEi">
       <property role="IQ2ns" value="7669448123828080710" />
@@ -236,15 +228,23 @@
       <property role="20lbJX" value="fLJekj4/_1" />
       <ref role="20lvS9" node="6DJmAW$1ULU" resolve="FieldTypeHolder" />
     </node>
+    <node concept="PrWs8" id="6DJmAW$6UAs" role="PzmwI">
+      <ref role="PrY4T" to="tpck:h0TrEE$" resolve="INamedConcept" />
+    </node>
+    <node concept="1TJgyj" id="6DJmAW$aDb6" role="1TKVEi">
+      <property role="IQ2ns" value="7669448123829883590" />
+      <property role="20kJfa" value="targetEntity" />
+      <ref role="20lvS9" node="6DJmAW$1ULY" resolve="Entity" />
+    </node>
   </node>
   <node concept="1TIwiD" id="6DJmAW$1ULN">
     <property role="EcuMT" value="7669448123827596403" />
-    <property role="TrG5h" value="FieldAnotationHolder" />
+    <property role="TrG5h" value="FieldAnnotationHolder" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="1TJgyi" id="6DJmAW$1ULO" role="1TKVEl">
       <property role="IQ2nx" value="7669448123827596404" />
-      <property role="TrG5h" value="anotation" />
-      <ref role="AX2Wp" node="6DJmAW$1UL6" resolve="FieldAnotation" />
+      <property role="TrG5h" value="annotation" />
+      <ref role="AX2Wp" node="6DJmAW$1UL6" resolve="FieldAnnotation" />
     </node>
   </node>
   <node concept="1TIwiD" id="6DJmAW$1ULU">
@@ -260,14 +260,10 @@
   <node concept="1TIwiD" id="6DJmAW$1ULY">
     <property role="EcuMT" value="7669448123827596414" />
     <property role="TrG5h" value="Entity" />
+    <property role="19KtqR" value="true" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="PrWs8" id="6DJmAW$1UM0" role="PzmwI">
       <ref role="PrY4T" to="tpck:h0TrEE$" resolve="INamedConcept" />
-    </node>
-    <node concept="1TJgyi" id="6DJmAW$1UM2" role="1TKVEl">
-      <property role="IQ2nx" value="7669448123827596418" />
-      <property role="TrG5h" value="tableName" />
-      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
     </node>
     <node concept="1TJgyj" id="6DJmAW$1UM4" role="1TKVEi">
       <property role="IQ2ns" value="7669448123827596420" />
@@ -283,6 +279,11 @@
       <property role="20lbJX" value="fLJekj6/_1__n" />
       <ref role="20lvS9" node="6DJmAW$1UM9" resolve="EntityOperationHolder" />
     </node>
+    <node concept="1TJgyj" id="6DJmAW$e$V9" role="1TKVEi">
+      <property role="IQ2ns" value="7669448123830914761" />
+      <property role="20kJfa" value="server" />
+      <ref role="20lvS9" node="6DJmAW$1UKx" resolve="NatsServer" />
+    </node>
   </node>
   <node concept="1TIwiD" id="6DJmAW$1UM9">
     <property role="EcuMT" value="7669448123827596425" />
@@ -297,14 +298,10 @@
   <node concept="1TIwiD" id="6DJmAW$1UMf">
     <property role="EcuMT" value="7669448123827596431" />
     <property role="TrG5h" value="Relation" />
+    <property role="19KtqR" value="true" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="PrWs8" id="6DJmAW$1UMh" role="PzmwI">
       <ref role="PrY4T" to="tpck:h0TrEE$" resolve="INamedConcept" />
-    </node>
-    <node concept="1TJgyi" id="6DJmAW$1UMj" role="1TKVEl">
-      <property role="IQ2nx" value="7669448123827596435" />
-      <property role="TrG5h" value="tableName" />
-      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
     </node>
     <node concept="1TJgyj" id="6DJmAW$1UMl" role="1TKVEi">
       <property role="IQ2ns" value="7669448123827596437" />
@@ -317,6 +314,11 @@
       <property role="20kJfa" value="to" />
       <property role="20lbJX" value="fLJekj4/_1" />
       <ref role="20lvS9" node="6DJmAW$1ULY" resolve="Entity" />
+    </node>
+    <node concept="1TJgyj" id="6DJmAW$e$Vc" role="1TKVEi">
+      <property role="IQ2ns" value="7669448123830914764" />
+      <property role="20kJfa" value="server" />
+      <ref role="20lvS9" node="6DJmAW$1UKx" resolve="NatsServer" />
     </node>
     <node concept="1TJgyj" id="6DJmAW$1UMq" role="1TKVEi">
       <property role="IQ2ns" value="7669448123827596442" />
@@ -341,6 +343,54 @@
       <property role="IQ2nx" value="7669448123827596446" />
       <property role="TrG5h" value="relationOperation" />
       <ref role="AX2Wp" node="6DJmAW$1ULx" resolve="RelationOperation" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="6DJmAW$e$V1">
+    <property role="TrG5h" value="EntityRef" />
+    <property role="EcuMT" value="7669448123830914753" />
+    <node concept="1TJgyj" id="6DJmAW$e$V2" role="1TKVEi">
+      <property role="IQ2ns" value="7669448123830914754" />
+      <property role="20kJfa" value="entity" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="6DJmAW$1ULY" resolve="Entity" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="6DJmAW$e$V5">
+    <property role="TrG5h" value="RelationRef" />
+    <property role="EcuMT" value="7669448123830914757" />
+    <node concept="1TJgyj" id="6DJmAW$e$V6" role="1TKVEi">
+      <property role="IQ2ns" value="7669448123830914758" />
+      <property role="20kJfa" value="relation" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="6DJmAW$1UMf" resolve="Relation" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="6DJmAW$e$Ve">
+    <property role="EcuMT" value="7669448123830914766" />
+    <property role="TrG5h" value="SqlSchem" />
+    <property role="19KtqR" value="true" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <node concept="PrWs8" id="6DJmAW$e$Vg" role="PzmwI">
+      <ref role="PrY4T" to="tpck:h0TrEE$" resolve="INamedConcept" />
+    </node>
+    <node concept="1TJgyi" id="6DJmAW$e$Vi" role="1TKVEl">
+      <property role="IQ2nx" value="7669448123830914770" />
+      <property role="TrG5h" value="dbSchema" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyj" id="6DJmAW$e$Vm" role="1TKVEi">
+      <property role="IQ2ns" value="7669448123830914774" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="entityrefs" />
+      <property role="20lbJX" value="fLJekj5/_0__n" />
+      <ref role="20lvS9" node="6DJmAW$e$V1" resolve="EntityRef" />
+    </node>
+    <node concept="1TJgyj" id="6DJmAW$e$Vn" role="1TKVEi">
+      <property role="IQ2ns" value="7669448123830914775" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="relations" />
+      <property role="20lbJX" value="fLJekj5/_0__n" />
+      <ref role="20lvS9" node="6DJmAW$e$V5" resolve="RelationRef" />
     </node>
   </node>
 </model>

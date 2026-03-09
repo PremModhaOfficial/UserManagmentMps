@@ -25,11 +25,13 @@
       <concept id="1080736578640" name="jetbrains.mps.lang.editor.structure.BaseEditorComponent" flags="ig" index="2wURMF">
         <child id="1080736633877" name="cellModel" index="2wV5jI" />
       </concept>
+      <concept id="1239814640496" name="jetbrains.mps.lang.editor.structure.CellLayout_VerticalGrid" flags="nn" index="2EHx9g" />
       <concept id="1186414536763" name="jetbrains.mps.lang.editor.structure.BooleanStyleSheetItem" flags="ln" index="VOi$J">
         <property id="1186414551515" name="flag" index="VOm3f" />
       </concept>
       <concept id="1186414928363" name="jetbrains.mps.lang.editor.structure.SelectableStyleSheetItem" flags="ln" index="VPM3Z" />
       <concept id="1233758997495" name="jetbrains.mps.lang.editor.structure.PunctuationLeftStyleClassItem" flags="ln" index="11L4FC" />
+      <concept id="1233759184865" name="jetbrains.mps.lang.editor.structure.PunctuationRightStyleClassItem" flags="ln" index="11LMrY" />
       <concept id="1088013125922" name="jetbrains.mps.lang.editor.structure.CellModel_RefCell" flags="sg" stub="730538219795941030" index="1iCGBv">
         <child id="1088186146602" name="editorComponent" index="1sWHZn" />
       </concept>
@@ -83,21 +85,6 @@
         <node concept="lj46D" id="6DJmAW$1Y0q" role="3F10Kt">
           <property role="VOm3f" value="true" />
         </node>
-        <node concept="3F0ifn" id="6DJmAW$1Y0r" role="3EZMnx">
-          <property role="3F0ifm" value="server name" />
-        </node>
-        <node concept="3F0ifn" id="6DJmAW$1Y0s" role="3EZMnx">
-          <property role="3F0ifm" value=":" />
-          <node concept="11L4FC" id="6DJmAW$1Y0t" role="3F10Kt">
-            <property role="VOm3f" value="true" />
-          </node>
-        </node>
-        <node concept="3F0A7n" id="6DJmAW$1Y0u" role="3EZMnx">
-          <ref role="1NtTu8" to="laam:6DJmAW$1UK_" resolve="serverName" />
-          <node concept="ljvvj" id="6DJmAW$1Y0v" role="3F10Kt">
-            <property role="VOm3f" value="true" />
-          </node>
-        </node>
         <node concept="3F0ifn" id="6DJmAW$1Y0w" role="3EZMnx">
           <property role="3F0ifm" value="tenent ID" />
         </node>
@@ -123,7 +110,7 @@
           </node>
         </node>
         <node concept="3F0A7n" id="6DJmAW$1Y0C" role="3EZMnx">
-          <ref role="1NtTu8" to="laam:6DJmAW$1UKD" resolve="defaultUrl" />
+          <ref role="1NtTu8" to="laam:6DJmAW$1UKD" resolve="defaultNatsUrl" />
           <node concept="ljvvj" id="6DJmAW$1Y0D" role="3F10Kt">
             <property role="VOm3f" value="true" />
           </node>
@@ -231,6 +218,21 @@
     <ref role="1XX52x" to="laam:6DJmAW$1ULY" resolve="Entity" />
     <node concept="3EZMnI" id="6DJmAW$2axR" role="2wV5jI">
       <node concept="2iRkQZ" id="6DJmAW$2axS" role="2iSdaV" />
+      <node concept="3EZMnI" id="6DJmAW$eBc2" role="3EZMnx">
+        <node concept="2iRfu4" id="6DJmAW$eBc3" role="2iSdaV" />
+        <node concept="3F0ifn" id="6DJmAW$eBbZ" role="3EZMnx">
+          <property role="3F0ifm" value="forServer:" />
+        </node>
+        <node concept="1iCGBv" id="6DJmAW$eBc5" role="3EZMnx">
+          <ref role="1NtTu8" to="laam:6DJmAW$e$V9" resolve="server" />
+          <node concept="1sVBvm" id="6DJmAW$eBc7" role="1sWHZn">
+            <node concept="3F0A7n" id="6DJmAW$eBcb" role="2wV5jI">
+              <property role="1Intyy" value="true" />
+              <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+            </node>
+          </node>
+        </node>
+      </node>
       <node concept="3EZMnI" id="6DJmAW$2ay0" role="3EZMnx">
         <node concept="2iRfu4" id="6DJmAW$2ay1" role="2iSdaV" />
         <node concept="3F0ifn" id="6DJmAW$2axX" role="3EZMnx">
@@ -241,12 +243,6 @@
         </node>
         <node concept="3F0ifn" id="6DJmAW$2ay7" role="3EZMnx">
           <property role="3F0ifm" value="" />
-        </node>
-        <node concept="3F0ifn" id="6DJmAW$2ayc" role="3EZMnx">
-          <property role="3F0ifm" value="tableName:" />
-        </node>
-        <node concept="3F0A7n" id="6DJmAW$2ayh" role="3EZMnx">
-          <ref role="1NtTu8" to="laam:6DJmAW$1UM2" resolve="tableName" />
         </node>
         <node concept="3F2HdR" id="6DJmAW$2q_R" role="3EZMnx">
           <ref role="1NtTu8" to="laam:6DJmAW$1UM6" resolve="operations" />
@@ -260,7 +256,7 @@
         </node>
         <node concept="3F2HdR" id="6DJmAW$6Do9" role="3EZMnx">
           <ref role="1NtTu8" to="laam:6DJmAW$1UM4" resolve="fields" />
-          <node concept="2iRkQZ" id="6DJmAW$6Dob" role="2czzBx" />
+          <node concept="2EHx9g" id="6DJmAW$7VYA" role="2czzBx" />
         </node>
         <node concept="2iRkQZ" id="6DJmAW$6Do7" role="2iSdaV" />
       </node>
@@ -269,14 +265,8 @@
   <node concept="24kQdi" id="6DJmAW$2yjl">
     <ref role="1XX52x" to="laam:6DJmAW$1UM9" resolve="EntityOperationHolder" />
     <node concept="3EZMnI" id="6DJmAW$2yjn" role="2wV5jI">
-      <node concept="3F0ifn" id="6DJmAW$2yjw" role="3EZMnx">
-        <property role="3F0ifm" value="operation" />
-      </node>
-      <node concept="3F0ifn" id="6DJmAW$2yjx" role="3EZMnx">
-        <property role="3F0ifm" value=":" />
-        <node concept="11L4FC" id="6DJmAW$2yjy" role="3F10Kt">
-          <property role="VOm3f" value="true" />
-        </node>
+      <node concept="3F0ifn" id="6DJmAW$8Vbm" role="3EZMnx">
+        <property role="3F0ifm" value="" />
       </node>
       <node concept="3F0A7n" id="6DJmAW$2yjz" role="3EZMnx">
         <ref role="1NtTu8" to="laam:6DJmAW$1UMb" resolve="entityOperation" />
@@ -284,7 +274,7 @@
           <property role="VOm3f" value="true" />
         </node>
       </node>
-      <node concept="2iRfu4" id="6DJmAW$2NdN" role="2iSdaV" />
+      <node concept="2iRfu4" id="6DJmAW$8Vbj" role="2iSdaV" />
     </node>
   </node>
   <node concept="24kQdi" id="6DJmAW$2VIq">
@@ -296,12 +286,6 @@
       </node>
       <node concept="3F0A7n" id="6DJmAW$2VK9" role="3EZMnx">
         <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
-      </node>
-      <node concept="3F0ifn" id="6DJmAW$2VL0" role="3EZMnx">
-        <property role="3F0ifm" value=" tableName:" />
-      </node>
-      <node concept="3F0A7n" id="6DJmAW$2VL3" role="3EZMnx">
-        <ref role="1NtTu8" to="laam:6DJmAW$1UMj" resolve="tableName" />
       </node>
       <node concept="3F0ifn" id="6DJmAW$2VKo" role="3EZMnx">
         <property role="3F0ifm" value="{" />
@@ -350,6 +334,21 @@
             </node>
           </node>
           <node concept="ljvvj" id="6DJmAW$2VLC" role="3F10Kt">
+            <property role="VOm3f" value="true" />
+          </node>
+        </node>
+        <node concept="3F0ifn" id="6DJmAW$eBcj" role="3EZMnx">
+          <property role="3F0ifm" value="server" />
+        </node>
+        <node concept="1iCGBv" id="6DJmAW$eBcn" role="3EZMnx">
+          <ref role="1NtTu8" to="laam:6DJmAW$e$Vc" resolve="server" />
+          <node concept="1sVBvm" id="6DJmAW$eBcp" role="1sWHZn">
+            <node concept="3F0A7n" id="6DJmAW$eBct" role="2wV5jI">
+              <property role="1Intyy" value="true" />
+              <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+            </node>
+          </node>
+          <node concept="ljvvj" id="6DJmAW$eBcv" role="3F10Kt">
             <property role="VOm3f" value="true" />
           </node>
         </node>
@@ -421,39 +420,30 @@
     <ref role="1XX52x" to="laam:6DJmAW$1ULC" resolve="Field" />
     <node concept="3EZMnI" id="6DJmAW$2VLS" role="2wV5jI">
       <node concept="2iRfu4" id="6DJmAW$2VLT" role="2iSdaV" />
-      <node concept="3F0A7n" id="6DJmAW$2VLV" role="3EZMnx">
-        <ref role="1NtTu8" to="laam:6DJmAW$1ULF" resolve="name" />
-        <node concept="ljvvj" id="6DJmAW$2VLW" role="3F10Kt">
-          <property role="VOm3f" value="true" />
-        </node>
+      <node concept="3F0A7n" id="6DJmAW$7Gb$" role="3EZMnx">
+        <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+      </node>
+      <node concept="3F0ifn" id="6DJmAW$7Gbx" role="3EZMnx">
+        <property role="3F0ifm" value=" " />
       </node>
       <node concept="3F1sOY" id="6DJmAW$4hC$" role="3EZMnx">
         <ref role="1NtTu8" to="laam:6DJmAW$3L16" resolve="type" />
       </node>
-      <node concept="3F0ifn" id="6DJmAW$2VMl" role="3EZMnx">
-        <property role="3F0ifm" value="&quot;" />
+      <node concept="1iCGBv" id="6DJmAW$d5IR" role="3EZMnx">
+        <ref role="1NtTu8" to="laam:6DJmAW$aDb6" resolve="targetEntity" />
+        <node concept="1sVBvm" id="6DJmAW$d5IT" role="1sWHZn">
+          <node concept="3F0A7n" id="6DJmAW$d5IZ" role="2wV5jI">
+            <property role="1Intyy" value="true" />
+            <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+          </node>
+        </node>
       </node>
-      <node concept="3F0A7n" id="6DJmAW$2VMs" role="3EZMnx">
-        <ref role="1NtTu8" to="laam:6DJmAW$1ULG" resolve="jsonName" />
-      </node>
-      <node concept="3F0ifn" id="6DJmAW$2VMo" role="3EZMnx">
-        <property role="3F0ifm" value="&quot;" />
-      </node>
-      <node concept="3F0ifn" id="6DJmAW$2VM_" role="3EZMnx">
-        <property role="3F0ifm" value=" db:" />
-      </node>
-      <node concept="3F0ifn" id="6DJmAW$2VMF" role="3EZMnx">
-        <property role="3F0ifm" value="&quot;" />
-      </node>
-      <node concept="3F0A7n" id="6DJmAW$2VMP" role="3EZMnx">
-        <ref role="1NtTu8" to="laam:6DJmAW$1ULH" resolve="dbName" />
-      </node>
-      <node concept="3F0ifn" id="6DJmAW$2VMS" role="3EZMnx">
-        <property role="3F0ifm" value="&quot;" />
+      <node concept="3F0ifn" id="6DJmAW$9aWp" role="3EZMnx">
+        <property role="3F0ifm" value="anotations: " />
       </node>
       <node concept="3F2HdR" id="6DJmAW$2VMZ" role="3EZMnx">
-        <ref role="1NtTu8" to="laam:6DJmAW$1ULQ" resolve="anotation" />
-        <node concept="2iRfu4" id="6DJmAW$2VN1" role="2czzBx" />
+        <ref role="1NtTu8" to="laam:6DJmAW$1ULQ" resolve="anotations" />
+        <node concept="2EHx9g" id="6DJmAW$eZZ_" role="2czzBx" />
       </node>
     </node>
   </node>
@@ -470,24 +460,39 @@
     </node>
   </node>
   <node concept="24kQdi" id="6DJmAW$521I">
-    <ref role="1XX52x" to="laam:6DJmAW$1ULN" resolve="FieldAnotationHolder" />
+    <ref role="1XX52x" to="laam:6DJmAW$1ULN" resolve="FieldAnnotationHolder" />
     <node concept="3EZMnI" id="6DJmAW$521K" role="2wV5jI">
-      <node concept="3F0ifn" id="6DJmAW$521T" role="3EZMnx">
-        <property role="3F0ifm" value="anotation" />
-      </node>
-      <node concept="3F0ifn" id="6DJmAW$521U" role="3EZMnx">
-        <property role="3F0ifm" value=":" />
-        <node concept="11L4FC" id="6DJmAW$521V" role="3F10Kt">
-          <property role="VOm3f" value="true" />
-        </node>
+      <node concept="3F0ifn" id="6DJmAW$fEcS" role="3EZMnx">
+        <property role="3F0ifm" value="@" />
       </node>
       <node concept="3F0A7n" id="6DJmAW$521W" role="3EZMnx">
-        <ref role="1NtTu8" to="laam:6DJmAW$1ULO" resolve="anotation" />
+        <ref role="1NtTu8" to="laam:6DJmAW$1ULO" resolve="annotation" />
         <node concept="ljvvj" id="6DJmAW$521X" role="3F10Kt">
           <property role="VOm3f" value="true" />
         </node>
       </node>
       <node concept="2iRfu4" id="6DJmAW$5220" role="2iSdaV" />
+    </node>
+  </node>
+  <node concept="24kQdi" id="6DJmAW$gDAL">
+    <ref role="1XX52x" to="laam:6DJmAW$1UMs" resolve="RelationOperationHolder" />
+    <node concept="3EZMnI" id="6DJmAW$gDAR" role="2wV5jI">
+      <node concept="l2Vlx" id="6DJmAW$gDAS" role="2iSdaV" />
+      <node concept="3F0ifn" id="6DJmAW$gDAU" role="3EZMnx">
+        <property role="3F0ifm" value="-" />
+        <node concept="11L4FC" id="6DJmAW$gDAV" role="3F10Kt">
+          <property role="VOm3f" value="true" />
+        </node>
+        <node concept="3mYdg7" id="6DJmAW$gDAW" role="3F10Kt">
+          <property role="1413C4" value="body-paren" />
+        </node>
+        <node concept="11LMrY" id="6DJmAW$gDAX" role="3F10Kt">
+          <property role="VOm3f" value="true" />
+        </node>
+      </node>
+      <node concept="3F0A7n" id="6DJmAW$gDB1" role="3EZMnx">
+        <ref role="1NtTu8" to="laam:6DJmAW$1UMu" resolve="relationOperation" />
+      </node>
     </node>
   </node>
 </model>
