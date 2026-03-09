@@ -7,7 +7,12 @@
   <imports />
   <registry>
     <language id="2fbdea06-2517-4783-91c4-fb1f5af2c6d7" name="UserManagement">
-      <concept id="7669448123830914753" name="UserManagement.structure.EntityRef" flags="ng" index="1elhiI" />
+      <concept id="7669448123830914757" name="UserManagement.structure.RelationRef" flags="ng" index="1elhiE">
+        <reference id="7669448123830914758" name="relation" index="1elhiD" />
+      </concept>
+      <concept id="7669448123830914753" name="UserManagement.structure.EntityRef" flags="ng" index="1elhiI">
+        <reference id="7669448123830914754" name="entity" index="1elhiH" />
+      </concept>
       <concept id="7669448123827596392" name="UserManagement.structure.Field" flags="ng" index="1eqfo7">
         <child id="7669448123828080710" name="type" index="1eo4CD" />
         <child id="7669448123827596406" name="anotations" index="1eqfop" />
@@ -28,6 +33,7 @@
         <property id="7669448123827596327" name="tenentID" index="1eqfp8" />
         <property id="7669448123827596342" name="dbSchema" index="1eqfpp" />
         <property id="7669448123827596341" name="subjectPrefix" index="1eqfpq" />
+        <child id="7669448123827596462" name="relations" index="1eqfr1" />
         <child id="7669448123827596460" name="entities" index="1eqfr3" />
       </concept>
       <concept id="7669448123827596431" name="UserManagement.structure.Relation" flags="ng" index="1eqfrw">
@@ -56,7 +62,15 @@
     <property role="1eqfp6" value="default" />
     <property role="1eqfpq" value="motadata" />
     <property role="1eqfpp" value="iam" />
-    <node concept="1elhiI" id="6DJmAW$eZZm" role="1eqfr3" />
+    <node concept="1elhiI" id="6DJmAW$jFhM" role="1eqfr3">
+      <ref role="1elhiH" node="6DJmAW$fZlt" resolve="Roles" />
+    </node>
+    <node concept="1elhiI" id="6DJmAW$jFhI" role="1eqfr3">
+      <ref role="1elhiH" node="6DJmAW$fl8W" resolve="User" />
+    </node>
+    <node concept="1elhiE" id="6DJmAW$jFhL" role="1eqfr1">
+      <ref role="1elhiD" node="6DJmAW$gkua" resolve="userRoles" />
+    </node>
   </node>
   <node concept="1eqfoh" id="6DJmAW$fl8W">
     <property role="TrG5h" value="User" />

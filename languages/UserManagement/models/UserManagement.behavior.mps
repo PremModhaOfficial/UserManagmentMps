@@ -1592,5 +1592,34 @@
       </node>
     </node>
   </node>
+  <node concept="13h7C7" id="6DJmAW$mchm">
+    <ref role="13h7C2" to="laam:6DJmAW$1UM9" resolve="EntityOperationHolder" />
+    <node concept="13hLZK" id="6DJmAW$mchn" role="13h7CW">
+      <node concept="3clFbS" id="6DJmAW$mcho" role="2VODD2" />
+    </node>
+    <node concept="13i0hz" id="6DJmAW$mchD" role="13h7CS">
+      <property role="TrG5h" value="capitalize" />
+      <node concept="3Tm1VV" id="6DJmAW$mchE" role="1B3o_S" />
+      <node concept="17QB3L" id="6DJmAW$mchX" role="3clF45" />
+      <node concept="3clFbS" id="6DJmAW$mchG" role="3clF47">
+        <node concept="3clFbF" id="6DJmAW$mcjg" role="3cqZAp">
+          <node concept="2OqwBi" id="6DJmAW$mdri" role="3clFbG">
+            <node concept="2OqwBi" id="6DJmAW$mcNL" role="2Oq$k0">
+              <node concept="2OqwBi" id="6DJmAW$mcuv" role="2Oq$k0">
+                <node concept="13iPFW" id="6DJmAW$mcjf" role="2Oq$k0" />
+                <node concept="3TrcHB" id="6DJmAW$mcAb" role="2OqNvi">
+                  <ref role="3TsBF5" to="laam:6DJmAW$1UMb" resolve="entityOperation" />
+                </node>
+              </node>
+              <node concept="24Tkf9" id="6DJmAW$mcVr" role="2OqNvi" />
+            </node>
+            <node concept="liA8E" id="6DJmAW$mdJG" role="2OqNvi">
+              <ref role="37wK5l" to="wyt6:~String.toUpperCase()" resolve="toUpperCase" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
 </model>
 

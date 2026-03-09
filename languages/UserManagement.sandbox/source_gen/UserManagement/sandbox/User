@@ -1,0 +1,232 @@
+package main
+
+import (
+ "context"
+ "encoding/json"
+ "fmt"
+ "time"
+
+ "github.com/motadata/motadata-go-sdk/pkg/core"
+ "github.com/motadata/motadata-go-sdk/pkg/nats"
+ "github.com/motadata/motadata-go-sdk/pkg/tracer"
+)
+
+type User struct {
+ ID string `json:"i_d" db:"i_d"`
+ password string `json:"-" db:"password"`
+ UserName string `json:"user_name" db:"user_name"`
+ createdAt time.Time `json:"created_at" db:"created_at"`
+}
+
+type UserCreatedEvent struct {
+ User User `json:"user"`
+ Timestamp time.Time `json:"timestamp"`
+}
+
+type UserUpdatedEvent struct {
+ User User `json:"user"`
+ Timestamp time.Time `json:"timestamp"`
+}
+
+type UserDeletedEvent struct {
+ User User `json:"user"`
+ Timestamp time.Time `json:"timestamp"`
+}
+
+type UserDeletedEvent struct {
+ UserID string `json:"user_id"`
+ Timestamp time.Time `json:"timestamp"`
+}
+
+type UserListRequest struct {
+ Limit     int       `json:"limit"`
+ Offset    int       `json:"offset"`
+ Timestamp time.Time `json:"timestamp"`
+}
+
+type UserGetRequest struct {
+ UserID string `json:"user_id"`
+ Timestamp time.Time `json:"timestamp"`
+}
+
+type UserHandler struct {
+ publisher     *nats.Publisher
+ subjectPrefix string
+}
+
+func NewUserHandler(pub *nats.Publisher, subjectPrefix string) *UserHandler {
+ return &UserHandler{
+  publisher:     pub,
+  subjectPrefix: subjectPrefix,
+ }
+}
+
+func (s *UserHandler) HandleCREATE(ctx context.Context, msg *core.Message) error {
+ ctx, span := tracer.StartConsumer(ctx, "User.HandleCREATE")
+ defer span.End()
+ ctx = core.InjectContext(ctx, msg.Headers)
+
+ var event UserCreatedEvent
+ if err := json.Unmarshal(msg.Data, &event); err != nil {
+  span.RecordError(err)
+  return err
+ }
+
+ if event.User.UserName == "" {
+  err := fmt.Errorf("invalid user data: missing required fields")
+  span.RecordError(err)
+  return err
+ }
+
+ span.SetAttributes(
+  tracer.StringAttr("user.id", event.User.ID),
+  tracer.StringAttr("tenant.id", msg.Headers.Get(core.HeaderTenantID)),
+ )
+
+ outMsg := core.NewMessage(msg.Data)
+ outMsg.Subject = s.subjectPrefix + ".user.db.create"
+ outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)
+ outMsg.Headers.Set("X-Business-Validated", "true")
+
+ if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {
+  span.RecordError(err)
+  return fmt.Errorf("publish error: %w", err)
+ }
+ return nil
+}
+
+func (s *UserHandler) HandleUPDATE(ctx context.Context, msg *core.Message) error {
+ ctx, span := tracer.StartConsumer(ctx, "User.HandleUPDATE")
+ defer span.End()
+ ctx = core.InjectContext(ctx, msg.Headers)
+
+ var event UserUpdatedEvent
+ if err := json.Unmarshal(msg.Data, &event); err != nil {
+  span.RecordError(err)
+  return err
+ }
+
+ if event.User.ID == "" {
+  err := fmt.Errorf("invalid user data: missing ID")
+  span.RecordError(err)
+  return err
+ }
+
+ span.SetAttributes(
+  tracer.StringAttr("user.id", event.User.ID),
+  tracer.StringAttr("tenant.id", msg.Headers.Get(core.HeaderTenantID)),
+ )
+
+ outMsg := core.NewMessage(msg.Data)
+ outMsg.Subject = s.subjectPrefix + ".user.db.update"
+ outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)
+ outMsg.Headers.Set("X-Business-Validated", "true")
+
+ if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {
+  span.RecordError(err)
+  return fmt.Errorf("publish error: %w", err)
+ }
+ return nil
+}
+
+func (s *UserHandler) HandleDELETE(ctx context.Context, msg *core.Message) error {
+ ctx, span := tracer.StartConsumer(ctx, "User.HandleDELETE")
+ defer span.End()
+ ctx = core.InjectContext(ctx, msg.Headers)
+
+ var event UserDeletedEvent
+ if err := json.Unmarshal(msg.Data, &event); err != nil {
+  span.RecordError(err)
+  return err
+ }
+
+ if event.UserID == "" {
+  err := fmt.Errorf("invalid request: missing user ID")
+  span.RecordError(err)
+  return err
+ }
+
+ span.SetAttributes(
+  tracer.StringAttr("user.id", event.UserID),
+  tracer.StringAttr("tenant.id", msg.Headers.Get(core.HeaderTenantID)),
+ )
+
+ outMsg := core.NewMessage(msg.Data)
+ outMsg.Subject = s.subjectPrefix + ".user.db.delete"
+ outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)
+ outMsg.Headers.Set("X-Business-Validated", "true")
+
+ if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {
+  span.RecordError(err)
+  return fmt.Errorf("publish error: %w", err)
+ }
+ return nil
+}
+
+func (s *UserHandler) HandleGET(ctx context.Context, msg *core.Message) error {
+ ctx, span := tracer.StartConsumer(ctx, "User.HandleGET")
+ defer span.End()
+ ctx = core.InjectContext(ctx, msg.Headers)
+
+ var event UserGetRequest
+ if err := json.Unmarshal(msg.Data, &event); err != nil {
+  span.RecordError(err)
+  return err
+ }
+
+ if event.UserID == "" {
+  err := fmt.Errorf("invalid request: missing user ID")
+  span.RecordError(err)
+  return err
+ }
+
+ span.SetAttributes(
+  tracer.StringAttr("user.id", event.UserID),
+  tracer.StringAttr("tenant.id", msg.Headers.Get(core.HeaderTenantID)),
+ )
+
+ outMsg := core.NewMessage(msg.Data)
+ outMsg.Subject = s.subjectPrefix + ".user.db.get"
+ outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)
+ outMsg.Headers.Set("X-Business-Validated", "true")
+
+ if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {
+  span.RecordError(err)
+  return fmt.Errorf("publish error: %w", err)
+ }
+ return nil
+}
+
+func (s *UserHandler) HandleLIST(ctx context.Context, msg *core.Message) error {
+ ctx, span := tracer.StartConsumer(ctx, "User.HandleLIST")
+ defer span.End()
+ ctx = core.InjectContext(ctx, msg.Headers)
+
+ var event UserListRequest
+ if err := json.Unmarshal(msg.Data, &event); err != nil {
+  span.RecordError(err)
+  return err
+ }
+
+ if event.Limit < 0 || event.Offset < 0 {
+  err := fmt.Errorf("invalid pagination parameters")
+  span.RecordError(err)
+  return err
+ }
+
+ span.SetAttributes(
+  tracer.StringAttr("tenant.id", msg.Headers.Get(core.HeaderTenantID)),
+ )
+
+ outMsg := core.NewMessage(msg.Data)
+ outMsg.Subject = s.subjectPrefix + ".user.db.list"
+ outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)
+ outMsg.Headers.Set("X-Business-Validated", "true")
+
+ if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {
+  span.RecordError(err)
+  return fmt.Errorf("publish error: %w", err)
+ }
+ return nil
+}
+
