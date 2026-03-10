@@ -1,11 +1,11 @@
 # TextGen Fixup Guide
 
-Source: `Entity_server_textgen.md`
-Output: `/home/prem-modha/MPSProjects/UserManagement/languages/UserManagement/models/UserManagement.Entity.textGen.mps`
+Source: `SqlSchema_sql_textgen.md`
+Output: `/home/prem-modha/MPSProjects/UserManagement/languages/UserManagement/models/UserManagement.SqlSchem.textGen.mps`
 
 ## File Metadata (add manually in MPS)
 
-- Line 2: `text gen component for concept Entity {`
+- Line 2: `text gen component for concept SqlSchem {`
 - Line 3: `file name :`
 - Line 5: `file path :`
 - Line 6: `extension :`

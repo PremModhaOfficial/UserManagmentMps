@@ -10,8 +10,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.mps.openapi.language.SAbstractConcept;
 import jetbrains.mps.text.rt.TextGenModelOutline;
 import org.jetbrains.mps.openapi.model.SNode;
+import jetbrains.mps.lang.smodel.generator.smodelAdapter.SPropertyOperations;
 import org.jetbrains.mps.openapi.language.SConcept;
 import jetbrains.mps.smodel.adapter.structure.MetaAdapterFactory;
+import org.jetbrains.mps.openapi.language.SProperty;
 
 public class TextGenAspectDescriptor extends TextGenAspectBase {
   private final LanguageConceptSwitch myIndex = new LanguageConceptSwitch();
@@ -25,6 +27,10 @@ public class TextGenAspectDescriptor extends TextGenAspectBase {
     switch (myIndex.index(concept)) {
       case LanguageConceptSwitch.Entity:
         return new Entity_TextGen();
+      case LanguageConceptSwitch.Relation:
+        return new Relation_TextGen();
+      case LanguageConceptSwitch.SqlSchem:
+        return new SqlSchem_TextGen();
     }
     return null;
   }
@@ -32,22 +38,65 @@ public class TextGenAspectDescriptor extends TextGenAspectBase {
   @Override
   public void breakdownToUnits(@NotNull TextGenModelOutline outline) {
     for (SNode root : outline.getModel().getRootNodes()) {
+      if (root.getConcept().equals(CONCEPTS.SqlSchem$b0)) {
+        String fname = getFileName_SqlSchem(root);
+        String ext = getFileExtension_SqlSchem(root);
+        outline.registerTextUnit((ext == null ? fname : (fname + '.' + ext)), root);
+        continue;
+      }
       if (root.getConcept().equals(CONCEPTS.Entity$iI)) {
         String fname = getFileName_Entity(root);
         String ext = getFileExtension_Entity(root);
         outline.registerTextUnit((ext == null ? fname : (fname + '.' + ext)), root);
         continue;
       }
+      if (root.getConcept().equals(CONCEPTS.Relation$Jj)) {
+        String fname = getFileName_Relation(root);
+        String ext = getFileExtension_Relation(root);
+        outline.registerTextUnit((ext == null ? fname : (fname + '.' + ext)), root);
+        continue;
+      }
+      if (root.getConcept().equals(CONCEPTS.NatsServer$eN)) {
+        String fname = getFileName_NatsServer(root);
+        String ext = getFileExtension_NatsServer(root);
+        outline.registerTextUnit((ext == null ? fname : (fname + '.' + ext)), root);
+        continue;
+      }
     }
+  }
+  private static String getFileName_SqlSchem(SNode node) {
+    return SPropertyOperations.getString(node, PROPS.name$MnvL) + "_init_sql.sql";
   }
   private static String getFileName_Entity(SNode node) {
     return node.getName();
   }
+  private static String getFileName_Relation(SNode node) {
+    return node.getName();
+  }
+  private static String getFileName_NatsServer(SNode node) {
+    return node.getName();
+  }
+  private static String getFileExtension_SqlSchem(SNode node) {
+    return null;
+  }
   private static String getFileExtension_Entity(SNode node) {
+    return null;
+  }
+  private static String getFileExtension_Relation(SNode node) {
+    return null;
+  }
+  private static String getFileExtension_NatsServer(SNode node) {
     return null;
   }
 
   private static final class CONCEPTS {
+    /*package*/ static final SConcept SqlSchem$b0 = MetaAdapterFactory.getConcept(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4eceL, "UserManagement.structure.SqlSchem");
     /*package*/ static final SConcept Entity$iI = MetaAdapterFactory.getConcept(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, "UserManagement.structure.Entity");
+    /*package*/ static final SConcept Relation$Jj = MetaAdapterFactory.getConcept(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, "UserManagement.structure.Relation");
+    /*package*/ static final SConcept NatsServer$eN = MetaAdapterFactory.getConcept(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L, "UserManagement.structure.NatsServer");
+  }
+
+  private static final class PROPS {
+    /*package*/ static final SProperty name$MnvL = MetaAdapterFactory.getProperty(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L, 0x110396ec041L, "name");
   }
 }

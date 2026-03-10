@@ -1,0 +1,88 @@
+package main
+
+import (
+ "context"
+ "encoding/json"
+ "fmt"
+ "time"
+
+ "dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core"
+ "dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/transport/nats"
+ "dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/tracer"
+)
+
+{???-foreach op in node.operations {}{???-if (op.relationOperation == RelationOperation:assign) {}type {???-node.from.name}{???-node.to.name}AssignedEvent struct {
+ {???-node.from.name}ID string `json:"{???-node.from.name.toLowerCase()}_id"`
+ {???-node.to.name}ID string `json:"{???-node.to.name.toLowerCase()}_id"`
+ Timestamp time.Time `json:"timestamp"`
+}
+
+{???-}}{???-if (op.relationOperation == RelationOperation:remove) {}type {???-node.from.name}{???-node.to.name}RemovedEvent struct {
+ {???-node.from.name}ID string `json:"{???-node.from.name.toLowerCase()}_id"`
+ {???-node.to.name}ID string `json:"{???-node.to.name.toLowerCase()}_id"`
+ Timestamp time.Time `json:"timestamp"`
+}
+
+{???-}}{???-if (op.relationOperation == RelationOperation:list) {}type {???-node.from.name}{???-node.to.name}ListRequest struct {
+ {???-node.from.name}ID string `json:"{???-node.from.name.toLowerCase()}_id"`
+ Limit     int       `json:"limit"`
+ Offset    int       `json:"offset"`
+ Timestamp time.Time `json:"timestamp"`
+}
+
+{???-}}{???-}}type {???-node.from.name}{???-node.to.name}Handler struct {
+ publisher     *nats.Publisher
+ subjectPrefix string
+}
+
+func New{???-node.from.name}{???-node.to.name}Handler(pub *nats.Publisher, subjectPrefix string) *{???-node.from.name}{???-node.to.name}Handler {
+ return &{???-node.from.name}{???-node.to.name}Handler{
+  publisher:     pub,
+  subjectPrefix: subjectPrefix,
+ }
+}
+
+{???-foreach op in node.operations {}func (s *{???-node.from.name}{???-node.to.name}Handler) Handle{???-op.capitalizedName()}(ctx context.Context, msg *core.Message) error {
+ ctx, span := tracer.StartConsumer(ctx, "{???-node.from.name}{???-node.to.name}.Handle{???-op.capitalizedName()}")
+ defer span.End()
+ ctx = core.InjectContext(ctx, msg.Headers)
+
+{???-if (op.relationOperation == RelationOperation:assign) {} var event {???-node.from.name}{???-node.to.name}AssignedEvent
+{???-}}{???-if (op.relationOperation == RelationOperation:remove) {} var event {???-node.from.name}{???-node.to.name}RemovedEvent
+{???-}}{???-if (op.relationOperation == RelationOperation:list) {} var event {???-node.from.name}{???-node.to.name}ListRequest
+{???-}} if err := json.Unmarshal(msg.Data, &event); err != nil {
+  span.RecordError(err)
+  return err
+ }
+
+{???-if (op.relationOperation == RelationOperation:assign || op.relationOperation == RelationOperation:remove) {} if event.{???-node.from.name}ID == "" || event.{???-node.to.name}ID == "" {
+  err := fmt.Errorf("invalid data: missing {???-node.from.name.toLowerCase()} or {???-node.to.name.toLowerCase()} ID")
+  span.RecordError(err)
+  return err
+ }
+{???-}}{???-if (op.relationOperation == RelationOperation:list) {} if event.{???-node.from.name}ID == "" {
+  err := fmt.Errorf("invalid request: missing {???-node.from.name.toLowerCase()} ID")
+  span.RecordError(err)
+  return err
+ }
+{???-}}
+ span.SetAttributes(
+{???-if (op.relationOperation == RelationOperation:assign || op.relationOperation == RelationOperation:remove) {}  tracer.StringAttr("{???-node.from.name.toLowerCase()}.id", event.{???-node.from.name}ID),
+  tracer.StringAttr("{???-node.to.name.toLowerCase()}.id", event.{???-node.to.name}ID),
+{???-}}{???-if (op.relationOperation == RelationOperation:list) {}  tracer.StringAttr("{???-node.from.name.toLowerCase()}.id", event.{???-node.from.name}ID),
+{???-}}  tracer.StringAttr("tenant.id", msg.Headers.Get(core.HeaderTenantID)),
+ )
+
+ outMsg := core.NewMessage(msg.Data)
+ outMsg.Subject = s.subjectPrefix + ".{???-node.from.name.toLowerCase()}.{???-node.to.name.toLowerCase()}.db.{???-op.relationOperation.name}"
+ outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)
+ outMsg.Headers.Set("X-Business-Validated", "true")
+
+ if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {
+  span.RecordError(err)
+  return fmt.Errorf("publish error: %w", err)
+ }
+ return nil
+}
+
+{???-}}{???-}}{???-}}

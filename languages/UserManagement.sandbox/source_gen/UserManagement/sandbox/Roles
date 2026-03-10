@@ -6,151 +6,105 @@ import (
  "fmt"
  "time"
 
- "github.com/motadata/motadata-go-sdk/pkg/core"
- "github.com/motadata/motadata-go-sdk/pkg/nats"
- "github.com/motadata/motadata-go-sdk/pkg/tracer"
+ "dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core"
+ "dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/transport/nats"
+ "dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/tracer"
 )
 
 type Roles struct {
- ID string `json:"i_d" db:"i_d"`
- desc string `json:"desc" db:"desc"`
- name string `json:"name" db:"name"`
-}
+{???-foreach field in node.fields {}{???-if (field.hasAnnotation(FieldAnnotation:hidden)) {} {???-field.name} {???-field.goType()} `json:"-" db:"{???-field.dbName()}"`
+{???-}}{???-if (!(field.hasAnnotation(FieldAnnotation:hidden))) {} {???-field.name} {???-field.goType()} `json:"{???-field.jsonName()}" db:"{???-field.dbName()}"`
+{???-}}{???-}}}
 
-type RolesCreatedEvent struct {
- Roles Roles `json:"roles"`
+{???-foreach op in node.operations {}{???-if (op.entityOperation == EntityOperation:create) {}type {???-node.name}CreatedEvent struct {
+ {???-node.name} {???-node.name} `json:"{???-node.name.toLowerCase()}"`
  Timestamp time.Time `json:"timestamp"`
 }
 
-type RolesUpdatedEvent struct {
- Roles Roles `json:"roles"`
+{???-}}{???-if (op.entityOperation == EntityOperation:update) {}type {???-node.name}UpdatedEvent struct {
+ {???-node.name} {???-node.name} `json:"{???-node.name.toLowerCase()}"`
  Timestamp time.Time `json:"timestamp"`
 }
 
-type RolesListRequest struct {
+{???-}}{???-if (op.entityOperation == EntityOperation:delete) {}type {???-node.name}DeletedEvent struct {
+ {???-node.name}ID string `json:"{???-node.name.toLowerCase()}_id"`
+ Timestamp time.Time `json:"timestamp"`
+}
+
+{???-}}{???-if (op.entityOperation == EntityOperation:list) {}type {???-node.name}ListRequest struct {
  Limit     int       `json:"limit"`
  Offset    int       `json:"offset"`
  Timestamp time.Time `json:"timestamp"`
 }
 
-type RolesGetRequest struct {
- RolesID string `json:"roles_id"`
+{???-}}{???-if (op.entityOperation == EntityOperation:get) {}type {???-node.name}GetRequest struct {
+ {???-node.name}ID string `json:"{???-node.name.toLowerCase()}_id"`
  Timestamp time.Time `json:"timestamp"`
 }
 
-type RolesDeletedEvent struct {
- Roles Roles `json:"roles"`
- Timestamp time.Time `json:"timestamp"`
-}
-
-type RolesDeletedEvent struct {
- RolesID string `json:"roles_id"`
- Timestamp time.Time `json:"timestamp"`
-}
-
-type RolesHandler struct {
+{???-}}{???-}}type {???-node.name}Handler struct {
  publisher     *nats.Publisher
  subjectPrefix string
 }
 
-func NewRolesHandler(pub *nats.Publisher, subjectPrefix string) *RolesHandler {
- return &RolesHandler{
+func New{???-node.name}Handler(pub *nats.Publisher, subjectPrefix string) *{???-node.name}Handler {
+ return &{???-node.name}Handler{
   publisher:     pub,
   subjectPrefix: subjectPrefix,
  }
 }
 
-func (s *RolesHandler) HandleCREATE(ctx context.Context, msg *core.Message) error {
- ctx, span := tracer.StartConsumer(ctx, "Roles.HandleCREATE")
+{???-foreach op in node.operations {}func (s *{???-node.name}Handler) Handle{???-op.capitalizedName()}(ctx context.Context, msg *core.Message) error {
+ ctx, span := tracer.StartConsumer(ctx, "{???-node.name}.Handle{???-op.capitalizedName()}")
  defer span.End()
  ctx = core.InjectContext(ctx, msg.Headers)
 
- var event RolesCreatedEvent
- if err := json.Unmarshal(msg.Data, &event); err != nil {
+{???-if (op.entityOperation == EntityOperation:create) {} var event {???-node.name}CreatedEvent
+{???-}}{???-if (op.entityOperation == EntityOperation:update) {} var event {???-node.name}UpdatedEvent
+{???-}}{???-if (op.entityOperation == EntityOperation:delete) {} var event {???-node.name}DeletedEvent
+{???-}}{???-if (op.entityOperation == EntityOperation:list) {} var event {???-node.name}ListRequest
+{???-}}{???-if (op.entityOperation == EntityOperation:get) {} var event {???-node.name}GetRequest
+{???-}} if err := json.Unmarshal(msg.Data, &event); err != nil {
   span.RecordError(err)
   return err
  }
 
- if event.Roles.name == "" {
-  err := fmt.Errorf("invalid roles data: missing required fields")
+{???-if (op.entityOperation == EntityOperation:create) {}{???-int valIdx = 0;}{???-foreach field in node.fields {}{???-if (!(field.hasAnnotation(FieldAnnotation:primaryKey)) && !(field.hasAnnotation(FieldAnnotation:auto)) && !(field.hasAnnotation(FieldAnnotation:hidden)) && !(field.hasAnnotation(FieldAnnotation:nullable))) {}{???-if (valIdx == 0) {} if event.{???-node.name}.{???-field.name} == ""{???-}}{???-if (valIdx > 0) {} || event.{???-node.name}.{???-field.name} == ""{???-}}{???-valIdx = valIdx + 1;}{???-}}{???-}} {
+  err := fmt.Errorf("invalid {???-node.name.toLowerCase()} data: missing required fields")
   span.RecordError(err)
   return err
  }
-
- span.SetAttributes(
-  tracer.StringAttr("roles.id", event.Roles.ID),
-  tracer.StringAttr("tenant.id", msg.Headers.Get(core.HeaderTenantID)),
- )
-
- outMsg := core.NewMessage(msg.Data)
- outMsg.Subject = s.subjectPrefix + ".roles.db.create"
- outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)
- outMsg.Headers.Set("X-Business-Validated", "true")
-
- if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {
-  span.RecordError(err)
-  return fmt.Errorf("publish error: %w", err)
- }
- return nil
-}
-
-func (s *RolesHandler) HandleUPDATE(ctx context.Context, msg *core.Message) error {
- ctx, span := tracer.StartConsumer(ctx, "Roles.HandleUPDATE")
- defer span.End()
- ctx = core.InjectContext(ctx, msg.Headers)
-
- var event RolesUpdatedEvent
- if err := json.Unmarshal(msg.Data, &event); err != nil {
+{???-}}{???-if (op.entityOperation == EntityOperation:update) {} if event.{???-node.name}.{???-node.primaryKeyField().name} == "" {
+  err := fmt.Errorf("invalid {???-node.name.toLowerCase()} data: missing ID")
   span.RecordError(err)
   return err
  }
-
- if event.Roles.ID == "" {
-  err := fmt.Errorf("invalid roles data: missing ID")
+{???-}}{???-if (op.entityOperation == EntityOperation:delete) {} if event.{???-node.name}ID == "" {
+  err := fmt.Errorf("invalid request: missing {???-node.name.toLowerCase()} ID")
   span.RecordError(err)
   return err
  }
-
- span.SetAttributes(
-  tracer.StringAttr("roles.id", event.Roles.ID),
-  tracer.StringAttr("tenant.id", msg.Headers.Get(core.HeaderTenantID)),
- )
-
- outMsg := core.NewMessage(msg.Data)
- outMsg.Subject = s.subjectPrefix + ".roles.db.update"
- outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)
- outMsg.Headers.Set("X-Business-Validated", "true")
-
- if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {
-  span.RecordError(err)
-  return fmt.Errorf("publish error: %w", err)
- }
- return nil
-}
-
-func (s *RolesHandler) HandleLIST(ctx context.Context, msg *core.Message) error {
- ctx, span := tracer.StartConsumer(ctx, "Roles.HandleLIST")
- defer span.End()
- ctx = core.InjectContext(ctx, msg.Headers)
-
- var event RolesListRequest
- if err := json.Unmarshal(msg.Data, &event); err != nil {
+{???-}}{???-if (op.entityOperation == EntityOperation:get) {} if event.{???-node.name}ID == "" {
+  err := fmt.Errorf("invalid request: missing {???-node.name.toLowerCase()} ID")
   span.RecordError(err)
   return err
  }
-
- if event.Limit < 0 || event.Offset < 0 {
+{???-}}{???-if (op.entityOperation == EntityOperation:list) {} if event.Limit < 0 || event.Offset < 0 {
   err := fmt.Errorf("invalid pagination parameters")
   span.RecordError(err)
   return err
  }
-
+{???-}}
  span.SetAttributes(
-  tracer.StringAttr("tenant.id", msg.Headers.Get(core.HeaderTenantID)),
+{???-if (op.entityOperation == EntityOperation:create) {}  tracer.StringAttr("{???-node.name.toLowerCase()}.id", event.{???-node.name}.{???-node.primaryKeyField().name}),
+{???-}}{???-if (op.entityOperation == EntityOperation:update) {}  tracer.StringAttr("{???-node.name.toLowerCase()}.id", event.{???-node.name}.{???-node.primaryKeyField().name}),
+{???-}}{???-if (op.entityOperation == EntityOperation:delete) {}  tracer.StringAttr("{???-node.name.toLowerCase()}.id", event.{???-node.name}ID),
+{???-}}{???-if (op.entityOperation == EntityOperation:get) {}  tracer.StringAttr("{???-node.name.toLowerCase()}.id", event.{???-node.name}ID),
+{???-}}  tracer.StringAttr("tenant.id", msg.Headers.Get(core.HeaderTenantID)),
  )
 
  outMsg := core.NewMessage(msg.Data)
- outMsg.Subject = s.subjectPrefix + ".roles.db.list"
+ outMsg.Subject = s.subjectPrefix + ".{???-node.name.toLowerCase()}.db.{???-op.entityOperation.name}"
  outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)
  outMsg.Headers.Set("X-Business-Validated", "true")
 
@@ -161,71 +115,4 @@ func (s *RolesHandler) HandleLIST(ctx context.Context, msg *core.Message) error 
  return nil
 }
 
-func (s *RolesHandler) HandleDELETE(ctx context.Context, msg *core.Message) error {
- ctx, span := tracer.StartConsumer(ctx, "Roles.HandleDELETE")
- defer span.End()
- ctx = core.InjectContext(ctx, msg.Headers)
-
- var event RolesDeletedEvent
- if err := json.Unmarshal(msg.Data, &event); err != nil {
-  span.RecordError(err)
-  return err
- }
-
- if event.RolesID == "" {
-  err := fmt.Errorf("invalid request: missing roles ID")
-  span.RecordError(err)
-  return err
- }
-
- span.SetAttributes(
-  tracer.StringAttr("roles.id", event.RolesID),
-  tracer.StringAttr("tenant.id", msg.Headers.Get(core.HeaderTenantID)),
- )
-
- outMsg := core.NewMessage(msg.Data)
- outMsg.Subject = s.subjectPrefix + ".roles.db.delete"
- outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)
- outMsg.Headers.Set("X-Business-Validated", "true")
-
- if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {
-  span.RecordError(err)
-  return fmt.Errorf("publish error: %w", err)
- }
- return nil
-}
-
-func (s *RolesHandler) HandleGET(ctx context.Context, msg *core.Message) error {
- ctx, span := tracer.StartConsumer(ctx, "Roles.HandleGET")
- defer span.End()
- ctx = core.InjectContext(ctx, msg.Headers)
-
- var event RolesGetRequest
- if err := json.Unmarshal(msg.Data, &event); err != nil {
-  span.RecordError(err)
-  return err
- }
-
- if event.RolesID == "" {
-  err := fmt.Errorf("invalid request: missing roles ID")
-  span.RecordError(err)
-  return err
- }
-
- span.SetAttributes(
-  tracer.StringAttr("roles.id", event.RolesID),
-  tracer.StringAttr("tenant.id", msg.Headers.Get(core.HeaderTenantID)),
- )
-
- outMsg := core.NewMessage(msg.Data)
- outMsg.Subject = s.subjectPrefix + ".roles.db.get"
- outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)
- outMsg.Headers.Set("X-Business-Validated", "true")
-
- if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {
-  span.RecordError(err)
-  return fmt.Errorf("publish error: %w", err)
- }
- return nil
-}
-
+{???-}}{???-}}

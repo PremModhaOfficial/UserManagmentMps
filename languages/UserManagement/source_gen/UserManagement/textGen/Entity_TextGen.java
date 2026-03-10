@@ -6,22 +6,13 @@ import jetbrains.mps.text.rt.TextGenDescriptorBase;
 import jetbrains.mps.text.rt.TextGenContext;
 import jetbrains.mps.text.impl.TextGenSupport;
 import jetbrains.mps.lang.smodel.generator.smodelAdapter.SPropertyOperations;
-import org.jetbrains.mps.openapi.model.SNode;
-import jetbrains.mps.internal.collections.runtime.ListSequence;
-import jetbrains.mps.lang.smodel.generator.smodelAdapter.SLinkOperations;
-import UserManagement.behavior.Field__BehaviorDescriptor;
-import jetbrains.mps.lang.smodel.generator.smodelAdapter.SEnumOperations;
-import UserManagement.behavior.EntityOperationHolder__BehaviorDescriptor;
-import UserManagement.behavior.Entity__BehaviorDescriptor;
 import org.jetbrains.mps.openapi.language.SProperty;
 import jetbrains.mps.smodel.adapter.structure.MetaAdapterFactory;
-import org.jetbrains.mps.openapi.language.SContainmentLink;
 
 public class Entity_TextGen extends TextGenDescriptorBase {
   @Override
   public void generateText(final TextGenContext ctx) {
     final TextGenSupport tgs = new TextGenSupport(ctx);
-
     tgs.append("package main");
     tgs.newLine();
     tgs.newLine();
@@ -36,11 +27,11 @@ public class Entity_TextGen extends TextGenDescriptorBase {
     tgs.append(" \"time\"");
     tgs.newLine();
     tgs.newLine();
-    tgs.append(" \"github.com/motadata/motadata-go-sdk/pkg/core\"");
+    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core\"");
     tgs.newLine();
-    tgs.append(" \"github.com/motadata/motadata-go-sdk/pkg/nats\"");
+    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/transport/nats\"");
     tgs.newLine();
-    tgs.append(" \"github.com/motadata/motadata-go-sdk/pkg/tracer\"");
+    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/tracer\"");
     tgs.newLine();
     tgs.append(")");
     tgs.newLine();
@@ -50,145 +41,133 @@ public class Entity_TextGen extends TextGenDescriptorBase {
     tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
     tgs.append(" struct {");
     tgs.newLine();
-    for (SNode field : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.fields$Rrud))) {
-      if ((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(field, "hidden")) {
-        tgs.append(" ");
-        tgs.append(SPropertyOperations.getString(field, PROPS.name$MnvL));
-        tgs.append(" ");
-        tgs.append(Field__BehaviorDescriptor.goType_id6DJmAW$aE7I.invoke(field));
-        tgs.append(" `json:\"-\" db:\"");
-        tgs.append(Field__BehaviorDescriptor.dbName_id6DJmAW$7pGu.invoke(field));
-        tgs.append("\"`");
-        tgs.newLine();
-      }
-      if (!((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(field, "hidden"))) {
 
-        tgs.append(" ");
-        tgs.append(SPropertyOperations.getString(field, PROPS.name$MnvL));
-        tgs.append(" ");
-        tgs.append(Field__BehaviorDescriptor.goType_id6DJmAW$aE7I.invoke(field));
-        tgs.append(" `json:\"");
-        tgs.append(Field__BehaviorDescriptor.jsonName_id6DJmAW$7ald.invoke(field));
-        tgs.append("\" db:\"");
-        tgs.append(Field__BehaviorDescriptor.dbName_id6DJmAW$7pGu.invoke(field));
-        tgs.append("\"`");
-        tgs.newLine();
-      }
-    }
+    tgs.append("{???-foreach field in node.fields {}");
+    tgs.append("{???-if (field.hasAnnotation(FieldAnnotation:hidden)) {}");
+    tgs.append(" ");
+    tgs.append("{???-field.name}");
+    tgs.append(" ");
+    tgs.append("{???-field.goType()}");
+    tgs.append(" `json:\"-\" db:\"");
+    tgs.append("{???-field.dbName()}");
+    tgs.append("\"`");
+    tgs.newLine();
+    tgs.append("{???-}}");
+    tgs.append("{???-if (!(field.hasAnnotation(FieldAnnotation:hidden))) {}");
+    tgs.append(" ");
+    tgs.append("{???-field.name}");
+    tgs.append(" ");
+    tgs.append("{???-field.goType()}");
+    tgs.append(" `json:\"");
+    tgs.append("{???-field.jsonName()}");
+    tgs.append("\" db:\"");
+    tgs.append("{???-field.dbName()}");
+    tgs.append("\"`");
+    tgs.newLine();
+    tgs.append("{???-}}");
+    tgs.append("{???-}}");
     tgs.append("}");
     tgs.newLine();
     tgs.newLine();
 
-    for (SNode o : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.operations$RrWf))) {
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("create")) {
-        tgs.append("type ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("CreatedEvent struct {");
-        tgs.newLine();
-        tgs.append(" ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append(" ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append(" `json:\"");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).toLowerCase());
-        tgs.append("\"`");
-        tgs.newLine();
-        tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
-      }
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("update")) {
-        tgs.append("type ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("UpdatedEvent struct {");
-        tgs.newLine();
-        tgs.append(" ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append(" ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append(" `json:\"");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).toLowerCase());
-        tgs.append("\"`");
-        tgs.newLine();
-        tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
-      }
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("delete")) {
-        tgs.append("type ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("DeletedEvent struct {");
-        tgs.newLine();
-        tgs.append(" ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append(" ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append(" `json:\"");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).toLowerCase());
-        tgs.append("\"`");
-        tgs.newLine();
-        tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
-        tgs.append("type ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("DeletedEvent struct {");
-        tgs.newLine();
-        tgs.append(" ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("ID string `json:\"");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).toLowerCase());
-        tgs.append("_id\"`");
-        tgs.newLine();
-        tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
-      }
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("list")) {
-        tgs.append("type ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("ListRequest struct {");
-        tgs.newLine();
-        tgs.append(" Limit     int       `json:\"limit\"`");
-        tgs.newLine();
-        tgs.append(" Offset    int       `json:\"offset\"`");
-        tgs.newLine();
-        tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
-      }
+    tgs.append("{???-foreach op in node.operations {}");
 
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("list")) {
-        tgs.append("type ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("GetRequest struct {");
-        tgs.newLine();
-        tgs.append(" ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("ID string `json:\"");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).toLowerCase());
-        tgs.append("_id\"`");
-        tgs.newLine();
-        tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
-      }
-    }
+    tgs.append("{???-if (op.entityOperation == EntityOperation:create) {}");
+    tgs.append("type ");
+    tgs.append("{???-node.name}");
+    tgs.append("CreatedEvent struct {");
+    tgs.newLine();
+    tgs.append(" ");
+    tgs.append("{???-node.name}");
+    tgs.append(" ");
+    tgs.append("{???-node.name}");
+    tgs.append(" `json:\"");
+    tgs.append("{???-node.name.toLowerCase()}");
+    tgs.append("\"`");
+    tgs.newLine();
+    tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
+    tgs.newLine();
+    tgs.append("}");
+    tgs.newLine();
+    tgs.newLine();
+    tgs.append("{???-}}");
+
+    tgs.append("{???-if (op.entityOperation == EntityOperation:update) {}");
+    tgs.append("type ");
+    tgs.append("{???-node.name}");
+    tgs.append("UpdatedEvent struct {");
+    tgs.newLine();
+    tgs.append(" ");
+    tgs.append("{???-node.name}");
+    tgs.append(" ");
+    tgs.append("{???-node.name}");
+    tgs.append(" `json:\"");
+    tgs.append("{???-node.name.toLowerCase()}");
+    tgs.append("\"`");
+    tgs.newLine();
+    tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
+    tgs.newLine();
+    tgs.append("}");
+    tgs.newLine();
+    tgs.newLine();
+    tgs.append("{???-}}");
+
+    tgs.append("{???-if (op.entityOperation == EntityOperation:delete) {}");
+    tgs.append("type ");
+    tgs.append("{???-node.name}");
+    tgs.append("DeletedEvent struct {");
+    tgs.newLine();
+    tgs.append(" ");
+    tgs.append("{???-node.name}");
+    tgs.append("ID string `json:\"");
+    tgs.append("{???-node.name.toLowerCase()}");
+    tgs.append("_id\"`");
+    tgs.newLine();
+    tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
+    tgs.newLine();
+    tgs.append("}");
+    tgs.newLine();
+    tgs.newLine();
+    tgs.append("{???-}}");
+
+    tgs.append("{???-if (op.entityOperation == EntityOperation:list) {}");
+    tgs.append("type ");
+    tgs.append("{???-node.name}");
+    tgs.append("ListRequest struct {");
+    tgs.newLine();
+    tgs.append(" Limit     int       `json:\"limit\"`");
+    tgs.newLine();
+    tgs.append(" Offset    int       `json:\"offset\"`");
+    tgs.newLine();
+    tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
+    tgs.newLine();
+    tgs.append("}");
+    tgs.newLine();
+    tgs.newLine();
+    tgs.append("{???-}}");
+
+    tgs.append("{???-if (op.entityOperation == EntityOperation:get) {}");
+    tgs.append("type ");
+    tgs.append("{???-node.name}");
+    tgs.append("GetRequest struct {");
+    tgs.newLine();
+    tgs.append(" ");
+    tgs.append("{???-node.name}");
+    tgs.append("ID string `json:\"");
+    tgs.append("{???-node.name.toLowerCase()}");
+    tgs.append("_id\"`");
+    tgs.newLine();
+    tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
+    tgs.newLine();
+    tgs.append("}");
+    tgs.newLine();
+    tgs.newLine();
+    tgs.append("{???-}}");
+
+    tgs.append("{???-}}");
 
     tgs.append("type ");
-    tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
+    tgs.append("{???-node.name}");
     tgs.append("Handler struct {");
     tgs.newLine();
     tgs.append(" publisher     *nats.Publisher");
@@ -199,13 +178,13 @@ public class Entity_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.newLine();
     tgs.append("func New");
-    tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
+    tgs.append("{???-node.name}");
     tgs.append("Handler(pub *nats.Publisher, subjectPrefix string) *");
-    tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
+    tgs.append("{???-node.name}");
     tgs.append("Handler {");
     tgs.newLine();
     tgs.append(" return &");
-    tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
+    tgs.append("{???-node.name}");
     tgs.append("Handler{");
     tgs.newLine();
     tgs.append("  publisher:     pub,");
@@ -218,246 +197,247 @@ public class Entity_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.newLine();
 
-    for (SNode o : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.operations$RrWf))) {
-      tgs.append("func (s *");
-      tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-      tgs.append("Handler) Handle");
-      tgs.append(EntityOperationHolder__BehaviorDescriptor.capitalize_id6DJmAW$mchD.invoke(o));
-      tgs.append("(ctx context.Context, msg *core.Message) error {");
-      tgs.newLine();
-      tgs.append(" ctx, span := tracer.StartConsumer(ctx, \"");
-      tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-      tgs.append(".Handle");
-      tgs.append(EntityOperationHolder__BehaviorDescriptor.capitalize_id6DJmAW$mchD.invoke(o));
-      tgs.append("\")");
-      tgs.newLine();
-      tgs.append(" defer span.End()");
-      tgs.newLine();
-      tgs.append(" ctx = core.InjectContext(ctx, msg.Headers)");
-      tgs.newLine();
-      tgs.newLine();
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("create")) {
-        tgs.append(" var event ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("CreatedEvent");
-        tgs.newLine();
-      }
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("update")) {
-        tgs.append(" var event ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("UpdatedEvent");
-        tgs.newLine();
-      }
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("delete")) {
-        tgs.append(" var event ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("DeletedEvent");
-        tgs.newLine();
-      }
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("list")) {
-        tgs.append(" var event ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("ListRequest");
-        tgs.newLine();
-      }
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("get")) {
-        tgs.append(" var event ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("GetRequest");
-        tgs.newLine();
-      }
-      tgs.append(" if err := json.Unmarshal(msg.Data, &event); err != nil {");
-      tgs.newLine();
-      tgs.append("  span.RecordError(err)");
-      tgs.newLine();
-      tgs.append("  return err");
-      tgs.newLine();
-      tgs.append(" }");
-      tgs.newLine();
-      tgs.newLine();
+    tgs.append("{???-foreach op in node.operations {}");
+
+    tgs.append("func (s *");
+    tgs.append("{???-node.name}");
+    tgs.append("Handler) Handle");
+    tgs.append("{???-op.capitalizedName()}");
+    tgs.append("(ctx context.Context, msg *core.Message) error {");
+    tgs.newLine();
+    tgs.append(" ctx, span := tracer.StartConsumer(ctx, \"");
+    tgs.append("{???-node.name}");
+    tgs.append(".Handle");
+    tgs.append("{???-op.capitalizedName()}");
+    tgs.append("\")");
+    tgs.newLine();
+    tgs.append(" defer span.End()");
+    tgs.newLine();
+    tgs.append(" ctx = core.InjectContext(ctx, msg.Headers)");
+    tgs.newLine();
+    tgs.newLine();
+
+    tgs.append("{???-if (op.entityOperation == EntityOperation:create) {}");
+    tgs.append(" var event ");
+    tgs.append("{???-node.name}");
+    tgs.append("CreatedEvent");
+    tgs.newLine();
+    tgs.append("{???-}}");
+    tgs.append("{???-if (op.entityOperation == EntityOperation:update) {}");
+    tgs.append(" var event ");
+    tgs.append("{???-node.name}");
+    tgs.append("UpdatedEvent");
+    tgs.newLine();
+    tgs.append("{???-}}");
+    tgs.append("{???-if (op.entityOperation == EntityOperation:delete) {}");
+    tgs.append(" var event ");
+    tgs.append("{???-node.name}");
+    tgs.append("DeletedEvent");
+    tgs.newLine();
+    tgs.append("{???-}}");
+    tgs.append("{???-if (op.entityOperation == EntityOperation:list) {}");
+    tgs.append(" var event ");
+    tgs.append("{???-node.name}");
+    tgs.append("ListRequest");
+    tgs.newLine();
+    tgs.append("{???-}}");
+    tgs.append("{???-if (op.entityOperation == EntityOperation:get) {}");
+    tgs.append(" var event ");
+    tgs.append("{???-node.name}");
+    tgs.append("GetRequest");
+    tgs.newLine();
+    tgs.append("{???-}}");
+
+    tgs.append(" if err := json.Unmarshal(msg.Data, &event); err != nil {");
+    tgs.newLine();
+    tgs.append("  span.RecordError(err)");
+    tgs.newLine();
+    tgs.append("  return err");
+    tgs.newLine();
+    tgs.append(" }");
+    tgs.newLine();
+    tgs.newLine();
+
+    tgs.append("{???-if (op.entityOperation == EntityOperation:create) {}");
+    tgs.append("{???-int valIdx = 0;}");
+    tgs.append("{???-foreach field in node.fields {}");
+    tgs.append("{???-if (!(field.hasAnnotation(FieldAnnotation:primaryKey)) && !(field.hasAnnotation(FieldAnnotation:auto)) && !(field.hasAnnotation(FieldAnnotation:hidden)) && !(field.hasAnnotation(FieldAnnotation:nullable))) {}");
+    tgs.append("{???-if (valIdx == 0) {}");
+    tgs.append(" if event.");
+    tgs.append("{???-node.name}");
+    tgs.append(".");
+    tgs.append("{???-field.name}");
+    tgs.append(" == \"\"");
+    tgs.append("{???-}}");
+    tgs.append("{???-if (valIdx > 0) {}");
+    tgs.append(" || event.");
+    tgs.append("{???-node.name}");
+    tgs.append(".");
+    tgs.append("{???-field.name}");
+    tgs.append(" == \"\"");
+    tgs.append("{???-}}");
+    tgs.append("{???-valIdx = valIdx + 1;}");
+    tgs.append("{???-}}");
+    tgs.append("{???-}}");
+    tgs.append(" {");
+    tgs.newLine();
+    tgs.append("  err := fmt.Errorf(\"invalid ");
+    tgs.append("{???-node.name.toLowerCase()}");
+    tgs.append(" data: missing required fields\")");
+    tgs.newLine();
+    tgs.append("  span.RecordError(err)");
+    tgs.newLine();
+    tgs.append("  return err");
+    tgs.newLine();
+    tgs.append(" }");
+    tgs.newLine();
+    tgs.append("{???-}}");
+
+    tgs.append("{???-if (op.entityOperation == EntityOperation:update) {}");
+    tgs.append(" if event.");
+    tgs.append("{???-node.name}");
+    tgs.append(".");
+    tgs.append("{???-node.primaryKeyField().name}");
+    tgs.append(" == \"\" {");
+    tgs.newLine();
+    tgs.append("  err := fmt.Errorf(\"invalid ");
+    tgs.append("{???-node.name.toLowerCase()}");
+    tgs.append(" data: missing ID\")");
+    tgs.newLine();
+    tgs.append("  span.RecordError(err)");
+    tgs.newLine();
+    tgs.append("  return err");
+    tgs.newLine();
+    tgs.append(" }");
+    tgs.newLine();
+    tgs.append("{???-}}");
+
+    tgs.append("{???-if (op.entityOperation == EntityOperation:delete) {}");
+    tgs.append(" if event.");
+    tgs.append("{???-node.name}");
+    tgs.append("ID == \"\" {");
+    tgs.newLine();
+    tgs.append("  err := fmt.Errorf(\"invalid request: missing ");
+    tgs.append("{???-node.name.toLowerCase()}");
+    tgs.append(" ID\")");
+    tgs.newLine();
+    tgs.append("  span.RecordError(err)");
+    tgs.newLine();
+    tgs.append("  return err");
+    tgs.newLine();
+    tgs.append(" }");
+    tgs.newLine();
+    tgs.append("{???-}}");
+
+    tgs.append("{???-if (op.entityOperation == EntityOperation:get) {}");
+    tgs.append(" if event.");
+    tgs.append("{???-node.name}");
+    tgs.append("ID == \"\" {");
+    tgs.newLine();
+    tgs.append("  err := fmt.Errorf(\"invalid request: missing ");
+    tgs.append("{???-node.name.toLowerCase()}");
+    tgs.append(" ID\")");
+    tgs.newLine();
+    tgs.append("  span.RecordError(err)");
+    tgs.newLine();
+    tgs.append("  return err");
+    tgs.newLine();
+    tgs.append(" }");
+    tgs.newLine();
+    tgs.append("{???-}}");
+
+    tgs.append("{???-if (op.entityOperation == EntityOperation:list) {}");
+    tgs.append(" if event.Limit < 0 || event.Offset < 0 {");
+    tgs.newLine();
+    tgs.append("  err := fmt.Errorf(\"invalid pagination parameters\")");
+    tgs.newLine();
+    tgs.append("  span.RecordError(err)");
+    tgs.newLine();
+    tgs.append("  return err");
+    tgs.newLine();
+    tgs.append(" }");
+    tgs.newLine();
+    tgs.append("{???-}}");
+
+    tgs.newLine();
+    tgs.append(" span.SetAttributes(");
+    tgs.newLine();
+    tgs.append("{???-if (op.entityOperation == EntityOperation:create) {}");
+    tgs.append("  tracer.StringAttr(\"");
+    tgs.append("{???-node.name.toLowerCase()}");
+    tgs.append(".id\", event.");
+    tgs.append("{???-node.name}");
+    tgs.append(".");
+    tgs.append("{???-node.primaryKeyField().name}");
+    tgs.append("),");
+    tgs.newLine();
+    tgs.append("{???-}}");
+    tgs.append("{???-if (op.entityOperation == EntityOperation:update) {}");
+    tgs.append("  tracer.StringAttr(\"");
+    tgs.append("{???-node.name.toLowerCase()}");
+    tgs.append(".id\", event.");
+    tgs.append("{???-node.name}");
+    tgs.append(".");
+    tgs.append("{???-node.primaryKeyField().name}");
+    tgs.append("),");
+    tgs.newLine();
+    tgs.append("{???-}}");
+    tgs.append("{???-if (op.entityOperation == EntityOperation:delete) {}");
+    tgs.append("  tracer.StringAttr(\"");
+    tgs.append("{???-node.name.toLowerCase()}");
+    tgs.append(".id\", event.");
+    tgs.append("{???-node.name}");
+    tgs.append("ID),");
+    tgs.newLine();
+    tgs.append("{???-}}");
+    tgs.append("{???-if (op.entityOperation == EntityOperation:get) {}");
+    tgs.append("  tracer.StringAttr(\"");
+    tgs.append("{???-node.name.toLowerCase()}");
+    tgs.append(".id\", event.");
+    tgs.append("{???-node.name}");
+    tgs.append("ID),");
+    tgs.newLine();
+    tgs.append("{???-}}");
+    tgs.append("  tracer.StringAttr(\"tenant.id\", msg.Headers.Get(core.HeaderTenantID)),");
+    tgs.newLine();
+    tgs.append(" )");
+    tgs.newLine();
+    tgs.newLine();
+
+    tgs.append(" outMsg := core.NewMessage(msg.Data)");
+    tgs.newLine();
+    tgs.append(" outMsg.Subject = s.subjectPrefix + \".");
+    tgs.append("{???-node.name.toLowerCase()}");
+    tgs.append(".db.");
+    tgs.append("{???-op.entityOperation.name}");
+    tgs.append("\"");
+    tgs.newLine();
+    tgs.append(" outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)");
+    tgs.newLine();
+    tgs.append(" outMsg.Headers.Set(\"X-Business-Validated\", \"true\")");
+    tgs.newLine();
+    tgs.newLine();
+    tgs.append(" if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {");
+    tgs.newLine();
+    tgs.append("  span.RecordError(err)");
+    tgs.newLine();
+    tgs.append("  return fmt.Errorf(\"publish error: %w\", err)");
+    tgs.newLine();
+    tgs.append(" }");
+    tgs.newLine();
+    tgs.append(" return nil");
+    tgs.newLine();
+    tgs.append("}");
+    tgs.newLine();
+    tgs.newLine();
+
+    tgs.append("{???-}}");
 
 
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("create")) {
-        int valIdx = 0;
-        for (SNode f : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.fields$Rrud))) {
-          if (!((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(f, "primaryKey")) && !((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(f, "auto")) && !((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(f, "hidden")) && !((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(f, "nullable"))) {
-            if (valIdx == 0) {
-              tgs.append(" if event.");
-              tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-              tgs.append(".");
-              tgs.append(SPropertyOperations.getString(f, PROPS.name$MnvL));
-              tgs.append(" == \"\"");
-            }
-            if (valIdx > 0) {
-              tgs.append(" || event.");
-              tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-              tgs.append(".");
-              tgs.append(SPropertyOperations.getString(f, PROPS.name$MnvL));
-              tgs.append(" == \"\"");
-            }
-            valIdx++;
-          }
-        }
-        tgs.append(" {");
-        tgs.newLine();
-        tgs.append("  err := fmt.Errorf(\"invalid ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).toLowerCase());
-        tgs.append(" data: missing required fields\")");
-        tgs.newLine();
-        tgs.append("  span.RecordError(err)");
-        tgs.newLine();
-        tgs.append("  return err");
-        tgs.newLine();
-        tgs.append(" }");
-        tgs.newLine();
-      }
-
-
-
-
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("update")) {
-        tgs.append(" if event.");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append(".");
-        tgs.append(SPropertyOperations.getString(Entity__BehaviorDescriptor.primaryKeyField_id6DJmAW$csS2.invoke(ctx.getPrimaryInput()), PROPS.name$MnvL));
-        tgs.append(" == \"\" {");
-        tgs.newLine();
-        tgs.append("  err := fmt.Errorf(\"invalid ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).toLowerCase());
-        tgs.append(" data: missing ID\")");
-        tgs.newLine();
-        tgs.append("  span.RecordError(err)");
-        tgs.newLine();
-        tgs.append("  return err");
-        tgs.newLine();
-        tgs.append(" }");
-        tgs.newLine();
-      }
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("delete")) {
-        tgs.append(" if event.");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("ID == \"\" {");
-        tgs.newLine();
-        tgs.append("  err := fmt.Errorf(\"invalid request: missing ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).toLowerCase());
-        tgs.append(" ID\")");
-        tgs.newLine();
-        tgs.append("  span.RecordError(err)");
-        tgs.newLine();
-        tgs.append("  return err");
-        tgs.newLine();
-        tgs.append(" }");
-        tgs.newLine();
-      }
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("get")) {
-        tgs.append(" if event.");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("ID == \"\" {");
-        tgs.newLine();
-        tgs.append("  err := fmt.Errorf(\"invalid request: missing ");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).toLowerCase());
-        tgs.append(" ID\")");
-        tgs.newLine();
-        tgs.append("  span.RecordError(err)");
-        tgs.newLine();
-        tgs.append("  return err");
-        tgs.newLine();
-        tgs.append(" }");
-        tgs.newLine();
-      }
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("list")) {
-        tgs.append(" if event.Limit < 0 || event.Offset < 0 {");
-        tgs.newLine();
-        tgs.append("  err := fmt.Errorf(\"invalid pagination parameters\")");
-        tgs.newLine();
-        tgs.append("  span.RecordError(err)");
-        tgs.newLine();
-        tgs.append("  return err");
-        tgs.newLine();
-        tgs.append(" }");
-        tgs.newLine();
-      }
-      tgs.newLine();
-      tgs.append(" span.SetAttributes(");
-      tgs.newLine();
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("create")) {
-        tgs.append("  tracer.StringAttr(\"");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).toLowerCase());
-        tgs.append(".id\", event.");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append(".");
-        tgs.append(SPropertyOperations.getString(Entity__BehaviorDescriptor.primaryKeyField_id6DJmAW$csS2.invoke(ctx.getPrimaryInput()), PROPS.name$MnvL));
-        tgs.append("),");
-        tgs.newLine();
-      }
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("update")) {
-        tgs.append("  tracer.StringAttr(\"");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).toLowerCase());
-        tgs.append(".id\", event.");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append(".");
-        tgs.append(SPropertyOperations.getString(Entity__BehaviorDescriptor.primaryKeyField_id6DJmAW$csS2.invoke(ctx.getPrimaryInput()), PROPS.name$MnvL));
-        tgs.append("),");
-        tgs.newLine();
-      }
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("delete")) {
-        tgs.append("  tracer.StringAttr(\"");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).toLowerCase());
-        tgs.append(".id\", event.");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("ID),");
-        tgs.newLine();
-      }
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)).equals("get")) {
-        tgs.append("  tracer.StringAttr(\"");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).toLowerCase());
-        tgs.append(".id\", event.");
-        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL));
-        tgs.append("ID),");
-        tgs.newLine();
-      }
-      tgs.append("  tracer.StringAttr(\"tenant.id\", msg.Headers.Get(core.HeaderTenantID)),");
-      tgs.newLine();
-      tgs.append(" )");
-      tgs.newLine();
-      tgs.newLine();
-
-      tgs.append(" outMsg := core.NewMessage(msg.Data)");
-      tgs.newLine();
-      tgs.append(" outMsg.Subject = s.subjectPrefix + \".");
-      tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).toLowerCase());
-      tgs.append(".db.");
-      tgs.append(SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.entityOperation$RtmO)));
-      tgs.append("\"");
-      tgs.newLine();
-      tgs.append(" outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)");
-      tgs.newLine();
-      tgs.append(" outMsg.Headers.Set(\"X-Business-Validated\", \"true\")");
-      tgs.newLine();
-      tgs.newLine();
-      tgs.append(" if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {");
-      tgs.newLine();
-      tgs.append("  span.RecordError(err)");
-      tgs.newLine();
-      tgs.append("  return fmt.Errorf(\"publish error: %w\", err)");
-      tgs.newLine();
-      tgs.append(" }");
-      tgs.newLine();
-      tgs.append(" return nil");
-      tgs.newLine();
-      tgs.append("}");
-      tgs.newLine();
-      tgs.newLine();
-    }
+    tgs.append("{???-}}");
   }
 
   private static final class PROPS {
     /*package*/ static final SProperty name$MnvL = MetaAdapterFactory.getProperty(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L, 0x110396ec041L, "name");
-    /*package*/ static final SProperty entityOperation$RtmO = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac89L, 0x6a6f5a6f2407ac8bL, "entityOperation");
-  }
-
-  private static final class LINKS {
-    /*package*/ static final SContainmentLink fields$Rrud = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x6a6f5a6f2407ac84L, "fields");
-    /*package*/ static final SContainmentLink operations$RrWf = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x6a6f5a6f2407ac86L, "operations");
   }
 }

@@ -7,6 +7,11 @@
   <imports />
   <registry>
     <language id="2fbdea06-2517-4783-91c4-fb1f5af2c6d7" name="UserManagement">
+      <concept id="7669448123830914766" name="UserManagement.structure.SqlSchem" flags="ng" index="1elhix">
+        <property id="7669448123830914770" name="dbSchema" index="1elhiX" />
+        <child id="7669448123830914775" name="relations" index="1elhiS" />
+        <child id="7669448123830914774" name="entityrefs" index="1elhiT" />
+      </concept>
       <concept id="7669448123830914757" name="UserManagement.structure.RelationRef" flags="ng" index="1elhiE">
         <reference id="7669448123830914758" name="relation" index="1elhiD" />
       </concept>
@@ -14,6 +19,7 @@
         <reference id="7669448123830914754" name="entity" index="1elhiH" />
       </concept>
       <concept id="7669448123827596392" name="UserManagement.structure.Field" flags="ng" index="1eqfo7">
+        <reference id="7669448123829883590" name="targetEntity" index="1ehsyD" />
         <child id="7669448123828080710" name="type" index="1eo4CD" />
         <child id="7669448123827596406" name="anotations" index="1eqfop" />
       </concept>
@@ -160,6 +166,13 @@
         <property role="1eqfor" value="6DJmAW$1UL9/required" />
       </node>
     </node>
+    <node concept="1eqfo7" id="1cQKuyWodhl" role="1eqfrF">
+      <property role="TrG5h" value="givenTo " />
+      <ref role="1ehsyD" node="6DJmAW$fl8W" resolve="User" />
+      <node concept="1eqfol" id="1cQKuyWodhm" role="1eo4CD">
+        <property role="1eqfok" value="6DJmAW$1UKT/uuid" />
+      </node>
+    </node>
     <node concept="1eqfrA" id="6DJmAW$fZlw" role="1eqfrD">
       <property role="1eqfr$" value="6DJmAW$1ULo/create" />
     </node>
@@ -198,6 +211,19 @@
       <node concept="1eqfos" id="6DJmAW$gkug" role="1eqfop">
         <property role="1eqfor" value="6DJmAW$1ULk/auto" />
       </node>
+    </node>
+  </node>
+  <node concept="1elhix" id="1cQKuyWn6oo">
+    <property role="TrG5h" value="sqlPrem" />
+    <property role="1elhiX" value="iam" />
+    <node concept="1elhiI" id="1cQKuyWn6or" role="1elhiT">
+      <ref role="1elhiH" node="6DJmAW$fl8W" resolve="User" />
+    </node>
+    <node concept="1elhiI" id="1cQKuyWn6op" role="1elhiT">
+      <ref role="1elhiH" node="6DJmAW$fZlt" resolve="Roles" />
+    </node>
+    <node concept="1elhiE" id="1cQKuyWn6os" role="1elhiS">
+      <ref role="1elhiD" node="6DJmAW$gkua" resolve="userRoles" />
     </node>
   </node>
 </model>
