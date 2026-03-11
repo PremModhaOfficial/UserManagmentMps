@@ -15,7 +15,7 @@ public class ConceptPresentationAspectImpl extends ConceptPresentationAspectBase
   private ConceptPresentation props_Field;
   private ConceptPresentation props_FieldAnnotationHolder;
   private ConceptPresentation props_FieldTypeHolder;
-  private ConceptPresentation props_NatsServer;
+  private ConceptPresentation props_Main;
   private ConceptPresentation props_Relation;
   private ConceptPresentation props_RelationOperationHolder;
   private ConceptPresentation props_RelationRef;
@@ -68,13 +68,13 @@ public class ConceptPresentationAspectImpl extends ConceptPresentationAspectBase
           props_FieldTypeHolder = cpb.create();
         }
         return props_FieldTypeHolder;
-      case LanguageConceptSwitch.NatsServer:
-        if (props_NatsServer == null) {
+      case LanguageConceptSwitch.Main:
+        if (props_Main == null) {
           ConceptPresentationBuilder cpb = new ConceptPresentationBuilder();
           cpb.presentationByName();
-          props_NatsServer = cpb.create();
+          props_Main = cpb.create();
         }
-        return props_NatsServer;
+        return props_Main;
       case LanguageConceptSwitch.Relation:
         if (props_Relation == null) {
           ConceptPresentationBuilder cpb = new ConceptPresentationBuilder();

@@ -28,6 +28,7 @@ public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
   private static final SAbstractConcept CONCEPT = MetaAdapterFactory.getConcept(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L, "UserManagement.structure.Field");
 
   public static final SMethod<Boolean> hasAnotation_id6DJmAW$hoUl = new SMethodBuilder<Boolean>(new SJavaCompoundTypeImpl(Boolean.TYPE)).name("hasAnotation").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123831651989L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2(SMethodBuilder.createJavaParameter(String.class, ""));
+  public static final SMethod<String> capitalize_id5Lqw_By60m2 = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("capitalize").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(6654774721950254466L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> sqlType_id6DJmAW$aWx9 = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("sqlType").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123829962825L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> goType_id6DJmAW$aE7I = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("goType").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123829887470L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> jsonTag_id6DJmAW$b545 = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("jsonTag").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123829997829L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
@@ -35,7 +36,7 @@ public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
   public static final SMethod<String> fkConstrainst_id6DJmAW$cjVl = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("fkConstrainst").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123830320853L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> dbName_id6DJmAW$7pGu = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("dbName").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123829033758L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
 
-  private static final List<SMethod<?>> BH_METHODS = Arrays.<SMethod<?>>asList(hasAnotation_id6DJmAW$hoUl, sqlType_id6DJmAW$aWx9, goType_id6DJmAW$aE7I, jsonTag_id6DJmAW$b545, jsonName_id6DJmAW$7ald, fkConstrainst_id6DJmAW$cjVl, dbName_id6DJmAW$7pGu);
+  private static final List<SMethod<?>> BH_METHODS = Arrays.<SMethod<?>>asList(hasAnotation_id6DJmAW$hoUl, capitalize_id5Lqw_By60m2, sqlType_id6DJmAW$aWx9, goType_id6DJmAW$aE7I, jsonTag_id6DJmAW$b545, jsonName_id6DJmAW$7ald, fkConstrainst_id6DJmAW$cjVl, dbName_id6DJmAW$7pGu);
 
   private static void ___init___(@NotNull SNode __thisNode__) {
   }
@@ -47,6 +48,10 @@ public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
       }
     }
     return false;
+  }
+  /*package*/ static String capitalize_id5Lqw_By60m2(@NotNull SNode __thisNode__) {
+    String s = SPropertyOperations.getString(__thisNode__, PROPS.name$MnvL);
+    return (s.substring(0, 1).toUpperCase() + s.substring(1, s.length()));
   }
   /*package*/ static String sqlType_id6DJmAW$aWx9(@NotNull SNode __thisNode__) {
     String ft = SEnumOperations.getMemberName0(SPropertyOperations.getEnum(SLinkOperations.getTarget(__thisNode__, LINKS.type$KBb7), PROPS.fieldType$RkpN));
@@ -124,6 +129,9 @@ public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
   }
   /*package*/ static String jsonName_id6DJmAW$7ald(@NotNull SNode __thisNode__) {
     String name = SPropertyOperations.getString(__thisNode__, PROPS.name$MnvL);
+    if (SPropertyOperations.getString(__thisNode__, PROPS.name$MnvL).length() <= 2) {
+      return SPropertyOperations.getString(__thisNode__, PROPS.name$MnvL).toLowerCase();
+    }
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < name.length(); i++) {
       char ch = name.charAt(i);
@@ -134,7 +142,7 @@ public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
         sb.append(Character.toLowerCase(ch));
       }
     }
-    return sb.toString();
+    return sb.toString().strip();
   }
   /*package*/ static String fkConstrainst_id6DJmAW$cjVl(@NotNull SNode __thisNode__) {
     if (SPropertyOperations.getEnum(SLinkOperations.getTarget(__thisNode__, LINKS.type$KBb7), PROPS.fieldType$RkpN).getPresentation().equals("entityRef") && SLinkOperations.getTarget(__thisNode__, LINKS.targetEntity$5$qj) != null) {
@@ -164,16 +172,18 @@ public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
       case 0:
         return (T) ((Boolean) hasAnotation_id6DJmAW$hoUl(node, (String) parameters[0]));
       case 1:
-        return (T) ((String) sqlType_id6DJmAW$aWx9(node));
+        return (T) ((String) capitalize_id5Lqw_By60m2(node));
       case 2:
-        return (T) ((String) goType_id6DJmAW$aE7I(node));
+        return (T) ((String) sqlType_id6DJmAW$aWx9(node));
       case 3:
-        return (T) ((String) jsonTag_id6DJmAW$b545(node));
+        return (T) ((String) goType_id6DJmAW$aE7I(node));
       case 4:
-        return (T) ((String) jsonName_id6DJmAW$7ald(node));
+        return (T) ((String) jsonTag_id6DJmAW$b545(node));
       case 5:
-        return (T) ((String) fkConstrainst_id6DJmAW$cjVl(node));
+        return (T) ((String) jsonName_id6DJmAW$7ald(node));
       case 6:
+        return (T) ((String) fkConstrainst_id6DJmAW$cjVl(node));
+      case 7:
         return (T) ((String) dbName_id6DJmAW$7pGu(node));
       default:
         throw new BHMethodNotFoundException(this, method);
@@ -206,8 +216,8 @@ public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
 
   private static final class PROPS {
     /*package*/ static final SProperty annotation$RdBN = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac73L, 0x6a6f5a6f2407ac74L, "annotation");
-    /*package*/ static final SProperty fieldType$RkpN = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7aL, 0x6a6f5a6f2407ac7bL, "fieldType");
     /*package*/ static final SProperty name$MnvL = MetaAdapterFactory.getProperty(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L, 0x110396ec041L, "name");
+    /*package*/ static final SProperty fieldType$RkpN = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7aL, 0x6a6f5a6f2407ac7bL, "fieldType");
   }
 
   private static final class LINKS {

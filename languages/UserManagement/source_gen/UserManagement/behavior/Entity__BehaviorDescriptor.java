@@ -6,15 +6,16 @@ import jetbrains.mps.core.aspects.behaviour.BaseBHDescriptor;
 import org.jetbrains.mps.openapi.language.SAbstractConcept;
 import jetbrains.mps.smodel.adapter.structure.MetaAdapterFactory;
 import jetbrains.mps.core.aspects.behaviour.api.SMethod;
-import org.jetbrains.mps.openapi.model.SNode;
 import jetbrains.mps.core.aspects.behaviour.SMethodBuilder;
 import jetbrains.mps.core.aspects.behaviour.SJavaCompoundTypeImpl;
 import jetbrains.mps.core.aspects.behaviour.AccessPrivileges;
+import org.jetbrains.mps.openapi.model.SNode;
 import java.util.List;
 import java.util.Arrays;
 import org.jetbrains.annotations.NotNull;
 import jetbrains.mps.internal.collections.runtime.ListSequence;
 import jetbrains.mps.lang.smodel.generator.smodelAdapter.SLinkOperations;
+import jetbrains.mps.lang.smodel.generator.smodelAdapter.SEnumOperations;
 import jetbrains.mps.lang.smodel.generator.smodelAdapter.SPropertyOperations;
 import jetbrains.mps.core.aspects.behaviour.api.SConstructor;
 import org.jetbrains.annotations.Nullable;
@@ -25,17 +26,28 @@ import org.jetbrains.mps.openapi.language.SProperty;
 public final class Entity__BehaviorDescriptor extends BaseBHDescriptor {
   private static final SAbstractConcept CONCEPT = MetaAdapterFactory.getConcept(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, "UserManagement.structure.Entity");
 
+  public static final SMethod<String> apppendTypeIfEmailPass_id24dYXnugYNM = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("apppendTypeIfEmailPass").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(2381836673924459762L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<SNode> primaryKeyField_id6DJmAW$csS2 = new SMethodBuilder<SNode>(new SJavaCompoundTypeImpl((Class<SNode>) ((Class) Object.class))).name("primaryKeyField").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123830357506L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> creteValidation_id6DJmAW$hYDa = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("creteValidation").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123831806538L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> schemaTableName_id6DJmAW$eABX = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("schemaTableName").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123830921725L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2(SMethodBuilder.createJavaParameter(String.class, ""));
   public static final SMethod<String> tableName_id6DJmAW$e3L$ = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("tableName").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123830778980L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
+  public static final SMethod<String> toLoverCaseFirst_id6LRrEr4Y7HY = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("toLoverCaseFirst").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7815837340873030526L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> createValidation_id6DJmAW$cIRR = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("createValidation").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123830431223L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
 
-  private static final List<SMethod<?>> BH_METHODS = Arrays.<SMethod<?>>asList(primaryKeyField_id6DJmAW$csS2, creteValidation_id6DJmAW$hYDa, schemaTableName_id6DJmAW$eABX, tableName_id6DJmAW$e3L$, createValidation_id6DJmAW$cIRR);
+  private static final List<SMethod<?>> BH_METHODS = Arrays.<SMethod<?>>asList(apppendTypeIfEmailPass_id24dYXnugYNM, primaryKeyField_id6DJmAW$csS2, creteValidation_id6DJmAW$hYDa, schemaTableName_id6DJmAW$eABX, tableName_id6DJmAW$e3L$, toLoverCaseFirst_id6LRrEr4Y7HY, createValidation_id6DJmAW$cIRR);
 
   private static void ___init___(@NotNull SNode __thisNode__) {
   }
 
+  /*package*/ static String apppendTypeIfEmailPass_id24dYXnugYNM(@NotNull SNode __thisNode__) {
+    String returns = "";
+
+    if (ListSequence.fromList(SLinkOperations.getChildren(__thisNode__, LINKS.fields$Rrud)).any((it) -> SEnumOperations.getMemberName0(SPropertyOperations.getEnum(SLinkOperations.getTarget(it, LINKS.type$KBb7), PROPS.fieldType$RkpN)).equals("password") || SEnumOperations.getMemberName0(SPropertyOperations.getEnum(SLinkOperations.getTarget(it, LINKS.type$KBb7), PROPS.fieldType$RkpN)).equals("email"))) {
+      returns = "\"dev.azure.com/Motadata/NextGen/motadata-go-sdk/core/types\"\n";
+    }
+
+    return returns;
+  }
   /*package*/ static SNode primaryKeyField_id6DJmAW$csS2(@NotNull SNode __thisNode__) {
     for (SNode f : ListSequence.fromList(SLinkOperations.getChildren(__thisNode__, LINKS.fields$Rrud))) {
       if ((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(f, "primaryKey")) {
@@ -65,6 +77,9 @@ public final class Entity__BehaviorDescriptor extends BaseBHDescriptor {
   }
   /*package*/ static String tableName_id6DJmAW$e3L$(@NotNull SNode __thisNode__) {
     return SPropertyOperations.getString(__thisNode__, PROPS.name$MnvL).toLowerCase();
+  }
+  /*package*/ static String toLoverCaseFirst_id6LRrEr4Y7HY(@NotNull SNode __thisNode__) {
+    return SPropertyOperations.getString(__thisNode__, PROPS.name$MnvL).toLowerCase() + "to";
   }
   /*package*/ static String createValidation_id6DJmAW$cIRR(@NotNull SNode __thisNode__) {
     String result = "";
@@ -103,14 +118,18 @@ public final class Entity__BehaviorDescriptor extends BaseBHDescriptor {
     }
     switch (methodIndex) {
       case 0:
-        return (T) ((SNode) primaryKeyField_id6DJmAW$csS2(node));
+        return (T) ((String) apppendTypeIfEmailPass_id24dYXnugYNM(node));
       case 1:
-        return (T) ((String) creteValidation_id6DJmAW$hYDa(node));
+        return (T) ((SNode) primaryKeyField_id6DJmAW$csS2(node));
       case 2:
-        return (T) ((String) schemaTableName_id6DJmAW$eABX(node, (String) parameters[0]));
+        return (T) ((String) creteValidation_id6DJmAW$hYDa(node));
       case 3:
-        return (T) ((String) tableName_id6DJmAW$e3L$(node));
+        return (T) ((String) schemaTableName_id6DJmAW$eABX(node, (String) parameters[0]));
       case 4:
+        return (T) ((String) tableName_id6DJmAW$e3L$(node));
+      case 5:
+        return (T) ((String) toLoverCaseFirst_id6LRrEr4Y7HY(node));
+      case 6:
         return (T) ((String) createValidation_id6DJmAW$cIRR(node));
       default:
         throw new BHMethodNotFoundException(this, method);
@@ -143,10 +162,12 @@ public final class Entity__BehaviorDescriptor extends BaseBHDescriptor {
 
   private static final class LINKS {
     /*package*/ static final SContainmentLink fields$Rrud = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x6a6f5a6f2407ac84L, "fields");
+    /*package*/ static final SContainmentLink type$KBb7 = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L, 0x6a6f5a6f240f1046L, "type");
     /*package*/ static final SContainmentLink anotations$R8V0 = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L, 0x6a6f5a6f2407ac76L, "anotations");
   }
 
   private static final class PROPS {
+    /*package*/ static final SProperty fieldType$RkpN = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7aL, 0x6a6f5a6f2407ac7bL, "fieldType");
     /*package*/ static final SProperty name$MnvL = MetaAdapterFactory.getProperty(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L, 0x110396ec041L, "name");
     /*package*/ static final SProperty annotation$RdBN = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac73L, 0x6a6f5a6f2407ac74L, "annotation");
   }

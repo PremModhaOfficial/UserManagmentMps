@@ -15,7 +15,7 @@ public final class LanguageConceptSwitch {
   public static final int Field = 3;
   public static final int FieldAnnotationHolder = 4;
   public static final int FieldTypeHolder = 5;
-  public static final int NatsServer = 6;
+  public static final int Main = 6;
   public static final int Relation = 7;
   public static final int RelationOperationHolder = 8;
   public static final int RelationRef = 9;
@@ -29,7 +29,7 @@ public final class LanguageConceptSwitch {
     builder.put(0x6a6f5a6f2407ac68L, Field);
     builder.put(0x6a6f5a6f2407ac73L, FieldAnnotationHolder);
     builder.put(0x6a6f5a6f2407ac7aL, FieldTypeHolder);
-    builder.put(0x6a6f5a6f2407ac21L, NatsServer);
+    builder.put(0x6a6f5a6f2407ac21L, Main);
     builder.put(0x6a6f5a6f2407ac8fL, Relation);
     builder.put(0x6a6f5a6f2407ac9cL, RelationOperationHolder);
     builder.put(0x6a6f5a6f243a4ec5L, RelationRef);

@@ -14,12 +14,14 @@ import java.util.Arrays;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.mps.openapi.model.SNode;
 import jetbrains.mps.lang.smodel.generator.smodelAdapter.SPropertyOperations;
+import jetbrains.mps.lang.smodel.generator.smodelAdapter.SNodeOperations;
 import jetbrains.mps.lang.smodel.generator.smodelAdapter.SLinkOperations;
 import jetbrains.mps.core.aspects.behaviour.api.SConstructor;
 import org.jetbrains.annotations.Nullable;
 import jetbrains.mps.core.aspects.behaviour.api.BHMethodNotFoundException;
-import org.jetbrains.mps.openapi.language.SReferenceLink;
+import org.jetbrains.mps.openapi.language.SConcept;
 import org.jetbrains.mps.openapi.language.SProperty;
+import org.jetbrains.mps.openapi.language.SReferenceLink;
 
 public final class Relation__BehaviorDescriptor extends BaseBHDescriptor {
   private static final SAbstractConcept CONCEPT = MetaAdapterFactory.getConcept(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, "UserManagement.structure.Relation");
@@ -33,7 +35,13 @@ public final class Relation__BehaviorDescriptor extends BaseBHDescriptor {
   }
 
   /*package*/ static String tableName_id6DJmAW$ebFg(@NotNull SNode __thisNode__) {
-    return SPropertyOperations.getString(SLinkOperations.getTarget(__thisNode__, LINKS.from$R$Po), PROPS.name$MnvL).toLowerCase() + "_" + SPropertyOperations.getString(SLinkOperations.getTarget(__thisNode__, LINKS.to$R_jq), PROPS.name$MnvL).toLowerCase() + "s";
+    String frm = SPropertyOperations.getString(SNodeOperations.getNodeAncestor(__thisNode__, CONCEPTS.Entity$iI, false, false), PROPS.name$MnvL);
+    String to = SPropertyOperations.getString(SLinkOperations.getTarget(__thisNode__, LINKS.with$R_jq), PROPS.name$MnvL);
+
+    frm = frm.strip();
+    to = to.strip();
+
+    return (frm.toLowerCase() + "_" + to.toLowerCase() + "s").strip();
   }
   /*package*/ static String schemaTableName_id6DJmAW$egG6(@NotNull SNode __thisNode__, String schema) {
     return schema + "." + Relation__BehaviorDescriptor.tableName_id6DJmAW$ebFg.invoke(__thisNode__);
@@ -87,12 +95,15 @@ public final class Relation__BehaviorDescriptor extends BaseBHDescriptor {
     return CONCEPT;
   }
 
-  private static final class LINKS {
-    /*package*/ static final SReferenceLink from$R$Po = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac95L, "from");
-    /*package*/ static final SReferenceLink to$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "to");
+  private static final class CONCEPTS {
+    /*package*/ static final SConcept Entity$iI = MetaAdapterFactory.getConcept(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, "UserManagement.structure.Entity");
   }
 
   private static final class PROPS {
     /*package*/ static final SProperty name$MnvL = MetaAdapterFactory.getProperty(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L, 0x110396ec041L, "name");
+  }
+
+  private static final class LINKS {
+    /*package*/ static final SReferenceLink with$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "with");
   }
 }

@@ -12,10 +12,12 @@ import jetbrains.mps.lang.smodel.generator.smodelAdapter.SLinkOperations;
 import UserManagement.behavior.Entity__BehaviorDescriptor;
 import UserManagement.behavior.Field__BehaviorDescriptor;
 import UserManagement.behavior.Relation__BehaviorDescriptor;
+import jetbrains.mps.lang.smodel.generator.smodelAdapter.SNodeOperations;
 import org.jetbrains.mps.openapi.language.SProperty;
 import jetbrains.mps.smodel.adapter.structure.MetaAdapterFactory;
 import org.jetbrains.mps.openapi.language.SReferenceLink;
 import org.jetbrains.mps.openapi.language.SContainmentLink;
+import org.jetbrains.mps.openapi.language.SConcept;
 
 public class SqlSchem_TextGen extends TextGenDescriptorBase {
   @Override
@@ -113,70 +115,75 @@ public class SqlSchem_TextGen extends TextGenDescriptorBase {
       tgs.newLine();
     }
 
-    for (SNode rref : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.relations$kokg))) {
-      SNode r = SLinkOperations.getTarget(rref, LINKS.relation$kafN);
-      tgs.append("-- Junction table: ");
-      tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.dbSchema$kn9b));
-      tgs.append(".");
-      tgs.append(Relation__BehaviorDescriptor.tableName_id6DJmAW$ebFg.invoke(r));
-      tgs.newLine();
-      tgs.append("CREATE TABLE IF NOT EXISTS ");
-      tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.dbSchema$kn9b));
-      tgs.append(".");
-      tgs.append(Relation__BehaviorDescriptor.tableName_id6DJmAW$ebFg.invoke(r));
-      tgs.append(" (");
-      tgs.newLine();
+    for (SNode entiref : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.entityrefs$ko5f))) {
+      ListSequence.fromList(SLinkOperations.getChildren(SLinkOperations.getTarget(entiref, LINKS.entity$k9hN), LINKS.relations$Mn4T)).visitAll((it) -> {
+        SNode r = it;
+        tgs.append("-- Junction table: ");
+        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.dbSchema$kn9b));
+        tgs.append(".");
+        tgs.append(Relation__BehaviorDescriptor.tableName_id6DJmAW$ebFg.invoke(r));
+        tgs.newLine();
+        tgs.append("CREATE TABLE IF NOT EXISTS ");
+        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.dbSchema$kn9b));
+        tgs.append(".");
+        tgs.append(Relation__BehaviorDescriptor.tableName_id6DJmAW$ebFg.invoke(r));
+        tgs.append(" (");
+        tgs.newLine();
 
-      tgs.append(" ");
-      tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.from$R$Po), PROPS.name$MnvL).toLowerCase());
-      tgs.append("_id UUID NOT NULL REFERENCES ");
-      tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.dbSchema$kn9b));
-      tgs.append(".");
-      tgs.append(Entity__BehaviorDescriptor.tableName_id6DJmAW$e3L$.invoke(SLinkOperations.getTarget(r, LINKS.from$R$Po)));
-      tgs.append("(id) ON DELETE CASCADE,");
-      tgs.newLine();
-      tgs.append(" ");
-      tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.to$R_jq), PROPS.name$MnvL).toLowerCase());
-      tgs.append("_id UUID NOT NULL REFERENCES ");
-      tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.dbSchema$kn9b));
-      tgs.append(".");
-      tgs.append(Entity__BehaviorDescriptor.tableName_id6DJmAW$e3L$.invoke(SLinkOperations.getTarget(r, LINKS.to$R_jq)));
-      tgs.append("(id) ON DELETE CASCADE");
-      for (SNode fex : ListSequence.fromList(SLinkOperations.getChildren(r, LINKS.extraFields$RLJf))) {
+        String parentNamr = SPropertyOperations.getString(SNodeOperations.getNodeAncestor(r, CONCEPTS.Entity$iI, false, false), PROPS.name$MnvL);
+        tgs.append(" ");
+        tgs.append(parentNamr.toLowerCase());
+        tgs.append("_id UUID NOT NULL REFERENCES ");
+        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.dbSchema$kn9b));
+        tgs.append(".");
+        tgs.append(Entity__BehaviorDescriptor.tableName_id6DJmAW$e3L$.invoke(SNodeOperations.getNodeAncestor(r, CONCEPTS.Entity$iI, false, false)));
+        tgs.append("(id) ON DELETE CASCADE,");
+        tgs.newLine();
+        tgs.append(" ");
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
+        tgs.append("_id UUID NOT NULL REFERENCES ");
+        tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.dbSchema$kn9b));
+        tgs.append(".");
+        tgs.append(Entity__BehaviorDescriptor.tableName_id6DJmAW$e3L$.invoke(SLinkOperations.getTarget(r, LINKS.with$R_jq)));
+        tgs.append("(id) ON DELETE CASCADE");
+        for (SNode fex : ListSequence.fromList(SLinkOperations.getChildren(r, LINKS.extraFields$RLJf))) {
+          tgs.append(",");
+          tgs.newLine();
+          if ((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(fex, "auto")) {
+            tgs.append(" ");
+            tgs.append(Field__BehaviorDescriptor.dbName_id6DJmAW$7pGu.invoke(fex));
+            tgs.append(" ");
+            tgs.append(Field__BehaviorDescriptor.sqlType_id6DJmAW$aWx9.invoke(fex));
+            tgs.append(" NOT NULL DEFAULT NOW()");
+          }
+          if ((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(fex, "nullable")) {
+            tgs.append(" ");
+            tgs.append(Field__BehaviorDescriptor.dbName_id6DJmAW$7pGu.invoke(fex));
+            tgs.append(" ");
+            tgs.append(Field__BehaviorDescriptor.sqlType_id6DJmAW$aWx9.invoke(fex));
+          }
+          if (!((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(fex, "auto")) && !((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(fex, "nullable"))) {
+            tgs.append(" ");
+            tgs.append(Field__BehaviorDescriptor.dbName_id6DJmAW$7pGu.invoke(fex));
+            tgs.append(" ");
+            tgs.append(Field__BehaviorDescriptor.sqlType_id6DJmAW$aWx9.invoke(fex));
+            tgs.append(" NOT NULL");
+          }
+        }
         tgs.append(",");
         tgs.newLine();
-        if ((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(fex, "auto")) {
-          tgs.append(" ");
-          tgs.append(Field__BehaviorDescriptor.dbName_id6DJmAW$7pGu.invoke(fex));
-          tgs.append(" ");
-          tgs.append(Field__BehaviorDescriptor.sqlType_id6DJmAW$aWx9.invoke(fex));
-          tgs.append(" NOT NULL DEFAULT NOW()");
-        }
-        if ((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(fex, "nullable")) {
-          tgs.append(" ");
-          tgs.append(Field__BehaviorDescriptor.dbName_id6DJmAW$7pGu.invoke(fex));
-          tgs.append(" ");
-          tgs.append(Field__BehaviorDescriptor.sqlType_id6DJmAW$aWx9.invoke(fex));
-        }
-        if (!((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(fex, "auto")) && !((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(fex, "nullable"))) {
-          tgs.append(" ");
-          tgs.append(Field__BehaviorDescriptor.dbName_id6DJmAW$7pGu.invoke(fex));
-          tgs.append(" ");
-          tgs.append(Field__BehaviorDescriptor.sqlType_id6DJmAW$aWx9.invoke(fex));
-          tgs.append(" NOT NULL");
-        }
-      }
-      tgs.append(",");
-      tgs.newLine();
-      tgs.append(" PRIMARY KEY (");
-      tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.from$R$Po), PROPS.name$MnvL).toLowerCase());
-      tgs.append("_id, ");
-      tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.to$R_jq), PROPS.name$MnvL).toLowerCase());
-      tgs.append("_id)");
-      tgs.newLine();
-      tgs.append(");");
-      tgs.newLine();
-      tgs.newLine();
+        tgs.append(" PRIMARY KEY (");
+        tgs.append(parentNamr.toLowerCase());
+        tgs.append("_id, ");
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
+        tgs.append("_id)");
+        tgs.newLine();
+        tgs.append(");");
+        tgs.newLine();
+        tgs.newLine();
+
+
+      });
     }
   }
 
@@ -189,10 +196,12 @@ public class SqlSchem_TextGen extends TextGenDescriptorBase {
     /*package*/ static final SReferenceLink entity$k9hN = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4ec1L, 0x6a6f5a6f243a4ec2L, "entity");
     /*package*/ static final SContainmentLink fields$Rrud = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x6a6f5a6f2407ac84L, "fields");
     /*package*/ static final SContainmentLink entityrefs$ko5f = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4eceL, 0x6a6f5a6f243a4ed6L, "entityrefs");
-    /*package*/ static final SReferenceLink relation$kafN = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4ec5L, 0x6a6f5a6f243a4ec6L, "relation");
-    /*package*/ static final SReferenceLink from$R$Po = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac95L, "from");
-    /*package*/ static final SReferenceLink to$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "to");
+    /*package*/ static final SContainmentLink relations$Mn4T = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x210dfbd5ddf5be7aL, "relations");
+    /*package*/ static final SReferenceLink with$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "with");
     /*package*/ static final SContainmentLink extraFields$RLJf = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407aca2L, "extraFields");
-    /*package*/ static final SContainmentLink relations$kokg = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4eceL, 0x6a6f5a6f243a4ed7L, "relations");
+  }
+
+  private static final class CONCEPTS {
+    /*package*/ static final SConcept Entity$iI = MetaAdapterFactory.getConcept(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, "UserManagement.structure.Entity");
   }
 }

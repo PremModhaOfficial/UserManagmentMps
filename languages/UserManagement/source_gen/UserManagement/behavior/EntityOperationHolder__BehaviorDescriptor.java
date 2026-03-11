@@ -31,7 +31,7 @@ public final class EntityOperationHolder__BehaviorDescriptor extends BaseBHDescr
   }
 
   /*package*/ static String capitalize_id6DJmAW$mchD(@NotNull SNode __thisNode__) {
-    return SEnumOperations.getMemberName0(SPropertyOperations.getEnum(__thisNode__, PROPS.entityOperation$RtmO)).toUpperCase();
+    return (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(__thisNode__, PROPS.entityOperation$RtmO)).charAt(0) + "").toUpperCase() + SEnumOperations.getMemberName0(SPropertyOperations.getEnum(__thisNode__, PROPS.entityOperation$RtmO)).subSequence(1, SEnumOperations.getMemberName0(SPropertyOperations.getEnum(__thisNode__, PROPS.entityOperation$RtmO)).length());
   }
 
   /*package*/ EntityOperationHolder__BehaviorDescriptor() {

@@ -5,116 +5,105 @@ package UserManagement.textGen;
 import jetbrains.mps.text.rt.TextGenDescriptorBase;
 import jetbrains.mps.text.rt.TextGenContext;
 import jetbrains.mps.text.impl.TextGenSupport;
+import jetbrains.mps.lang.smodel.generator.smodelAdapter.SPropertyOperations;
+import jetbrains.mps.lang.smodel.generator.smodelAdapter.SNodeOperations;
+import org.jetbrains.mps.openapi.model.SNode;
+import jetbrains.mps.internal.collections.runtime.ListSequence;
+import jetbrains.mps.lang.smodel.generator.smodelAdapter.SLinkOperations;
+import jetbrains.mps.lang.smodel.generator.smodelAdapter.SEnumOperations;
+import UserManagement.behavior.RelationOperationHolder__BehaviorDescriptor;
+import org.jetbrains.mps.openapi.language.SConcept;
+import jetbrains.mps.smodel.adapter.structure.MetaAdapterFactory;
+import org.jetbrains.mps.openapi.language.SProperty;
+import org.jetbrains.mps.openapi.language.SReferenceLink;
+import org.jetbrains.mps.openapi.language.SContainmentLink;
 
 public class Relation_TextGen extends TextGenDescriptorBase {
   @Override
   public void generateText(final TextGenContext ctx) {
     final TextGenSupport tgs = new TextGenSupport(ctx);
 
-    tgs.append("package main");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("import (");
-    tgs.newLine();
-    tgs.append(" \"context\"");
-    tgs.newLine();
-    tgs.append(" \"encoding/json\"");
-    tgs.newLine();
-    tgs.append(" \"fmt\"");
-    tgs.newLine();
-    tgs.append(" \"time\"");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core\"");
-    tgs.newLine();
-    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/transport/nats\"");
-    tgs.newLine();
-    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/tracer\"");
-    tgs.newLine();
-    tgs.append(")");
-    tgs.newLine();
-    tgs.newLine();
 
-    tgs.append("{???-foreach op in node.operations {}");
+    String parentEntityName = SPropertyOperations.getString(SNodeOperations.getNodeAncestor(ctx.getPrimaryInput(), CONCEPTS.Entity$iI, false, false), PROPS.name$MnvL);
+    for (SNode o : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.operations$REVM))) {
+      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("assign")) {
+        tgs.append("type ");
+        tgs.append(parentEntityName);
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append("AssignedEvent struct {");
+        tgs.newLine();
+        tgs.append(" ");
+        tgs.append(parentEntityName);
+        tgs.append("ID string `json:\"");
+        tgs.append(parentEntityName.toLowerCase());
+        tgs.append("_id\"`");
+        tgs.newLine();
+        tgs.append(" ");
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append("ID string `json:\"");
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
+        tgs.append("_id\"`");
+        tgs.newLine();
+        tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+      }
 
-    tgs.append("{???-if (op.relationOperation == RelationOperation:assign) {}");
-    tgs.append("type ");
-    tgs.append("{???-node.from.name}");
-    tgs.append("{???-node.to.name}");
-    tgs.append("AssignedEvent struct {");
-    tgs.newLine();
-    tgs.append(" ");
-    tgs.append("{???-node.from.name}");
-    tgs.append("ID string `json:\"");
-    tgs.append("{???-node.from.name.toLowerCase()}");
-    tgs.append("_id\"`");
-    tgs.newLine();
-    tgs.append(" ");
-    tgs.append("{???-node.to.name}");
-    tgs.append("ID string `json:\"");
-    tgs.append("{???-node.to.name.toLowerCase()}");
-    tgs.append("_id\"`");
-    tgs.newLine();
-    tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("{???-}}");
+      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("remove")) {
+        tgs.append("type ");
+        tgs.append(parentEntityName);
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append("RemovedEvent struct {");
+        tgs.newLine();
+        tgs.append(" ");
+        tgs.append(parentEntityName);
+        tgs.append("ID string `json:\"");
+        tgs.append(parentEntityName.toLowerCase());
+        tgs.append("_id\"`");
+        tgs.newLine();
+        tgs.append(" ");
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append("ID string `json:\"");
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
+        tgs.append("_id\"`");
+        tgs.newLine();
+        tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+      }
 
-    tgs.append("{???-if (op.relationOperation == RelationOperation:remove) {}");
-    tgs.append("type ");
-    tgs.append("{???-node.from.name}");
-    tgs.append("{???-node.to.name}");
-    tgs.append("RemovedEvent struct {");
-    tgs.newLine();
-    tgs.append(" ");
-    tgs.append("{???-node.from.name}");
-    tgs.append("ID string `json:\"");
-    tgs.append("{???-node.from.name.toLowerCase()}");
-    tgs.append("_id\"`");
-    tgs.newLine();
-    tgs.append(" ");
-    tgs.append("{???-node.to.name}");
-    tgs.append("ID string `json:\"");
-    tgs.append("{???-node.to.name.toLowerCase()}");
-    tgs.append("_id\"`");
-    tgs.newLine();
-    tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("{???-}}");
+      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("list")) {
+        tgs.append("type ");
+        tgs.append(parentEntityName);
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append("ListRequest struct {");
+        tgs.newLine();
+        tgs.append(" ");
+        tgs.append(parentEntityName);
+        tgs.append("ID string `json:\"");
+        tgs.append(parentEntityName.toLowerCase());
+        tgs.append("_id\"`");
+        tgs.newLine();
+        tgs.append(" Limit     int       `json:\"limit\"`");
+        tgs.newLine();
+        tgs.append(" Offset    int       `json:\"offset\"`");
+        tgs.newLine();
+        tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+      }
+    }
 
-    tgs.append("{???-if (op.relationOperation == RelationOperation:list) {}");
-    tgs.append("type ");
-    tgs.append("{???-node.from.name}");
-    tgs.append("{???-node.to.name}");
-    tgs.append("ListRequest struct {");
-    tgs.newLine();
-    tgs.append(" ");
-    tgs.append("{???-node.from.name}");
-    tgs.append("ID string `json:\"");
-    tgs.append("{???-node.from.name.toLowerCase()}");
-    tgs.append("_id\"`");
-    tgs.newLine();
-    tgs.append(" Limit     int       `json:\"limit\"`");
-    tgs.newLine();
-    tgs.append(" Offset    int       `json:\"offset\"`");
-    tgs.newLine();
-    tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("{???-}}");
-
-    tgs.append("{???-}}");
 
     tgs.append("type ");
-    tgs.append("{???-node.from.name}");
-    tgs.append("{???-node.to.name}");
+    tgs.append(parentEntityName);
+    tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
     tgs.append("Handler struct {");
     tgs.newLine();
     tgs.append(" publisher     *nats.Publisher");
@@ -125,16 +114,16 @@ public class Relation_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.newLine();
     tgs.append("func New");
-    tgs.append("{???-node.from.name}");
-    tgs.append("{???-node.to.name}");
+    tgs.append(parentEntityName);
+    tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
     tgs.append("Handler(pub *nats.Publisher, subjectPrefix string) *");
-    tgs.append("{???-node.from.name}");
-    tgs.append("{???-node.to.name}");
+    tgs.append(parentEntityName);
+    tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
     tgs.append("Handler {");
     tgs.newLine();
     tgs.append(" return &");
-    tgs.append("{???-node.from.name}");
-    tgs.append("{???-node.to.name}");
+    tgs.append(parentEntityName);
+    tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
     tgs.append("Handler{");
     tgs.newLine();
     tgs.append("  publisher:     pub,");
@@ -147,161 +136,172 @@ public class Relation_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.newLine();
 
-    tgs.append("{???-foreach op in node.operations {}");
+    for (SNode o : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.operations$REVM))) {
+      tgs.append("func (s *");
+      tgs.append(parentEntityName);
+      tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+      tgs.append("Handler) Handle");
+      tgs.append(RelationOperationHolder__BehaviorDescriptor.capitalize_id6LRrEr56jrv.invoke(o));
+      tgs.append("(ctx context.Context, msg *core.Message) error {");
+      tgs.newLine();
+      tgs.append(" ctx, span := tracer.StartConsumer(ctx, \"");
+      tgs.append(parentEntityName);
+      tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+      tgs.append(".Handle");
+      tgs.append(RelationOperationHolder__BehaviorDescriptor.capitalize_id6LRrEr56jrv.invoke(o));
+      tgs.append("\")");
+      tgs.newLine();
+      tgs.append(" defer span.End()");
+      tgs.newLine();
+      tgs.append(" ctx = core.InjectContext(ctx, msg.Headers)");
+      tgs.newLine();
+      tgs.newLine();
 
-    tgs.append("func (s *");
-    tgs.append("{???-node.from.name}");
-    tgs.append("{???-node.to.name}");
-    tgs.append("Handler) Handle");
-    tgs.append("{???-op.capitalizedName()}");
-    tgs.append("(ctx context.Context, msg *core.Message) error {");
-    tgs.newLine();
-    tgs.append(" ctx, span := tracer.StartConsumer(ctx, \"");
-    tgs.append("{???-node.from.name}");
-    tgs.append("{???-node.to.name}");
-    tgs.append(".Handle");
-    tgs.append("{???-op.capitalizedName()}");
-    tgs.append("\")");
-    tgs.newLine();
-    tgs.append(" defer span.End()");
-    tgs.newLine();
-    tgs.append(" ctx = core.InjectContext(ctx, msg.Headers)");
-    tgs.newLine();
-    tgs.newLine();
+      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("assign")) {
+        tgs.append(" var event ");
+        tgs.append(parentEntityName);
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append("AssignedEvent");
+        tgs.newLine();
+      }
 
-    tgs.append("{???-if (op.relationOperation == RelationOperation:assign) {}");
-    tgs.append(" var event ");
-    tgs.append("{???-node.from.name}");
-    tgs.append("{???-node.to.name}");
-    tgs.append("AssignedEvent");
-    tgs.newLine();
-    tgs.append("{???-}}");
-    tgs.append("{???-if (op.relationOperation == RelationOperation:remove) {}");
-    tgs.append(" var event ");
-    tgs.append("{???-node.from.name}");
-    tgs.append("{???-node.to.name}");
-    tgs.append("RemovedEvent");
-    tgs.newLine();
-    tgs.append("{???-}}");
-    tgs.append("{???-if (op.relationOperation == RelationOperation:list) {}");
-    tgs.append(" var event ");
-    tgs.append("{???-node.from.name}");
-    tgs.append("{???-node.to.name}");
-    tgs.append("ListRequest");
-    tgs.newLine();
-    tgs.append("{???-}}");
+      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("remove")) {
+        tgs.append(" var event ");
+        tgs.append(parentEntityName);
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append("RemovedEvent");
+        tgs.newLine();
+      }
 
-    tgs.append(" if err := json.Unmarshal(msg.Data, &event); err != nil {");
-    tgs.newLine();
-    tgs.append("  span.RecordError(err)");
-    tgs.newLine();
-    tgs.append("  return err");
-    tgs.newLine();
-    tgs.append(" }");
-    tgs.newLine();
-    tgs.newLine();
+      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("list")) {
+        tgs.append(" var event ");
+        tgs.append(parentEntityName);
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append("ListRequest");
+        tgs.newLine();
+      }
+      tgs.append(" if err := json.Unmarshal(msg.Data, &event); err != nil {");
+      tgs.newLine();
+      tgs.append("  span.RecordError(err)");
+      tgs.newLine();
+      tgs.append("  return err");
+      tgs.newLine();
+      tgs.append(" }");
+      tgs.newLine();
+      tgs.newLine();
 
-    tgs.append("{???-if (op.relationOperation == RelationOperation:assign || op.relationOperation == RelationOperation:remove) {}");
-    tgs.append(" if event.");
-    tgs.append("{???-node.from.name}");
-    tgs.append("ID == \"\" || event.");
-    tgs.append("{???-node.to.name}");
-    tgs.append("ID == \"\" {");
-    tgs.newLine();
-    tgs.append("  err := fmt.Errorf(\"invalid data: missing ");
-    tgs.append("{???-node.from.name.toLowerCase()}");
-    tgs.append(" or ");
-    tgs.append("{???-node.to.name.toLowerCase()}");
-    tgs.append(" ID\")");
-    tgs.newLine();
-    tgs.append("  span.RecordError(err)");
-    tgs.newLine();
-    tgs.append("  return err");
-    tgs.newLine();
-    tgs.append(" }");
-    tgs.newLine();
-    tgs.append("{???-}}");
-    tgs.append("{???-if (op.relationOperation == RelationOperation:list) {}");
-    tgs.append(" if event.");
-    tgs.append("{???-node.from.name}");
-    tgs.append("ID == \"\" {");
-    tgs.newLine();
-    tgs.append("  err := fmt.Errorf(\"invalid request: missing ");
-    tgs.append("{???-node.from.name.toLowerCase()}");
-    tgs.append(" ID\")");
-    tgs.newLine();
-    tgs.append("  span.RecordError(err)");
-    tgs.newLine();
-    tgs.append("  return err");
-    tgs.newLine();
-    tgs.append(" }");
-    tgs.newLine();
-    tgs.append("{???-}}");
+      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("assign") || SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("remove")) {
+        tgs.append(" if event.");
+        tgs.append(parentEntityName);
+        tgs.append("ID == \"\" || event.");
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append("ID == \"\" {");
+        tgs.newLine();
+        tgs.append("  err := fmt.Errorf(\"invalid data: missing ");
+        tgs.append(parentEntityName.toLowerCase());
+        tgs.append(" or ");
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
+        tgs.append(" ID\")");
+        tgs.newLine();
+        tgs.append("  span.RecordError(err)");
+        tgs.newLine();
+        tgs.append("  return err");
+        tgs.newLine();
+        tgs.append(" }");
+        tgs.newLine();
+      }
 
-    tgs.newLine();
-    tgs.append(" span.SetAttributes(");
-    tgs.newLine();
-    tgs.append("{???-if (op.relationOperation == RelationOperation:assign || op.relationOperation == RelationOperation:remove) {}");
-    tgs.append("  tracer.StringAttr(\"");
-    tgs.append("{???-node.from.name.toLowerCase()}");
-    tgs.append(".id\", event.");
-    tgs.append("{???-node.from.name}");
-    tgs.append("ID),");
-    tgs.newLine();
-    tgs.append("  tracer.StringAttr(\"");
-    tgs.append("{???-node.to.name.toLowerCase()}");
-    tgs.append(".id\", event.");
-    tgs.append("{???-node.to.name}");
-    tgs.append("ID),");
-    tgs.newLine();
-    tgs.append("{???-}}");
-    tgs.append("{???-if (op.relationOperation == RelationOperation:list) {}");
-    tgs.append("  tracer.StringAttr(\"");
-    tgs.append("{???-node.from.name.toLowerCase()}");
-    tgs.append(".id\", event.");
-    tgs.append("{???-node.from.name}");
-    tgs.append("ID),");
-    tgs.newLine();
-    tgs.append("{???-}}");
-    tgs.append("  tracer.StringAttr(\"tenant.id\", msg.Headers.Get(core.HeaderTenantID)),");
-    tgs.newLine();
-    tgs.append(" )");
-    tgs.newLine();
-    tgs.newLine();
+      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("list")) {
+        tgs.append(" if event.");
+        tgs.append(parentEntityName);
+        tgs.append("ID == \"\" {");
+        tgs.newLine();
+        tgs.append("  err := fmt.Errorf(\"invalid request: missing ");
+        tgs.append(parentEntityName.toLowerCase());
+        tgs.append(" ID\")");
+        tgs.newLine();
+        tgs.append("  span.RecordError(err)");
+        tgs.newLine();
+        tgs.append("  return err");
+        tgs.newLine();
+        tgs.append(" }");
+        tgs.newLine();
+      }
+      tgs.newLine();
+      tgs.append(" span.SetAttributes(");
+      tgs.newLine();
+      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("assign") || SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("remove")) {
+        tgs.append("  tracer.StringAttr(\"");
+        tgs.append(parentEntityName.toLowerCase());
+        tgs.append(".id\", event.");
+        tgs.append(parentEntityName);
+        tgs.append("ID),");
+        tgs.newLine();
+        tgs.append("  tracer.StringAttr(\"");
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
+        tgs.append(".id\", event.");
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append("ID),");
+        tgs.newLine();
+      }
 
-    tgs.append(" outMsg := core.NewMessage(msg.Data)");
-    tgs.newLine();
-    tgs.append(" outMsg.Subject = s.subjectPrefix + \".");
-    tgs.append("{???-node.from.name.toLowerCase()}");
-    tgs.append(".");
-    tgs.append("{???-node.to.name.toLowerCase()}");
-    tgs.append(".db.");
-    tgs.append("{???-op.relationOperation.name}");
-    tgs.append("\"");
-    tgs.newLine();
-    tgs.append(" outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)");
-    tgs.newLine();
-    tgs.append(" outMsg.Headers.Set(\"X-Business-Validated\", \"true\")");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {");
-    tgs.newLine();
-    tgs.append("  span.RecordError(err)");
-    tgs.newLine();
-    tgs.append("  return fmt.Errorf(\"publish error: %w\", err)");
-    tgs.newLine();
-    tgs.append(" }");
-    tgs.newLine();
-    tgs.append(" return nil");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
+      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("list")) {
+        tgs.append("  tracer.StringAttr(\"");
+        tgs.append(parentEntityName.toLowerCase());
+        tgs.append(".id\", event.");
+        tgs.append(parentEntityName);
+        tgs.append("ID),");
+        tgs.newLine();
+      }
+      tgs.append("  tracer.StringAttr(\"tenant.id\", msg.Headers.Get(core.HeaderTenantID)),");
+      tgs.newLine();
+      tgs.append(" )");
+      tgs.newLine();
+      tgs.newLine();
 
-    tgs.append("{???-}}");
+      tgs.append(" outMsg := core.NewMessage(msg.Data)");
+      tgs.newLine();
+      tgs.append(" outMsg.Subject = s.subjectPrefix + \".");
+      tgs.append(parentEntityName.toLowerCase());
+      tgs.append(".");
+      tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
+      tgs.append(".db.");
+      tgs.append(SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)));
+      tgs.append("\"");
+      tgs.newLine();
+      tgs.append(" outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)");
+      tgs.newLine();
+      tgs.append(" outMsg.Headers.Set(\"X-Business-Validated\", \"true\")");
+      tgs.newLine();
+      tgs.newLine();
+      tgs.append(" if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {");
+      tgs.newLine();
+      tgs.append("  span.RecordError(err)");
+      tgs.newLine();
+      tgs.append("  return fmt.Errorf(\"publish error: %w\", err)");
+      tgs.newLine();
+      tgs.append(" }");
+      tgs.newLine();
+      tgs.append(" return nil");
+      tgs.newLine();
+      tgs.append("}");
+      tgs.newLine();
+      tgs.newLine();
 
-    tgs.append("{???-}}");
-    tgs.append("{???-}}");
+    }
+  }
 
+  private static final class CONCEPTS {
+    /*package*/ static final SConcept Entity$iI = MetaAdapterFactory.getConcept(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, "UserManagement.structure.Entity");
+  }
+
+  private static final class PROPS {
+    /*package*/ static final SProperty name$MnvL = MetaAdapterFactory.getProperty(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L, 0x110396ec041L, "name");
+    /*package*/ static final SProperty relationOperation$RG8k = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac9cL, 0x6a6f5a6f2407ac9eL, "relationOperation");
+  }
+
+  private static final class LINKS {
+    /*package*/ static final SReferenceLink with$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "with");
+    /*package*/ static final SContainmentLink operations$REVM = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac9aL, "operations");
   }
 }
