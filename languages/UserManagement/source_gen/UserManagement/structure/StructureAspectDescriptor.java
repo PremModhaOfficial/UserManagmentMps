@@ -12,10 +12,11 @@ import jetbrains.mps.smodel.adapter.ids.SConceptId;
 import jetbrains.mps.smodel.runtime.DataTypeDescriptor;
 import org.jetbrains.mps.openapi.language.SAbstractConcept;
 import jetbrains.mps.smodel.runtime.impl.ConceptDescriptorBuilder2;
-import jetbrains.mps.smodel.adapter.ids.MetaIdFactory;
 import jetbrains.mps.smodel.adapter.ids.PrimitiveTypeId;
+import jetbrains.mps.smodel.adapter.ids.MetaIdFactory;
 
 public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
+  /*package*/ final ConceptDescriptor myConceptConfiguration = createDescriptorForConfiguration();
   /*package*/ final ConceptDescriptor myConceptEntity = createDescriptorForEntity();
   /*package*/ final ConceptDescriptor myConceptEntityOperationHolder = createDescriptorForEntityOperationHolder();
   /*package*/ final ConceptDescriptor myConceptEntityRef = createDescriptorForEntityRef();
@@ -45,13 +46,15 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
 
   @Override
   public Collection<ConceptDescriptor> getDescriptors() {
-    return Arrays.asList(myConceptEntity, myConceptEntityOperationHolder, myConceptEntityRef, myConceptField, myConceptFieldAnnotationHolder, myConceptFieldTypeHolder, myConceptMain, myConceptRelation, myConceptRelationOperationHolder, myConceptRelationRef, myConceptSqlSchem);
+    return Arrays.asList(myConceptConfiguration, myConceptEntity, myConceptEntityOperationHolder, myConceptEntityRef, myConceptField, myConceptFieldAnnotationHolder, myConceptFieldTypeHolder, myConceptMain, myConceptRelation, myConceptRelationOperationHolder, myConceptRelationRef, myConceptSqlSchem);
   }
 
   @Override
   @Nullable
   public ConceptDescriptor getDescriptor(SConceptId id) {
     switch (myIndexSwitch.index(id)) {
+      case LanguageConceptSwitch.Configuration:
+        return myConceptConfiguration;
       case LanguageConceptSwitch.Entity:
         return myConceptEntity;
       case LanguageConceptSwitch.EntityOperationHolder:
@@ -88,6 +91,16 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
     return myIndexSwitch.index(c);
   }
 
+  private static ConceptDescriptor createDescriptorForConfiguration() {
+    ConceptDescriptorBuilder2 b = new ConceptDescriptorBuilder2("UserManagement", "Configuration", 0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x210dfbd5de6075b2L);
+    b.class_(false, false, true);
+    b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/2381836673926329778");
+    b.version(3);
+    b.property("natsUrl", 0x210dfbd5de6075b3L).type(PrimitiveTypeId.STRING).origin("2381836673926329779").done();
+    b.property("tenetID", 0x210dfbd5de6075b4L).type(PrimitiveTypeId.STRING).origin("2381836673926329780").done();
+    b.property("tenetName", 0x210dfbd5de6075b5L).type(PrimitiveTypeId.STRING).origin("2381836673926329781").done();
+    return b.create();
+  }
   private static ConceptDescriptor createDescriptorForEntity() {
     ConceptDescriptorBuilder2 b = new ConceptDescriptorBuilder2("UserManagement", "Entity", 0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL);
     b.class_(false, false, true);

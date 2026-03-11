@@ -22,9 +22,10 @@ public class EnumerationDescriptor_FieldAnnotation extends EnumerationDescriptor
   private final EnumerationDescriptor.MemberDescriptor myMember_indexed_0 = new EnumerationDescriptor.MemberDescriptor("indexed", "indexed", 0x6a6f5a6f2407ac50L, "r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596368");
   private final EnumerationDescriptor.MemberDescriptor myMember_hidden_0 = new EnumerationDescriptor.MemberDescriptor("hidden", "hidden", 0x6a6f5a6f2407ac52L, "r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596370");
   private final EnumerationDescriptor.MemberDescriptor myMember_auto_0 = new EnumerationDescriptor.MemberDescriptor("auto", "auto", 0x6a6f5a6f2407ac54L, "r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596372");
+  private final EnumerationDescriptor.MemberDescriptor myMember_immutable_0 = new EnumerationDescriptor.MemberDescriptor("immutable", "immutable", 0x210dfbd5de60726eL, "r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/2381836673926328942");
 
-  private final EnumerationLiteralsIndex myIndex = EnumerationLiteralsIndex.build(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac46L, 0x6a6f5a6f2407ac47L, 0x6a6f5a6f2407ac49L, 0x6a6f5a6f2407ac4cL, 0x6a6f5a6f2407ac4eL, 0x6a6f5a6f2407ac50L, 0x6a6f5a6f2407ac52L, 0x6a6f5a6f2407ac54L);
-  private final List<EnumerationDescriptor.MemberDescriptor> myMembers = new EnumerationDescriptorBase.MembersList0(myIndex, myMember_primaryKey_0, myMember_required_0, myMember_nullable_0, myMember_unique_0, myMember_indexed_0, myMember_hidden_0, myMember_auto_0);
+  private final EnumerationLiteralsIndex myIndex = EnumerationLiteralsIndex.build(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac46L, 0x6a6f5a6f2407ac47L, 0x6a6f5a6f2407ac49L, 0x6a6f5a6f2407ac4cL, 0x6a6f5a6f2407ac4eL, 0x6a6f5a6f2407ac50L, 0x6a6f5a6f2407ac52L, 0x6a6f5a6f2407ac54L, 0x210dfbd5de60726eL);
+  private final List<EnumerationDescriptor.MemberDescriptor> myMembers = new EnumerationDescriptorBase.MembersList0(myIndex, myMember_primaryKey_0, myMember_required_0, myMember_nullable_0, myMember_unique_0, myMember_indexed_0, myMember_hidden_0, myMember_auto_0, myMember_immutable_0);
 
   @Nullable
   @Override
@@ -59,6 +60,8 @@ public class EnumerationDescriptor_FieldAnnotation extends EnumerationDescriptor
         return myMember_hidden_0;
       case "auto":
         return myMember_auto_0;
+      case "immutable":
+        return myMember_immutable_0;
     }
     return null;
   }

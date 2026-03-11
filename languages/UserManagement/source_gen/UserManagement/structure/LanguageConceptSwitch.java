@@ -9,20 +9,22 @@ import org.jetbrains.mps.openapi.language.SAbstractConcept;
 
 public final class LanguageConceptSwitch {
   private final LanguageConceptIndex myIndex;
-  public static final int Entity = 0;
-  public static final int EntityOperationHolder = 1;
-  public static final int EntityRef = 2;
-  public static final int Field = 3;
-  public static final int FieldAnnotationHolder = 4;
-  public static final int FieldTypeHolder = 5;
-  public static final int Main = 6;
-  public static final int Relation = 7;
-  public static final int RelationOperationHolder = 8;
-  public static final int RelationRef = 9;
-  public static final int SqlSchem = 10;
+  public static final int Configuration = 0;
+  public static final int Entity = 1;
+  public static final int EntityOperationHolder = 2;
+  public static final int EntityRef = 3;
+  public static final int Field = 4;
+  public static final int FieldAnnotationHolder = 5;
+  public static final int FieldTypeHolder = 6;
+  public static final int Main = 7;
+  public static final int Relation = 8;
+  public static final int RelationOperationHolder = 9;
+  public static final int RelationRef = 10;
+  public static final int SqlSchem = 11;
 
   public LanguageConceptSwitch() {
     LanguageConceptIndexBuilder builder = new LanguageConceptIndexBuilder(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L);
+    builder.put(0x210dfbd5de6075b2L, Configuration);
     builder.put(0x6a6f5a6f2407ac7eL, Entity);
     builder.put(0x6a6f5a6f2407ac89L, EntityOperationHolder);
     builder.put(0x6a6f5a6f243a4ec1L, EntityRef);

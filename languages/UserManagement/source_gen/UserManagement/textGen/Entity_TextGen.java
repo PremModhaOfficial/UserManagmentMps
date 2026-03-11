@@ -21,9 +21,10 @@ public class Entity_TextGen extends TextGenDescriptorBase {
   @Override
   public void generateText(final TextGenContext ctx) {
     final TextGenSupport tgs = new TextGenSupport(ctx);
-    String name = SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL).strip();
 
-
+    String name = SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL);
+    String nameLower = name.toLowerCase();
+    String pkField = SPropertyOperations.getString(Entity__BehaviorDescriptor.primaryKeyField_id6DJmAW$csS2.invoke(ctx.getPrimaryInput()), PROPS.name$MnvL);
 
     tgs.append("package main");
     tgs.newLine();
@@ -36,16 +37,20 @@ public class Entity_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.append(" \"fmt\"");
     tgs.newLine();
+    tgs.append(" \"log\"");
+    tgs.newLine();
     tgs.append(" \"time\"");
     tgs.newLine();
     tgs.newLine();
-    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core\"");
+    tgs.append(" \"github.com/nats-io/nats.go\"");
     tgs.newLine();
-    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/transport/nats\"");
+    tgs.newLine();
+    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events\"");
+    tgs.newLine();
+    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core\"");
     tgs.newLine();
     tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/tracer\"");
     tgs.newLine();
-    tgs.append(Entity__BehaviorDescriptor.apppendTypeIfEmailPass_id24dYXnugYNM.invoke(ctx.getPrimaryInput()));
     tgs.append(")");
     tgs.newLine();
     tgs.newLine();
@@ -55,9 +60,7 @@ public class Entity_TextGen extends TextGenDescriptorBase {
     tgs.append(" struct {");
     tgs.newLine();
 
-    // A
     for (SNode f : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.fields$Rrud))) {
-
       tgs.append(" ");
       tgs.append(Field__BehaviorDescriptor.capitalize_id5Lqw_By60m2.invoke(f));
       tgs.append(" ");
@@ -73,9 +76,7 @@ public class Entity_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.newLine();
 
-    // B
     for (SNode op : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.operations$RrWf))) {
-      // B.A
       if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("create")) {
         tgs.append("type ");
         tgs.append(name);
@@ -86,7 +87,7 @@ public class Entity_TextGen extends TextGenDescriptorBase {
         tgs.append(" ");
         tgs.append(name);
         tgs.append(" `json:\"");
-        tgs.append(name.toLowerCase());
+        tgs.append(nameLower);
         tgs.append("\"`");
         tgs.newLine();
         tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
@@ -96,7 +97,6 @@ public class Entity_TextGen extends TextGenDescriptorBase {
         tgs.newLine();
       }
 
-      // B.B
       if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("update")) {
         tgs.append("type ");
         tgs.append(name);
@@ -107,7 +107,7 @@ public class Entity_TextGen extends TextGenDescriptorBase {
         tgs.append(" ");
         tgs.append(name);
         tgs.append(" `json:\"");
-        tgs.append(name.toLowerCase());
+        tgs.append(nameLower);
         tgs.append("\"`");
         tgs.newLine();
         tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
@@ -117,7 +117,6 @@ public class Entity_TextGen extends TextGenDescriptorBase {
         tgs.newLine();
       }
 
-      // B.C
       if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("delete")) {
         tgs.append("type ");
         tgs.append(name);
@@ -126,7 +125,7 @@ public class Entity_TextGen extends TextGenDescriptorBase {
         tgs.append(" ");
         tgs.append(name);
         tgs.append("ID string `json:\"");
-        tgs.append(name.toLowerCase());
+        tgs.append(nameLower);
         tgs.append("_id\"`");
         tgs.newLine();
         tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
@@ -136,7 +135,6 @@ public class Entity_TextGen extends TextGenDescriptorBase {
         tgs.newLine();
       }
 
-      // B.D
       if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("list")) {
         tgs.append("type ");
         tgs.append(name);
@@ -153,7 +151,6 @@ public class Entity_TextGen extends TextGenDescriptorBase {
         tgs.newLine();
       }
 
-      // B.E
       if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("get")) {
         tgs.append("type ");
         tgs.append(name);
@@ -162,7 +159,7 @@ public class Entity_TextGen extends TextGenDescriptorBase {
         tgs.append(" ");
         tgs.append(name);
         tgs.append("ID string `json:\"");
-        tgs.append(name.toLowerCase());
+        tgs.append(nameLower);
         tgs.append("_id\"`");
         tgs.newLine();
         tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
@@ -171,14 +168,14 @@ public class Entity_TextGen extends TextGenDescriptorBase {
         tgs.newLine();
         tgs.newLine();
       }
+
     }
 
-    // C
     tgs.append("type ");
     tgs.append(name);
     tgs.append("Handler struct {");
     tgs.newLine();
-    tgs.append(" publisher     *nats.Publisher");
+    tgs.append(" publisher     *events.Publisher");
     tgs.newLine();
     tgs.append(" subjectPrefix string");
     tgs.newLine();
@@ -187,7 +184,7 @@ public class Entity_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.append("func New");
     tgs.append(name);
-    tgs.append("Handler(pub *nats.Publisher, subjectPrefix string) *");
+    tgs.append("Handler(pub *events.Publisher, subjectPrefix string) *");
     tgs.append(name);
     tgs.append("Handler {");
     tgs.newLine();
@@ -205,327 +202,464 @@ public class Entity_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.newLine();
 
-    // D
     for (SNode op : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.operations$RrWf))) {
+      String opName = EntityOperationHolder__BehaviorDescriptor.capitalize_id6DJmAW$mchD.invoke(op);
+      String opKind = SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO));
+
       tgs.append("func (s *");
       tgs.append(name);
       tgs.append("Handler) Handle");
-      tgs.append(EntityOperationHolder__BehaviorDescriptor.capitalize_id6DJmAW$mchD.invoke(op));
-      tgs.append("(ctx context.Context, msg *core.Message) error {");
+      tgs.append(opName);
+      tgs.append("(req core.Request) {");
+      tgs.newLine();
+      tgs.append(" ctx := req.Context()");
       tgs.newLine();
       tgs.append(" ctx, span := tracer.StartConsumer(ctx, \"");
       tgs.append(name);
       tgs.append(".Handle");
-      tgs.append(EntityOperationHolder__BehaviorDescriptor.capitalize_id6DJmAW$mchD.invoke(op));
+      tgs.append(opName);
       tgs.append("\")");
       tgs.newLine();
       tgs.append(" defer span.End()");
       tgs.newLine();
-      tgs.append(" ctx = core.InjectContext(ctx, msg.Headers)");
+      tgs.append(" ctx = core.InjectContext(ctx, req.Headers())");
       tgs.newLine();
       tgs.newLine();
 
-      // D.A
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("create")) {
+      if (opKind.equals("create")) {
         tgs.append(" var event ");
         tgs.append(name);
         tgs.append("CreatedEvent");
         tgs.newLine();
       }
-      // D.B
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("update")) {
+
+      if (opKind.equals("update")) {
         tgs.append(" var event ");
         tgs.append(name);
         tgs.append("UpdatedEvent");
         tgs.newLine();
       }
 
-      // D.C
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("delete")) {
+      if (opKind.equals("delete")) {
         tgs.append(" var event ");
         tgs.append(name);
         tgs.append("DeletedEvent");
         tgs.newLine();
-      }
 
-      // D.D
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("list")) {
+      }
+      if (opKind.equals("list")) {
         tgs.append(" var event ");
         tgs.append(name);
         tgs.append("ListRequest");
         tgs.newLine();
       }
 
-      // D.E
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("get")) {
+      if (opKind.equals("get")) {
         tgs.append(" var event ");
         tgs.append(name);
         tgs.append("GetRequest");
         tgs.newLine();
       }
-      // E
-      tgs.append(" if err := json.Unmarshal(msg.Data, &event); err != nil {");
+
+      tgs.append(" if err := json.Unmarshal(req.Data(), &event); err != nil {");
       tgs.newLine();
       tgs.append("  span.RecordError(err)");
       tgs.newLine();
-      tgs.append("  return err");
+      tgs.append("  _ = req.RespondError(\"400\", \"invalid JSON: \" + err.Error(), nil)");
+      tgs.newLine();
+      tgs.append("  return");
       tgs.newLine();
       tgs.append(" }");
       tgs.newLine();
       tgs.newLine();
 
-
-      // F
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("create")) {
-        // F.A
+      if (opKind.equals("create")) {
         int validX = 0;
-        for (SNode f : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.fields$Rrud))) {
-          if (!((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(f, "primaryKey")) && !((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(f, "auto")) && !((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(f, "nullable")) && !((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(f, "hidden"))) {
+        for (SNode field : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.fields$Rrud))) {
+          if (!((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(field, "primaryKey")) && !((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(field, "auto")) && !((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(field, "hidden")) && !((boolean) Field__BehaviorDescriptor.hasAnotation_id6DJmAW$hoUl.invoke(field, "nullable"))) {
             if (validX == 0) {
               tgs.append(" if event.");
               tgs.append(name);
               tgs.append(".");
-              tgs.append(Field__BehaviorDescriptor.capitalize_id5Lqw_By60m2.invoke(f));
+              tgs.append(SPropertyOperations.getString(field, PROPS.name$MnvL));
               tgs.append(" == \"\"");
             }
             if (validX > 0) {
               tgs.append(" || event.");
               tgs.append(name);
               tgs.append(".");
-              tgs.append(Field__BehaviorDescriptor.capitalize_id5Lqw_By60m2.invoke(f));
+              tgs.append(SPropertyOperations.getString(field, PROPS.name$MnvL));
               tgs.append(" == \"\"");
             }
-            validX++;
+            validX = validX + 1;
           }
         }
-
-        // G.A
         tgs.append(" {");
         tgs.newLine();
         tgs.append("  err := fmt.Errorf(\"invalid ");
-        tgs.append(name.toLowerCase());
+        tgs.append(nameLower);
         tgs.append(" data: missing required fields\")");
         tgs.newLine();
         tgs.append("  span.RecordError(err)");
         tgs.newLine();
-        tgs.append("  return err");
+        tgs.append("  _ = req.RespondError(\"400\", err.Error(), nil)");
+        tgs.newLine();
+        tgs.append("  return");
         tgs.newLine();
         tgs.append(" }");
         tgs.newLine();
 
-        // G.B
-
-        for (SNode f : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.fields$Rrud))) {
-          if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(SLinkOperations.getTarget(f, LINKS.type$KBb7), PROPS.fieldType$RkpN)).equals("password")) {
-            tgs.append(" pwd := types.NewPassword(event.");
-            tgs.append(name);
-            tgs.append(".");
-            tgs.append(Field__BehaviorDescriptor.capitalize_id5Lqw_By60m2.invoke(f));
-            tgs.append(")");
-            tgs.newLine();
-            tgs.append(" if !pwd.MeetsPolicy(8, true, true, true, true) {");
-            tgs.newLine();
-            tgs.append("  err := fmt.Errorf(\"password does not meet policy requirements\")");
-            tgs.newLine();
-            tgs.append("  span.RecordError(err)");
-            tgs.newLine();
-            tgs.append("  return err");
-            tgs.newLine();
-            tgs.append("  }");
-            tgs.newLine();
-          }
-          if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(SLinkOperations.getTarget(f, LINKS.type$KBb7), PROPS.fieldType$RkpN)).equals("email")) {
-            tgs.append(" email, _:= types.NewEmail(event.");
-            tgs.append(name);
-            tgs.append(".");
-            tgs.append(Field__BehaviorDescriptor.capitalize_id5Lqw_By60m2.invoke(f));
-            tgs.append(")");
-            tgs.newLine();
-            tgs.append(" if !email.IsValid() {");
-            tgs.newLine();
-            tgs.append("  err := fmt.Errorf(\"invalid email format for ");
-            tgs.append(SPropertyOperations.getString(f, PROPS.name$MnvL).toLowerCase());
-            tgs.append("\")");
-            tgs.newLine();
-            tgs.append("  span.RecordError(err)");
-            tgs.newLine();
-            tgs.append("  return err");
-            tgs.newLine();
-            tgs.append(" }");
-            tgs.newLine();
-          }
-        }
       }
 
-      // H
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("update")) {
+      if (opKind.equals("update")) {
         tgs.append(" if event.");
         tgs.append(name);
         tgs.append(".");
-        tgs.append(SPropertyOperations.getString(Entity__BehaviorDescriptor.primaryKeyField_id6DJmAW$csS2.invoke(ctx.getPrimaryInput()), PROPS.name$MnvL));
+        tgs.append(pkField);
         tgs.append(" == \"\" {");
         tgs.newLine();
         tgs.append("  err := fmt.Errorf(\"invalid ");
-        tgs.append(name.toLowerCase());
+        tgs.append(nameLower);
         tgs.append(" data: missing ID\")");
         tgs.newLine();
         tgs.append("  span.RecordError(err)");
         tgs.newLine();
-        tgs.append("  return err");
+        tgs.append("  _ = req.RespondError(\"400\", err.Error(), nil)");
+        tgs.newLine();
+        tgs.append("  return");
         tgs.newLine();
         tgs.append(" }");
         tgs.newLine();
       }
-
-      // I
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("delete")) {
+      if (opKind.equals("delete")) {
         tgs.append(" if event.");
         tgs.append(name);
         tgs.append("ID == \"\" {");
         tgs.newLine();
         tgs.append("  err := fmt.Errorf(\"invalid request: missing ");
-        tgs.append(name.toLowerCase());
+        tgs.append(nameLower);
         tgs.append(" ID\")");
         tgs.newLine();
         tgs.append("  span.RecordError(err)");
         tgs.newLine();
-        tgs.append("  return err");
+        tgs.append("  _ = req.RespondError(\"400\", err.Error(), nil)");
+        tgs.newLine();
+        tgs.append("  return");
         tgs.newLine();
         tgs.append(" }");
         tgs.newLine();
       }
 
-      // J
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("get")) {
+
+      if (opKind.equals("get")) {
         tgs.append(" if event.");
         tgs.append(name);
         tgs.append("ID == \"\" {");
         tgs.newLine();
         tgs.append("  err := fmt.Errorf(\"invalid request: missing ");
-        tgs.append(name.toLowerCase());
+        tgs.append(nameLower);
         tgs.append(" ID\")");
         tgs.newLine();
         tgs.append("  span.RecordError(err)");
         tgs.newLine();
-        tgs.append("  return err");
+        tgs.append("  _ = req.RespondError(\"400\", err.Error(), nil)");
+        tgs.newLine();
+        tgs.append("  return");
         tgs.newLine();
         tgs.append(" }");
         tgs.newLine();
       }
 
-      // J
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("list")) {
+
+      if (opKind.equals("list")) {
         tgs.append(" if event.Limit < 0 || event.Offset < 0 {");
         tgs.newLine();
         tgs.append("  err := fmt.Errorf(\"invalid pagination parameters\")");
         tgs.newLine();
         tgs.append("  span.RecordError(err)");
         tgs.newLine();
-        tgs.append("  return err");
+        tgs.append("  _ = req.RespondError(\"400\", err.Error(), nil)");
+        tgs.newLine();
+        tgs.append("  return");
         tgs.newLine();
         tgs.append(" }");
         tgs.newLine();
       }
+
       tgs.newLine();
       tgs.append(" span.SetAttributes(");
       tgs.newLine();
-
-      // K
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("create")) {
+      if (opKind.equals("create")) {
         tgs.append("  tracer.StringAttr(\"");
-        tgs.append(name.toLowerCase());
+        tgs.append(nameLower);
         tgs.append(".id\", event.");
         tgs.append(name);
         tgs.append(".");
-        tgs.append(SPropertyOperations.getString(Entity__BehaviorDescriptor.primaryKeyField_id6DJmAW$csS2.invoke(ctx.getPrimaryInput()), PROPS.name$MnvL));
+        tgs.append(pkField);
         tgs.append("),");
         tgs.newLine();
       }
 
-
-      // L
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("update")) {
+      if (opKind.equals("update")) {
         tgs.append("  tracer.StringAttr(\"");
-        tgs.append(name.toLowerCase());
+        tgs.append(nameLower);
         tgs.append(".id\", event.");
         tgs.append(name);
         tgs.append(".");
-        tgs.append(SPropertyOperations.getString(Entity__BehaviorDescriptor.primaryKeyField_id6DJmAW$csS2.invoke(ctx.getPrimaryInput()), PROPS.name$MnvL));
+        tgs.append(pkField);
         tgs.append("),");
         tgs.newLine();
       }
 
-      // M
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("delete")) {
+      if (opKind.equals("delete")) {
         tgs.append("  tracer.StringAttr(\"");
-        tgs.append(name.toLowerCase());
+        tgs.append(nameLower);
         tgs.append(".id\", event.");
         tgs.append(name);
         tgs.append("ID),");
         tgs.newLine();
       }
 
-      // N
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)).equals("get")) {
+      if (opKind.equals("get")) {
         tgs.append("  tracer.StringAttr(\"");
-        tgs.append(name.toLowerCase());
+        tgs.append(nameLower);
         tgs.append(".id\", event.");
         tgs.append(name);
         tgs.append("ID),");
         tgs.newLine();
       }
 
-      // O
-      tgs.append("  tracer.StringAttr(\"tenant.id\", msg.Headers.Get(core.HeaderTenantID)),");
+      tgs.append("  tracer.StringAttr(\"tenant.id\", req.Header(core.HeaderTenantID)),");
       tgs.newLine();
       tgs.append(" )");
       tgs.newLine();
       tgs.newLine();
 
-      tgs.append(" outMsg := core.NewMessage(msg.Data)");
-      tgs.newLine();
-
-      tgs.append(" outMsg.Subject = s.subjectPrefix + \".");
-      tgs.append(name.toLowerCase());
-      tgs.append(".db.");
-      tgs.append(SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)));
-      tgs.append("\"");
-      tgs.newLine();
-      tgs.append(" outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)");
-      tgs.newLine();
-      tgs.append(" outMsg.Headers.Set(\"X-Business-Validated\", \"true\")");
-      tgs.newLine();
-      tgs.newLine();
-      tgs.append(" if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {");
+      tgs.append(" if err := s.pre");
+      tgs.append(opName);
+      tgs.append("Hook(ctx, span, &event); err != nil {");
       tgs.newLine();
       tgs.append("  span.RecordError(err)");
       tgs.newLine();
-      tgs.append("  return fmt.Errorf(\"publish error: %w\", err)");
+      tgs.append("  _ = req.RespondError(\"400\", \"pre-hook: \" + err.Error(), nil)");
+      tgs.newLine();
+      tgs.append("  return");
       tgs.newLine();
       tgs.append(" }");
       tgs.newLine();
-      tgs.append(" return nil");
+      tgs.newLine();
+
+      tgs.append(" dalSubject := s.subjectPrefix + \".");
+      tgs.append(nameLower);
+      tgs.append(".db.");
+      tgs.append(opKind);
+      tgs.append(opKind);
+      tgs.append("\"");
+      tgs.newLine();
+      tgs.append(" outMsg := &nats.Msg{Data: req.Data()}");
+      tgs.newLine();
+      tgs.append(" outMsg.Header = core.ExtractHeaders(ctx, nil)");
+      tgs.newLine();
+      tgs.append(" outMsg.Header.Set(\"X-Business-Validated\", \"true\")");
+      tgs.newLine();
+      tgs.newLine();
+      tgs.append(" dalCtx, dalCancel := context.WithTimeout(ctx, 10*time.Second)");
+      tgs.newLine();
+      tgs.append(" defer dalCancel()");
+      tgs.newLine();
+      tgs.newLine();
+      tgs.append(" reply, err := s.publisher.Request(dalCtx, dalSubject, outMsg)");
+      tgs.newLine();
+      tgs.append(" if err != nil {");
+      tgs.newLine();
+      tgs.append("  span.RecordError(err)");
+      tgs.newLine();
+      tgs.append("  _ = req.RespondError(\"500\", \"DAL request error: \" + err.Error(), nil)");
+      tgs.newLine();
+      tgs.append("  return");
+      tgs.newLine();
+      tgs.append(" }");
+      tgs.newLine();
+      tgs.newLine();
+      tgs.append(" log.Printf(\"");
+      tgs.append(name);
+      tgs.append(".");
+      tgs.append(opKind);
+      tgs.append(" DAL reply: %d bytes\", len(reply.Data))");
+      tgs.newLine();
+      tgs.newLine();
+
+      tgs.append(" responseData := s.post");
+      tgs.append(opName);
+      tgs.append("Hook(ctx, span, &event, reply.Data)");
+      tgs.newLine();
+      tgs.append(" _ = req.Respond(responseData)");
       tgs.newLine();
       tgs.append("}");
       tgs.newLine();
       tgs.newLine();
+
+
+
     }
-    ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.relations$Mn4T)).visitAll((it) -> {
-      tgs.appendNode(it);
-      tgs.newLine();
-    });
+    for (SNode op : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.operations$RrWf))) {
+      String hookName = EntityOperationHolder__BehaviorDescriptor.capitalize_id6DJmAW$mchD.invoke(op);
+      String opKind = SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO));
+
+      if (opKind.equals("create")) {
+        tgs.append("func (s *");
+        tgs.append(name);
+        tgs.append("Handler) pre");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(name);
+        tgs.append("CreatedEvent) error {");
+        tgs.newLine();
+        tgs.append(" return nil");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+        tgs.append("func (s *");
+        tgs.append(name);
+        tgs.append("Handler) post");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(name);
+        tgs.append("CreatedEvent, data []byte) []byte {");
+        tgs.newLine();
+        tgs.append(" return data");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+      }
+
+      if (opKind.equals("update")) {
+        tgs.append("func (s *");
+        tgs.append(name);
+        tgs.append("Handler) pre");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(name);
+        tgs.append("UpdatedEvent) error {");
+        tgs.newLine();
+        tgs.append(" return nil");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+        tgs.append("func (s *");
+        tgs.append(name);
+        tgs.append("Handler) post");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(name);
+        tgs.append("UpdatedEvent, data []byte) []byte {");
+        tgs.newLine();
+        tgs.append(" return data");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+      }
+
+      if (opKind.equals("delete")) {
+        tgs.append("func (s *");
+        tgs.append(name);
+        tgs.append("Handler) pre");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(name);
+        tgs.append("DeletedEvent) error {");
+        tgs.newLine();
+        tgs.append(" return nil");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+        tgs.append("func (s *");
+        tgs.append(name);
+        tgs.append("Handler) post");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(name);
+        tgs.append("DeletedEvent, data []byte) []byte {");
+        tgs.newLine();
+        tgs.append(" return data");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+      }
+
+      if (opKind.equals("get")) {
+        tgs.append("func (s *");
+        tgs.append(name);
+        tgs.append("Handler) pre");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(name);
+        tgs.append("GetRequest) error {");
+        tgs.newLine();
+        tgs.append(" return nil");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+        tgs.append("func (s *");
+        tgs.append(name);
+        tgs.append("Handler) post");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(name);
+        tgs.append("GetRequest, data []byte) []byte {");
+        tgs.newLine();
+        tgs.append(" return data");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+      }
+
+      if (opKind.equals("list")) {
+        tgs.append("func (s *");
+        tgs.append(name);
+        tgs.append("Handler) pre");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(name);
+        tgs.append("ListRequest) error {");
+        tgs.newLine();
+        tgs.append(" return nil");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+        tgs.append("func (s *");
+        tgs.append(name);
+        tgs.append("Handler) post");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(name);
+        tgs.append("ListRequest, data []byte) []byte {");
+        tgs.newLine();
+        tgs.append(" return data");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+      }
+    }
   }
 
   private static final class PROPS {
     /*package*/ static final SProperty name$MnvL = MetaAdapterFactory.getProperty(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L, 0x110396ec041L, "name");
     /*package*/ static final SProperty entityOperation$RtmO = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac89L, 0x6a6f5a6f2407ac8bL, "entityOperation");
-    /*package*/ static final SProperty fieldType$RkpN = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7aL, 0x6a6f5a6f2407ac7bL, "fieldType");
   }
 
   private static final class LINKS {
     /*package*/ static final SContainmentLink fields$Rrud = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x6a6f5a6f2407ac84L, "fields");
     /*package*/ static final SContainmentLink operations$RrWf = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x6a6f5a6f2407ac86L, "operations");
-    /*package*/ static final SContainmentLink type$KBb7 = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L, 0x6a6f5a6f240f1046L, "type");
-    /*package*/ static final SContainmentLink relations$Mn4T = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x210dfbd5ddf5be7aL, "relations");
   }
 }
