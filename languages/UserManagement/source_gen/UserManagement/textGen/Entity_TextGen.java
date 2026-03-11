@@ -281,14 +281,14 @@ public class Entity_TextGen extends TextGenDescriptorBase {
               tgs.append(" if event.");
               tgs.append(name);
               tgs.append(".");
-              tgs.append(SPropertyOperations.getString(field, PROPS.name$MnvL));
+              tgs.append(Field__BehaviorDescriptor.capitalize_id5Lqw_By60m2.invoke(field));
               tgs.append(" == \"\"");
             }
             if (validX > 0) {
               tgs.append(" || event.");
               tgs.append(name);
               tgs.append(".");
-              tgs.append(SPropertyOperations.getString(field, PROPS.name$MnvL));
+              tgs.append(Field__BehaviorDescriptor.capitalize_id5Lqw_By60m2.invoke(field));
               tgs.append(" == \"\"");
             }
             validX = validX + 1;
@@ -435,24 +435,28 @@ public class Entity_TextGen extends TextGenDescriptorBase {
       tgs.newLine();
       tgs.newLine();
 
-      tgs.append(" if err := s.pre");
-      tgs.append(opName);
-      tgs.append("Hook(ctx, span, &event); err != nil {");
-      tgs.newLine();
-      tgs.append("  span.RecordError(err)");
-      tgs.newLine();
-      tgs.append("  _ = req.RespondError(\"400\", \"pre-hook: \" + err.Error(), nil)");
-      tgs.newLine();
-      tgs.append("  return");
-      tgs.newLine();
-      tgs.append(" }");
-      tgs.newLine();
-      tgs.newLine();
+      for (SNode prehook : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.preHooks$1OjW))) {
+        String preehookName = SEnumOperations.getMemberName0(SPropertyOperations.getEnum(prehook, PROPS.entityOperation$RtmO));
+        if (preehookName.equals(opKind)) {
+          tgs.append(" if err := s.pre");
+          tgs.append(opName);
+          tgs.append("Hook(ctx, span, &event); err != nil {");
+          tgs.newLine();
+          tgs.append("  span.RecordError(err)");
+          tgs.newLine();
+          tgs.append("  _ = req.RespondError(\"400\", \"pre-hook: \" + err.Error(), nil)");
+          tgs.newLine();
+          tgs.append("  return");
+          tgs.newLine();
+          tgs.append(" }");
+          tgs.newLine();
+          tgs.newLine();
+        }
+      }
 
       tgs.append(" dalSubject := s.subjectPrefix + \".");
       tgs.append(nameLower);
       tgs.append(".db.");
-      tgs.append(opKind);
       tgs.append(opKind);
       tgs.append("\"");
       tgs.newLine();
@@ -489,168 +493,218 @@ public class Entity_TextGen extends TextGenDescriptorBase {
       tgs.newLine();
       tgs.newLine();
 
-      tgs.append(" responseData := s.post");
-      tgs.append(opName);
-      tgs.append("Hook(ctx, span, &event, reply.Data)");
-      tgs.newLine();
-      tgs.append(" _ = req.Respond(responseData)");
-      tgs.newLine();
+      boolean hasPostHook = false;
+      for (SNode posthook : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.postHooks$tLoy))) {
+        if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(posthook, PROPS.entityOperation$RtmO)).equals(opKind)) {
+          hasPostHook = true;
+          break;
+        }
+      }
+      if (hasPostHook) {
+        tgs.append(" responseData := s.post");
+        tgs.append(opName);
+        tgs.append("Hook(ctx, span, &event, reply.Data)");
+        tgs.newLine();
+        tgs.append(" _ = req.Respond(responseData)");
+        tgs.newLine();
+      } else {
+        tgs.append(" _ = req.Respond(reply.Data)");
+        tgs.newLine();
+      }
       tgs.append("}");
       tgs.newLine();
       tgs.newLine();
 
-
-
     }
+
+
     for (SNode op : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.operations$RrWf))) {
       String hookName = EntityOperationHolder__BehaviorDescriptor.capitalize_id6DJmAW$mchD.invoke(op);
       String opKind = SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO));
 
       if (opKind.equals("create")) {
-        tgs.append("func (s *");
-        tgs.append(name);
-        tgs.append("Handler) pre");
-        tgs.append(hookName);
-        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-        tgs.append(name);
-        tgs.append("CreatedEvent) error {");
-        tgs.newLine();
-        tgs.append(" return nil");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
-        tgs.append("func (s *");
-        tgs.append(name);
-        tgs.append("Handler) post");
-        tgs.append(hookName);
-        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-        tgs.append(name);
-        tgs.append("CreatedEvent, data []byte) []byte {");
-        tgs.newLine();
-        tgs.append(" return data");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
+        if (ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.preHooks$1OjW)).any((it) -> SEnumOperations.getMemberName0(SPropertyOperations.getEnum(it, PROPS.entityOperation$RtmO)).equals("create"))) {
+          tgs.append("func (s *");
+          tgs.append(name);
+          tgs.append("Handler) pre");
+          tgs.append(hookName);
+          tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+          tgs.append(name);
+          tgs.append("CreatedEvent) error {");
+          tgs.newLine();
+          tgs.append(" return nil");
+          tgs.newLine();
+          tgs.append("}");
+          tgs.newLine();
+          tgs.newLine();
+        }
+      }
+      if (opKind.equals("create")) {
+        if (ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.postHooks$tLoy)).any((it) -> SEnumOperations.getMemberName0(SPropertyOperations.getEnum(it, PROPS.entityOperation$RtmO)).equals("create"))) {
+          tgs.append("func (s *");
+          tgs.append(name);
+          tgs.append("Handler) post");
+          tgs.append(hookName);
+          tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+          tgs.append(name);
+          tgs.append("CreatedEvent, data []byte) []byte {");
+          tgs.newLine();
+          tgs.append(" return data");
+          tgs.newLine();
+          tgs.append("}");
+          tgs.newLine();
+          tgs.newLine();
+        }
       }
 
       if (opKind.equals("update")) {
-        tgs.append("func (s *");
-        tgs.append(name);
-        tgs.append("Handler) pre");
-        tgs.append(hookName);
-        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-        tgs.append(name);
-        tgs.append("UpdatedEvent) error {");
-        tgs.newLine();
-        tgs.append(" return nil");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
-        tgs.append("func (s *");
-        tgs.append(name);
-        tgs.append("Handler) post");
-        tgs.append(hookName);
-        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-        tgs.append(name);
-        tgs.append("UpdatedEvent, data []byte) []byte {");
-        tgs.newLine();
-        tgs.append(" return data");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
+        if (ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.preHooks$1OjW)).any((it) -> SEnumOperations.getMemberName0(SPropertyOperations.getEnum(it, PROPS.entityOperation$RtmO)).equals("update"))) {
+          tgs.append("func (s *");
+          tgs.append(name);
+          tgs.append("Handler) pre");
+          tgs.append(hookName);
+          tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+          tgs.append(name);
+          tgs.append("UpdatedEvent) error {");
+          tgs.newLine();
+          tgs.append(" return nil");
+          tgs.newLine();
+          tgs.append("}");
+          tgs.newLine();
+          tgs.newLine();
+        }
+      }
+      if (opKind.equals("update")) {
+        if (ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.postHooks$tLoy)).any((it) -> SEnumOperations.getMemberName0(SPropertyOperations.getEnum(it, PROPS.entityOperation$RtmO)).equals("update"))) {
+          tgs.append("func (s *");
+          tgs.append(name);
+          tgs.append("Handler) post");
+          tgs.append(hookName);
+          tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+          tgs.append(name);
+          tgs.append("UpdatedEvent, data []byte) []byte {");
+          tgs.newLine();
+          tgs.append(" return data");
+          tgs.newLine();
+          tgs.append("}");
+          tgs.newLine();
+          tgs.newLine();
+        }
       }
 
+
       if (opKind.equals("delete")) {
-        tgs.append("func (s *");
-        tgs.append(name);
-        tgs.append("Handler) pre");
-        tgs.append(hookName);
-        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-        tgs.append(name);
-        tgs.append("DeletedEvent) error {");
-        tgs.newLine();
-        tgs.append(" return nil");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
-        tgs.append("func (s *");
-        tgs.append(name);
-        tgs.append("Handler) post");
-        tgs.append(hookName);
-        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-        tgs.append(name);
-        tgs.append("DeletedEvent, data []byte) []byte {");
-        tgs.newLine();
-        tgs.append(" return data");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
+        if (ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.preHooks$1OjW)).any((it) -> SEnumOperations.getMemberName0(SPropertyOperations.getEnum(it, PROPS.entityOperation$RtmO)).equals("delete"))) {
+          tgs.append("func (s *");
+          tgs.append(name);
+          tgs.append("Handler) pre");
+          tgs.append(hookName);
+          tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+          tgs.append(name);
+          tgs.append("DeletedEvent) error {");
+          tgs.newLine();
+          tgs.append(" return nil");
+          tgs.newLine();
+          tgs.append("}");
+          tgs.newLine();
+          tgs.newLine();
+        }
+      }
+      if (opKind.equals("delete")) {
+        if (ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.postHooks$tLoy)).any((it) -> SEnumOperations.getMemberName0(SPropertyOperations.getEnum(it, PROPS.entityOperation$RtmO)).equals("delete"))) {
+          tgs.append("func (s *");
+          tgs.append(name);
+          tgs.append("Handler) post");
+          tgs.append(hookName);
+          tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+          tgs.append(name);
+          tgs.append("DeletedEvent, data []byte) []byte {");
+          tgs.newLine();
+          tgs.append(" return data");
+          tgs.newLine();
+          tgs.append("}");
+          tgs.newLine();
+          tgs.newLine();
+        }
       }
 
       if (opKind.equals("get")) {
-        tgs.append("func (s *");
-        tgs.append(name);
-        tgs.append("Handler) pre");
-        tgs.append(hookName);
-        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-        tgs.append(name);
-        tgs.append("GetRequest) error {");
-        tgs.newLine();
-        tgs.append(" return nil");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
-        tgs.append("func (s *");
-        tgs.append(name);
-        tgs.append("Handler) post");
-        tgs.append(hookName);
-        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-        tgs.append(name);
-        tgs.append("GetRequest, data []byte) []byte {");
-        tgs.newLine();
-        tgs.append(" return data");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
+        if (ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.preHooks$1OjW)).any((it) -> SEnumOperations.getMemberName0(SPropertyOperations.getEnum(it, PROPS.entityOperation$RtmO)).equals("get"))) {
+          tgs.append("func (s *");
+          tgs.append(name);
+          tgs.append("Handler) pre");
+          tgs.append(hookName);
+          tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+          tgs.append(name);
+          tgs.append("GetRequest) error {");
+          tgs.newLine();
+          tgs.append(" return nil");
+          tgs.newLine();
+          tgs.append("}");
+          tgs.newLine();
+          tgs.newLine();
+        }
+      }
+      if (opKind.equals("get")) {
+        if (ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.postHooks$tLoy)).any((it) -> SEnumOperations.getMemberName0(SPropertyOperations.getEnum(it, PROPS.entityOperation$RtmO)).equals("get"))) {
+          tgs.append("func (s *");
+          tgs.append(name);
+          tgs.append("Handler) post");
+          tgs.append(hookName);
+          tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+          tgs.append(name);
+          tgs.append("GetRequest, data []byte) []byte {");
+          tgs.newLine();
+          tgs.append(" return data");
+          tgs.newLine();
+          tgs.append("}");
+          tgs.newLine();
+          tgs.newLine();
+        }
       }
 
+
       if (opKind.equals("list")) {
-        tgs.append("func (s *");
-        tgs.append(name);
-        tgs.append("Handler) pre");
-        tgs.append(hookName);
-        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-        tgs.append(name);
-        tgs.append("ListRequest) error {");
-        tgs.newLine();
-        tgs.append(" return nil");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
-        tgs.append("func (s *");
-        tgs.append(name);
-        tgs.append("Handler) post");
-        tgs.append(hookName);
-        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-        tgs.append(name);
-        tgs.append("ListRequest, data []byte) []byte {");
-        tgs.newLine();
-        tgs.append(" return data");
-        tgs.newLine();
-        tgs.append("}");
-        tgs.newLine();
-        tgs.newLine();
+        if (ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.preHooks$1OjW)).any((it) -> SEnumOperations.getMemberName0(SPropertyOperations.getEnum(it, PROPS.entityOperation$RtmO)).equals("list"))) {
+          tgs.append("func (s *");
+          tgs.append(name);
+          tgs.append("Handler) pre");
+          tgs.append(hookName);
+          tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+          tgs.append(name);
+          tgs.append("ListRequest) error {");
+          tgs.newLine();
+          tgs.append(" return nil");
+          tgs.newLine();
+          tgs.append("}");
+          tgs.newLine();
+          tgs.newLine();
+        }
+      }
+      if (opKind.equals("list")) {
+        if (ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.postHooks$tLoy)).any((it) -> SEnumOperations.getMemberName0(SPropertyOperations.getEnum(it, PROPS.entityOperation$RtmO)).equals("list"))) {
+          tgs.append("func (s *");
+          tgs.append(name);
+          tgs.append("Handler) post");
+          tgs.append(hookName);
+          tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+          tgs.append(name);
+          tgs.append("ListRequest, data []byte) []byte {");
+          tgs.newLine();
+          tgs.append(" return data");
+          tgs.newLine();
+          tgs.append("}");
+          tgs.newLine();
+          tgs.newLine();
+        }
       }
     }
+
+
+    ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.relations$Mn4T)).visitAll((it) -> {
+      tgs.appendNode(it);
+      tgs.newLine();
+    });
   }
 
   private static final class PROPS {
@@ -661,5 +715,8 @@ public class Entity_TextGen extends TextGenDescriptorBase {
   private static final class LINKS {
     /*package*/ static final SContainmentLink fields$Rrud = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x6a6f5a6f2407ac84L, "fields");
     /*package*/ static final SContainmentLink operations$RrWf = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x6a6f5a6f2407ac86L, "operations");
+    /*package*/ static final SContainmentLink preHooks$1OjW = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x4e35d519f236377aL, "preHooks");
+    /*package*/ static final SContainmentLink postHooks$tLoy = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x4e35d519f2393161L, "postHooks");
+    /*package*/ static final SContainmentLink relations$Mn4T = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x210dfbd5ddf5be7aL, "relations");
   }
 }

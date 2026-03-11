@@ -71,7 +71,7 @@ func (s *RolesHandler) HandleCreate(req core.Request) {
   return
  }
 
- if event.Roles.name == "" {
+ if event.Roles.Name == "" {
   err := fmt.Errorf("invalid roles data: missing required fields")
   span.RecordError(err)
   _ = req.RespondError("400", err.Error(), nil)
@@ -83,13 +83,7 @@ func (s *RolesHandler) HandleCreate(req core.Request) {
   tracer.StringAttr("tenant.id", req.Header(core.HeaderTenantID)),
  )
 
- if err := s.preCreateHook(ctx, span, &event); err != nil {
-  span.RecordError(err)
-  _ = req.RespondError("400", "pre-hook: " + err.Error(), nil)
-  return
- }
-
- dalSubject := s.subjectPrefix + ".roles.db.createcreate"
+ dalSubject := s.subjectPrefix + ".roles.db.create"
  outMsg := &nats.Msg{Data: req.Data()}
  outMsg.Header = core.ExtractHeaders(ctx, nil)
  outMsg.Header.Set("X-Business-Validated", "true")
@@ -106,8 +100,7 @@ func (s *RolesHandler) HandleCreate(req core.Request) {
 
  log.Printf("Roles.create DAL reply: %d bytes", len(reply.Data))
 
- responseData := s.postCreateHook(ctx, span, &event, reply.Data)
- _ = req.Respond(responseData)
+ _ = req.Respond(reply.Data)
 }
 
 func (s *RolesHandler) HandleUpdate(req core.Request) {
@@ -135,13 +128,7 @@ func (s *RolesHandler) HandleUpdate(req core.Request) {
   tracer.StringAttr("tenant.id", req.Header(core.HeaderTenantID)),
  )
 
- if err := s.preUpdateHook(ctx, span, &event); err != nil {
-  span.RecordError(err)
-  _ = req.RespondError("400", "pre-hook: " + err.Error(), nil)
-  return
- }
-
- dalSubject := s.subjectPrefix + ".roles.db.updateupdate"
+ dalSubject := s.subjectPrefix + ".roles.db.update"
  outMsg := &nats.Msg{Data: req.Data()}
  outMsg.Header = core.ExtractHeaders(ctx, nil)
  outMsg.Header.Set("X-Business-Validated", "true")
@@ -158,8 +145,7 @@ func (s *RolesHandler) HandleUpdate(req core.Request) {
 
  log.Printf("Roles.update DAL reply: %d bytes", len(reply.Data))
 
- responseData := s.postUpdateHook(ctx, span, &event, reply.Data)
- _ = req.Respond(responseData)
+ _ = req.Respond(reply.Data)
 }
 
 func (s *RolesHandler) HandleList(req core.Request) {
@@ -186,13 +172,7 @@ func (s *RolesHandler) HandleList(req core.Request) {
   tracer.StringAttr("tenant.id", req.Header(core.HeaderTenantID)),
  )
 
- if err := s.preListHook(ctx, span, &event); err != nil {
-  span.RecordError(err)
-  _ = req.RespondError("400", "pre-hook: " + err.Error(), nil)
-  return
- }
-
- dalSubject := s.subjectPrefix + ".roles.db.listlist"
+ dalSubject := s.subjectPrefix + ".roles.db.list"
  outMsg := &nats.Msg{Data: req.Data()}
  outMsg.Header = core.ExtractHeaders(ctx, nil)
  outMsg.Header.Set("X-Business-Validated", "true")
@@ -209,8 +189,7 @@ func (s *RolesHandler) HandleList(req core.Request) {
 
  log.Printf("Roles.list DAL reply: %d bytes", len(reply.Data))
 
- responseData := s.postListHook(ctx, span, &event, reply.Data)
- _ = req.Respond(responseData)
+ _ = req.Respond(reply.Data)
 }
 
 func (s *RolesHandler) HandleDelete(req core.Request) {
@@ -238,13 +217,7 @@ func (s *RolesHandler) HandleDelete(req core.Request) {
   tracer.StringAttr("tenant.id", req.Header(core.HeaderTenantID)),
  )
 
- if err := s.preDeleteHook(ctx, span, &event); err != nil {
-  span.RecordError(err)
-  _ = req.RespondError("400", "pre-hook: " + err.Error(), nil)
-  return
- }
-
- dalSubject := s.subjectPrefix + ".roles.db.deletedelete"
+ dalSubject := s.subjectPrefix + ".roles.db.delete"
  outMsg := &nats.Msg{Data: req.Data()}
  outMsg.Header = core.ExtractHeaders(ctx, nil)
  outMsg.Header.Set("X-Business-Validated", "true")
@@ -261,8 +234,7 @@ func (s *RolesHandler) HandleDelete(req core.Request) {
 
  log.Printf("Roles.delete DAL reply: %d bytes", len(reply.Data))
 
- responseData := s.postDeleteHook(ctx, span, &event, reply.Data)
- _ = req.Respond(responseData)
+ _ = req.Respond(reply.Data)
 }
 
 func (s *RolesHandler) HandleGet(req core.Request) {
@@ -290,13 +262,7 @@ func (s *RolesHandler) HandleGet(req core.Request) {
   tracer.StringAttr("tenant.id", req.Header(core.HeaderTenantID)),
  )
 
- if err := s.preGetHook(ctx, span, &event); err != nil {
-  span.RecordError(err)
-  _ = req.RespondError("400", "pre-hook: " + err.Error(), nil)
-  return
- }
-
- dalSubject := s.subjectPrefix + ".roles.db.getget"
+ dalSubject := s.subjectPrefix + ".roles.db.get"
  outMsg := &nats.Msg{Data: req.Data()}
  outMsg.Header = core.ExtractHeaders(ctx, nil)
  outMsg.Header.Set("X-Business-Validated", "true")
@@ -313,47 +279,6 @@ func (s *RolesHandler) HandleGet(req core.Request) {
 
  log.Printf("Roles.get DAL reply: %d bytes", len(reply.Data))
 
- responseData := s.postGetHook(ctx, span, &event, reply.Data)
- _ = req.Respond(responseData)
-}
-
-func (s *RolesHandler) preCreateHook(ctx context.Context, span tracer.Span, event *RolesCreatedEvent) error {
- return nil
-}
-
-func (s *RolesHandler) postCreateHook(ctx context.Context, span tracer.Span, event *RolesCreatedEvent, data []byte) []byte {
- return data
-}
-
-func (s *RolesHandler) preUpdateHook(ctx context.Context, span tracer.Span, event *RolesUpdatedEvent) error {
- return nil
-}
-
-func (s *RolesHandler) postUpdateHook(ctx context.Context, span tracer.Span, event *RolesUpdatedEvent, data []byte) []byte {
- return data
-}
-
-func (s *RolesHandler) preListHook(ctx context.Context, span tracer.Span, event *RolesListRequest) error {
- return nil
-}
-
-func (s *RolesHandler) postListHook(ctx context.Context, span tracer.Span, event *RolesListRequest, data []byte) []byte {
- return data
-}
-
-func (s *RolesHandler) preDeleteHook(ctx context.Context, span tracer.Span, event *RolesDeletedEvent) error {
- return nil
-}
-
-func (s *RolesHandler) postDeleteHook(ctx context.Context, span tracer.Span, event *RolesDeletedEvent, data []byte) []byte {
- return data
-}
-
-func (s *RolesHandler) preGetHook(ctx context.Context, span tracer.Span, event *RolesGetRequest) error {
- return nil
-}
-
-func (s *RolesHandler) postGetHook(ctx context.Context, span tracer.Span, event *RolesGetRequest, data []byte) []byte {
- return data
+ _ = req.Respond(reply.Data)
 }
 

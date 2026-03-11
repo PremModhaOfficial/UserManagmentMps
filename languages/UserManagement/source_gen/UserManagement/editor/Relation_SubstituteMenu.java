@@ -38,7 +38,7 @@ public class Relation_SubstituteMenu extends SubstituteMenuBase {
   public class SMP_ReferenceScope_l8i2fy_a extends ReferenceScopeSubstituteMenuPart {
 
     public SMP_ReferenceScope_l8i2fy_a() {
-      super(CONCEPTS.Relation$Jj, LINKS.with$R_jq, new EditorMenuDescriptorBase("reference scope substitute menu part", null));
+      super(CONCEPTS.Relation$Jj, LINKS.to$R_jq, new EditorMenuDescriptorBase("reference scope substitute menu part", null));
     }
 
   }
@@ -63,6 +63,6 @@ public class Relation_SubstituteMenu extends SubstituteMenuBase {
   }
 
   private static final class LINKS {
-    /*package*/ static final SReferenceLink with$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "with");
+    /*package*/ static final SReferenceLink to$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "to");
   }
 }

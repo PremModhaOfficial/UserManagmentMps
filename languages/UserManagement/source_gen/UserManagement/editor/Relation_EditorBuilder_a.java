@@ -138,10 +138,10 @@ import org.jetbrains.mps.openapi.language.SConcept;
     return editorCell;
   }
   private EditorCell createRefCell_0() {
-    final SReferenceLink referenceLink = LINKS.with$R_jq;
+    final SReferenceLink referenceLink = LINKS.to$R_jq;
     SReferenceCellProvider provider = new SReferenceCellProvider(getNode(), referenceLink, getEditorContext()) {
       protected EditorCell createReferenceCell(final SNode targetNode) {
-        EditorCell cell = getUpdateSession().updateReferencedNodeCell(() -> new Inline_Builder0(getEditorContext(), getNode(), targetNode).createCell(), targetNode, LINKS.with$R_jq);
+        EditorCell cell = getUpdateSession().updateReferencedNodeCell(() -> new Inline_Builder0(getEditorContext(), getNode(), targetNode).createCell(), targetNode, LINKS.to$R_jq);
         CellUtil.setupIDeprecatableStyles(targetNode, cell);
         setSemanticNodeToCells(cell, getNode());
         installDeleteActions_notnull_smartReference(cell);
@@ -156,12 +156,12 @@ import org.jetbrains.mps.openapi.language.SConcept;
       }
     };
 
-    provider.setNoTargetText("<no with>");
+    provider.setNoTargetText("<no to>");
     EditorCell editorCell = provider.createCell();
 
     if (editorCell.getSRole() == null) {
       editorCell.setReferenceCell(true);
-      editorCell.setSRole(LINKS.with$R_jq);
+      editorCell.setSRole(LINKS.to$R_jq);
     }
     Style style = new StyleImpl();
     style.set(StyleAttributes.INDENT_LAYOUT_NEW_LINE, true);
@@ -448,7 +448,7 @@ import org.jetbrains.mps.openapi.language.SConcept;
   }
 
   private static final class LINKS {
-    /*package*/ static final SReferenceLink with$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "with");
+    /*package*/ static final SReferenceLink to$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "to");
     /*package*/ static final SContainmentLink operations$REVM = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac9aL, "operations");
     /*package*/ static final SContainmentLink extraFields$RLJf = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407aca2L, "extraFields");
   }

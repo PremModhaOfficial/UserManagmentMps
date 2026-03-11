@@ -7,9 +7,9 @@ import jetbrains.mps.text.rt.TextGenContext;
 import jetbrains.mps.text.impl.TextGenSupport;
 import jetbrains.mps.lang.smodel.generator.smodelAdapter.SPropertyOperations;
 import jetbrains.mps.lang.smodel.generator.smodelAdapter.SNodeOperations;
+import jetbrains.mps.lang.smodel.generator.smodelAdapter.SLinkOperations;
 import org.jetbrains.mps.openapi.model.SNode;
 import jetbrains.mps.internal.collections.runtime.ListSequence;
-import jetbrains.mps.lang.smodel.generator.smodelAdapter.SLinkOperations;
 import jetbrains.mps.lang.smodel.generator.smodelAdapter.SEnumOperations;
 import UserManagement.behavior.RelationOperationHolder__BehaviorDescriptor;
 import org.jetbrains.mps.openapi.language.SConcept;
@@ -22,26 +22,34 @@ public class Relation_TextGen extends TextGenDescriptorBase {
   @Override
   public void generateText(final TextGenContext ctx) {
     final TextGenSupport tgs = new TextGenSupport(ctx);
+    // new
 
+    String fromName = SPropertyOperations.getString(SNodeOperations.getNodeAncestor(ctx.getPrimaryInput(), CONCEPTS.Entity$iI, false, false), PROPS.name$MnvL);
+    String toName = SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.to$R_jq), PROPS.name$MnvL);
+    String fromNameLow = fromName.toLowerCase();
+    String tonameLow = toName.toLowerCase();
 
-    String parentEntityName = SPropertyOperations.getString(SNodeOperations.getNodeAncestor(ctx.getPrimaryInput(), CONCEPTS.Entity$iI, false, false), PROPS.name$MnvL);
-    for (SNode o : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.operations$REVM))) {
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("assign")) {
+    tgs.newLine();
+
+    for (SNode op : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.operations$REVM))) {
+      String opKind = SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.relationOperation$RG8k));
+
+      if (opKind.equals("assign")) {
         tgs.append("type ");
-        tgs.append(parentEntityName);
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append(fromName);
+        tgs.append(toName);
         tgs.append("AssignedEvent struct {");
         tgs.newLine();
         tgs.append(" ");
-        tgs.append(parentEntityName);
+        tgs.append(fromName);
         tgs.append("ID string `json:\"");
-        tgs.append(parentEntityName.toLowerCase());
+        tgs.append(fromNameLow);
         tgs.append("_id\"`");
         tgs.newLine();
         tgs.append(" ");
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append(toName);
         tgs.append("ID string `json:\"");
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
+        tgs.append(tonameLow);
         tgs.append("_id\"`");
         tgs.newLine();
         tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
@@ -51,22 +59,22 @@ public class Relation_TextGen extends TextGenDescriptorBase {
         tgs.newLine();
       }
 
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("remove")) {
+      if (opKind.equals("remove")) {
         tgs.append("type ");
-        tgs.append(parentEntityName);
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append(fromName);
+        tgs.append(toName);
         tgs.append("RemovedEvent struct {");
         tgs.newLine();
         tgs.append(" ");
-        tgs.append(parentEntityName);
+        tgs.append(fromName);
         tgs.append("ID string `json:\"");
-        tgs.append(parentEntityName.toLowerCase());
+        tgs.append(fromNameLow);
         tgs.append("_id\"`");
         tgs.newLine();
         tgs.append(" ");
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append(toName);
         tgs.append("ID string `json:\"");
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
+        tgs.append(tonameLow);
         tgs.append("_id\"`");
         tgs.newLine();
         tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
@@ -76,16 +84,16 @@ public class Relation_TextGen extends TextGenDescriptorBase {
         tgs.newLine();
       }
 
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("list")) {
+      if (opKind.equals("list")) {
         tgs.append("type ");
-        tgs.append(parentEntityName);
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
+        tgs.append(fromName);
+        tgs.append(toName);
         tgs.append("ListRequest struct {");
         tgs.newLine();
         tgs.append(" ");
-        tgs.append(parentEntityName);
+        tgs.append(fromName);
         tgs.append("ID string `json:\"");
-        tgs.append(parentEntityName.toLowerCase());
+        tgs.append(fromNameLow);
         tgs.append("_id\"`");
         tgs.newLine();
         tgs.append(" Limit     int       `json:\"limit\"`");
@@ -98,313 +106,12 @@ public class Relation_TextGen extends TextGenDescriptorBase {
         tgs.newLine();
         tgs.newLine();
       }
-    }
-
-
-    tgs.append("type ");
-    tgs.append(parentEntityName);
-    tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
-    tgs.append("Handler struct {");
-    tgs.newLine();
-    tgs.append(" publisher     *nats.Publisher");
-    tgs.newLine();
-    tgs.append(" subjectPrefix string");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("func New");
-    tgs.append(parentEntityName);
-    tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
-    tgs.append("Handler(pub *nats.Publisher, subjectPrefix string) *");
-    tgs.append(parentEntityName);
-    tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
-    tgs.append("Handler {");
-    tgs.newLine();
-    tgs.append(" return &");
-    tgs.append(parentEntityName);
-    tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
-    tgs.append("Handler{");
-    tgs.newLine();
-    tgs.append("  publisher:     pub,");
-    tgs.newLine();
-    tgs.append("  subjectPrefix: subjectPrefix,");
-    tgs.newLine();
-    tgs.append(" }");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
-
-    for (SNode o : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.operations$REVM))) {
-      tgs.append("func (s *");
-      tgs.append(parentEntityName);
-      tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
-      tgs.append("Handler) Handle");
-      tgs.append(RelationOperationHolder__BehaviorDescriptor.capitalize_id6LRrEr56jrv.invoke(o));
-      tgs.append("(ctx context.Context, msg *core.Message) error {");
-      tgs.newLine();
-      tgs.append(" ctx, span := tracer.StartConsumer(ctx, \"");
-      tgs.append(parentEntityName);
-      tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
-      tgs.append(".Handle");
-      tgs.append(RelationOperationHolder__BehaviorDescriptor.capitalize_id6LRrEr56jrv.invoke(o));
-      tgs.append("\")");
-      tgs.newLine();
-      tgs.append(" defer span.End()");
-      tgs.newLine();
-      tgs.append(" ctx = core.InjectContext(ctx, msg.Headers)");
-      tgs.newLine();
-      tgs.newLine();
-
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("assign")) {
-        tgs.append(" var event ");
-        tgs.append(parentEntityName);
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
-        tgs.append("AssignedEvent");
-        tgs.newLine();
-      }
-
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("remove")) {
-        tgs.append(" var event ");
-        tgs.append(parentEntityName);
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
-        tgs.append("RemovedEvent");
-        tgs.newLine();
-      }
-
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("list")) {
-        tgs.append(" var event ");
-        tgs.append(parentEntityName);
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
-        tgs.append("ListRequest");
-        tgs.newLine();
-      }
-      tgs.append(" if err := json.Unmarshal(msg.Data, &event); err != nil {");
-      tgs.newLine();
-      tgs.append("  span.RecordError(err)");
-      tgs.newLine();
-      tgs.append("  return err");
-      tgs.newLine();
-      tgs.append(" }");
-      tgs.newLine();
-      tgs.newLine();
-
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("assign") || SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("remove")) {
-        tgs.append(" if event.");
-        tgs.append(parentEntityName);
-        tgs.append("ID == \"\" || event.");
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
-        tgs.append("ID == \"\" {");
-        tgs.newLine();
-        tgs.append("  err := fmt.Errorf(\"invalid data: missing ");
-        tgs.append(parentEntityName.toLowerCase());
-        tgs.append(" or ");
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
-        tgs.append(" ID\")");
-        tgs.newLine();
-        tgs.append("  span.RecordError(err)");
-        tgs.newLine();
-        tgs.append("  return err");
-        tgs.newLine();
-        tgs.append(" }");
-        tgs.newLine();
-      }
-
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("list")) {
-        tgs.append(" if event.");
-        tgs.append(parentEntityName);
-        tgs.append("ID == \"\" {");
-        tgs.newLine();
-        tgs.append("  err := fmt.Errorf(\"invalid request: missing ");
-        tgs.append(parentEntityName.toLowerCase());
-        tgs.append(" ID\")");
-        tgs.newLine();
-        tgs.append("  span.RecordError(err)");
-        tgs.newLine();
-        tgs.append("  return err");
-        tgs.newLine();
-        tgs.append(" }");
-        tgs.newLine();
-      }
-      tgs.newLine();
-      tgs.append(" span.SetAttributes(");
-      tgs.newLine();
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("assign") || SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("remove")) {
-        tgs.append("  tracer.StringAttr(\"");
-        tgs.append(parentEntityName.toLowerCase());
-        tgs.append(".id\", event.");
-        tgs.append(parentEntityName);
-        tgs.append("ID),");
-        tgs.newLine();
-        tgs.append("  tracer.StringAttr(\"");
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
-        tgs.append(".id\", event.");
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL));
-        tgs.append("ID),");
-        tgs.newLine();
-      }
-
-      if (SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)).equals("list")) {
-        tgs.append("  tracer.StringAttr(\"");
-        tgs.append(parentEntityName.toLowerCase());
-        tgs.append(".id\", event.");
-        tgs.append(parentEntityName);
-        tgs.append("ID),");
-        tgs.newLine();
-      }
-      tgs.append("  tracer.StringAttr(\"tenant.id\", msg.Headers.Get(core.HeaderTenantID)),");
-      tgs.newLine();
-      tgs.append(" )");
-      tgs.newLine();
-      tgs.newLine();
-
-      tgs.append(" outMsg := core.NewMessage(msg.Data)");
-      tgs.newLine();
-      tgs.append(" outMsg.Subject = s.subjectPrefix + \".");
-      tgs.append(parentEntityName.toLowerCase());
-      tgs.append(".");
-      tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(ctx.getPrimaryInput(), LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
-      tgs.append(".db.");
-      tgs.append(SEnumOperations.getMemberName0(SPropertyOperations.getEnum(o, PROPS.relationOperation$RG8k)));
-      tgs.append("\"");
-      tgs.newLine();
-      tgs.append(" outMsg.Headers = core.ExtractHeaders(ctx, outMsg.Headers)");
-      tgs.newLine();
-      tgs.append(" outMsg.Headers.Set(\"X-Business-Validated\", \"true\")");
-      tgs.newLine();
-      tgs.newLine();
-      tgs.append(" if err := s.publisher.Publish(ctx, outMsg.Subject, outMsg); err != nil {");
-      tgs.newLine();
-      tgs.append("  span.RecordError(err)");
-      tgs.newLine();
-      tgs.append("  return fmt.Errorf(\"publish error: %w\", err)");
-      tgs.newLine();
-      tgs.append(" }");
-      tgs.newLine();
-      tgs.append(" return nil");
-      tgs.newLine();
-      tgs.append("}");
-      tgs.newLine();
-      tgs.newLine();
 
     }
-    // new
-
-    tgs.append("{???-string fromName = node.from.name;}");
-    tgs.append("{???-string toName = node.to.name;}");
-    tgs.append("{???-string fromLower = node.from.name.toLowerCase();}");
-    tgs.append("{???-string toLower = node.to.name.toLowerCase();}");
-
-    tgs.append("package main");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("import (");
-    tgs.newLine();
-    tgs.append(" \"context\"");
-    tgs.newLine();
-    tgs.append(" \"encoding/json\"");
-    tgs.newLine();
-    tgs.append(" \"fmt\"");
-    tgs.newLine();
-    tgs.append(" \"log\"");
-    tgs.newLine();
-    tgs.append(" \"time\"");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" \"github.com/nats-io/nats.go\"");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events\"");
-    tgs.newLine();
-    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core\"");
-    tgs.newLine();
-    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/tracer\"");
-    tgs.newLine();
-    tgs.append(")");
-    tgs.newLine();
-    tgs.newLine();
-
-    tgs.append("{???-foreach op in node.operations {}");
-
-    tgs.append("{???-if (op.relationOperation == RelationOperation:assign) {}");
-    tgs.append("type ");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("AssignedEvent struct {");
-    tgs.newLine();
-    tgs.append(" ");
-    tgs.append("{???-fromName}");
-    tgs.append("ID string `json:\"");
-    tgs.append("{???-fromLower}");
-    tgs.append("_id\"`");
-    tgs.newLine();
-    tgs.append(" ");
-    tgs.append("{???-toName}");
-    tgs.append("ID string `json:\"");
-    tgs.append("{???-toLower}");
-    tgs.append("_id\"`");
-    tgs.newLine();
-    tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("{???-}}");
-
-    tgs.append("{???-if (op.relationOperation == RelationOperation:remove) {}");
-    tgs.append("type ");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("RemovedEvent struct {");
-    tgs.newLine();
-    tgs.append(" ");
-    tgs.append("{???-fromName}");
-    tgs.append("ID string `json:\"");
-    tgs.append("{???-fromLower}");
-    tgs.append("_id\"`");
-    tgs.newLine();
-    tgs.append(" ");
-    tgs.append("{???-toName}");
-    tgs.append("ID string `json:\"");
-    tgs.append("{???-toLower}");
-    tgs.append("_id\"`");
-    tgs.newLine();
-    tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("{???-}}");
-
-    tgs.append("{???-if (op.relationOperation == RelationOperation:list) {}");
-    tgs.append("type ");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("ListRequest struct {");
-    tgs.newLine();
-    tgs.append(" ");
-    tgs.append("{???-fromName}");
-    tgs.append("ID string `json:\"");
-    tgs.append("{???-fromLower}");
-    tgs.append("_id\"`");
-    tgs.newLine();
-    tgs.append(" Limit     int       `json:\"limit\"`");
-    tgs.newLine();
-    tgs.append(" Offset    int       `json:\"offset\"`");
-    tgs.newLine();
-    tgs.append(" Timestamp time.Time `json:\"timestamp\"`");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("{???-}}");
-
-    tgs.append("{???-}}");
 
     tgs.append("type ");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
+    tgs.append(fromName);
+    tgs.append(toName);
     tgs.append("Handler struct {");
     tgs.newLine();
     tgs.append(" publisher     *events.Publisher");
@@ -415,16 +122,16 @@ public class Relation_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.newLine();
     tgs.append("func New");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
+    tgs.append(fromName);
+    tgs.append(toName);
     tgs.append("Handler(pub *events.Publisher, subjectPrefix string) *");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
+    tgs.append(fromName);
+    tgs.append(toName);
     tgs.append("Handler {");
     tgs.newLine();
     tgs.append(" return &");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
+    tgs.append(fromName);
+    tgs.append(toName);
     tgs.append("Handler{");
     tgs.newLine();
     tgs.append("  publisher:     pub,");
@@ -437,313 +144,317 @@ public class Relation_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.newLine();
 
-    tgs.append("{???-foreach op in node.operations {}");
-    tgs.append("{???-string opName = op.capitalizedName();}");
-    tgs.append("{???-string opKind = op.relationOperation.name;}");
 
-    tgs.append("func (s *");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("Handler) Handle");
-    tgs.append("{???-opName}");
-    tgs.append("(req core.Request) {");
-    tgs.newLine();
-    tgs.append(" ctx := req.Context()");
-    tgs.newLine();
-    tgs.append(" ctx, span := tracer.StartConsumer(ctx, \"");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append(".Handle");
-    tgs.append("{???-opName}");
-    tgs.append("\")");
-    tgs.newLine();
-    tgs.append(" defer span.End()");
-    tgs.newLine();
-    tgs.append(" ctx = core.InjectContext(ctx, req.Headers())");
-    tgs.newLine();
-    tgs.newLine();
+    for (SNode op : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.operations$REVM))) {
+      String opKind = SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.relationOperation$RG8k));
+      String opName = RelationOperationHolder__BehaviorDescriptor.capitalize_id6LRrEr56jrv.invoke(op);
 
-    tgs.append("{???-if (op.relationOperation == RelationOperation:assign) {}");
-    tgs.append(" var event ");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("AssignedEvent");
-    tgs.newLine();
-    tgs.append("{???-}}");
-    tgs.append("{???-if (op.relationOperation == RelationOperation:remove) {}");
-    tgs.append(" var event ");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("RemovedEvent");
-    tgs.newLine();
-    tgs.append("{???-}}");
-    tgs.append("{???-if (op.relationOperation == RelationOperation:list) {}");
-    tgs.append(" var event ");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("ListRequest");
-    tgs.newLine();
-    tgs.append("{???-}}");
+      tgs.append("func (s *");
+      tgs.append(fromName);
+      tgs.append(toName);
+      tgs.append("Handler) Handle");
+      tgs.append(opName);
+      tgs.append("(req core.Request) {");
+      tgs.newLine();
+      tgs.append(" ctx := req.Context()");
+      tgs.newLine();
+      tgs.append(" ctx, span := tracer.StartConsumer(ctx, \"");
+      tgs.append(fromName);
+      tgs.append(toName);
+      tgs.append(".Handle");
+      tgs.append(opName);
+      tgs.append("\")");
+      tgs.newLine();
+      tgs.append(" defer span.End()");
+      tgs.newLine();
+      tgs.append(" ctx = core.InjectContext(ctx, req.Headers())");
+      tgs.newLine();
+      tgs.newLine();
 
-    tgs.append(" if err := json.Unmarshal(req.Data(), &event); err != nil {");
-    tgs.newLine();
-    tgs.append("  span.RecordError(err)");
-    tgs.newLine();
-    tgs.append("  _ = req.RespondError(\"400\", \"invalid JSON: \" + err.Error(), nil)");
-    tgs.newLine();
-    tgs.append("  return");
-    tgs.newLine();
-    tgs.append(" }");
-    tgs.newLine();
-    tgs.newLine();
+      if (opKind.equals("assign")) {
+        tgs.append(" var event ");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("AssignedEvent");
+        tgs.newLine();
+      }
 
-    tgs.append("{???-if (op.relationOperation == RelationOperation:assign || op.relationOperation == RelationOperation:remove) {}");
-    tgs.append(" if event.");
-    tgs.append("{???-fromName}");
-    tgs.append("ID == \"\" || event.");
-    tgs.append("{???-toName}");
-    tgs.append("ID == \"\" {");
-    tgs.newLine();
-    tgs.append("  err := fmt.Errorf(\"invalid data: missing ");
-    tgs.append("{???-fromLower}");
-    tgs.append(" or ");
-    tgs.append("{???-toLower}");
-    tgs.append(" ID\")");
-    tgs.newLine();
-    tgs.append("  span.RecordError(err)");
-    tgs.newLine();
-    tgs.append("  _ = req.RespondError(\"400\", err.Error(), nil)");
-    tgs.newLine();
-    tgs.append("  return");
-    tgs.newLine();
-    tgs.append(" }");
-    tgs.newLine();
-    tgs.append("{???-}}");
-    tgs.append("{???-if (op.relationOperation == RelationOperation:list) {}");
-    tgs.append(" if event.");
-    tgs.append("{???-fromName}");
-    tgs.append("ID == \"\" {");
-    tgs.newLine();
-    tgs.append("  err := fmt.Errorf(\"invalid request: missing ");
-    tgs.append("{???-fromLower}");
-    tgs.append(" ID\")");
-    tgs.newLine();
-    tgs.append("  span.RecordError(err)");
-    tgs.newLine();
-    tgs.append("  _ = req.RespondError(\"400\", err.Error(), nil)");
-    tgs.newLine();
-    tgs.append("  return");
-    tgs.newLine();
-    tgs.append(" }");
-    tgs.newLine();
-    tgs.append("{???-}}");
+      if (opKind.equals("remove")) {
+        tgs.append(" var event ");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("RemovedEvent");
+        tgs.newLine();
+      }
 
-    tgs.newLine();
-    tgs.append(" span.SetAttributes(");
-    tgs.newLine();
-    tgs.append("{???-if (op.relationOperation == RelationOperation:assign || op.relationOperation == RelationOperation:remove) {}");
-    tgs.append("  tracer.StringAttr(\"");
-    tgs.append("{???-fromLower}");
-    tgs.append(".id\", event.");
-    tgs.append("{???-fromName}");
-    tgs.append("ID),");
-    tgs.newLine();
-    tgs.append("  tracer.StringAttr(\"");
-    tgs.append("{???-toLower}");
-    tgs.append(".id\", event.");
-    tgs.append("{???-toName}");
-    tgs.append("ID),");
-    tgs.newLine();
-    tgs.append("{???-}}");
-    tgs.append("{???-if (op.relationOperation == RelationOperation:list) {}");
-    tgs.append("  tracer.StringAttr(\"");
-    tgs.append("{???-fromLower}");
-    tgs.append(".id\", event.");
-    tgs.append("{???-fromName}");
-    tgs.append("ID),");
-    tgs.newLine();
-    tgs.append("{???-}}");
-    tgs.append("  tracer.StringAttr(\"tenant.id\", req.Header(core.HeaderTenantID)),");
-    tgs.newLine();
-    tgs.append(" )");
-    tgs.newLine();
-    tgs.newLine();
+      if (opKind.equals("list")) {
+        tgs.append(" var event ");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("ListRequest");
+        tgs.newLine();
+      }
 
-    tgs.append(" if err := s.pre");
-    tgs.append("{???-opName}");
-    tgs.append("Hook(ctx, span, &event); err != nil {");
-    tgs.newLine();
-    tgs.append("  span.RecordError(err)");
-    tgs.newLine();
-    tgs.append("  _ = req.RespondError(\"400\", \"pre-hook: \" + err.Error(), nil)");
-    tgs.newLine();
-    tgs.append("  return");
-    tgs.newLine();
-    tgs.append(" }");
-    tgs.newLine();
-    tgs.newLine();
+      tgs.append(" if err := json.Unmarshal(req.Data(), &event); err != nil {");
+      tgs.newLine();
+      tgs.append("  span.RecordError(err)");
+      tgs.newLine();
+      tgs.append("  _ = req.RespondError(\"400\", \"invalid JSON: \" + err.Error(), nil)");
+      tgs.newLine();
+      tgs.append("  return");
+      tgs.newLine();
+      tgs.append(" }");
+      tgs.newLine();
+      tgs.newLine();
 
-    tgs.append(" dalSubject := s.subjectPrefix + \".");
-    tgs.append("{???-fromLower}");
-    tgs.append(".");
-    tgs.append("{???-toLower}");
-    tgs.append(".db.");
-    tgs.append("{???-opKind}");
-    tgs.append("\"");
-    tgs.newLine();
-    tgs.append(" outMsg := &nats.Msg{Data: req.Data()}");
-    tgs.newLine();
-    tgs.append(" outMsg.Header = core.ExtractHeaders(ctx, nil)");
-    tgs.newLine();
-    tgs.append(" outMsg.Header.Set(\"X-Business-Validated\", \"true\")");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" dalCtx, dalCancel := context.WithTimeout(ctx, 10*time.Second)");
-    tgs.newLine();
-    tgs.append(" defer dalCancel()");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" reply, err := s.publisher.Request(dalCtx, dalSubject, outMsg)");
-    tgs.newLine();
-    tgs.append(" if err != nil {");
-    tgs.newLine();
-    tgs.append("  span.RecordError(err)");
-    tgs.newLine();
-    tgs.append("  _ = req.RespondError(\"500\", \"DAL request error: \" + err.Error(), nil)");
-    tgs.newLine();
-    tgs.append("  return");
-    tgs.newLine();
-    tgs.append(" }");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" log.Printf(\"");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append(".");
-    tgs.append("{???-opKind}");
-    tgs.append(" DAL reply: %d bytes\", len(reply.Data))");
-    tgs.newLine();
-    tgs.newLine();
+      if (opKind.equals("assign") || opKind.equals("remove")) {
+        tgs.append(" if event.");
+        tgs.append(fromName);
+        tgs.append("ID == \"\" || event.");
+        tgs.append(toName);
+        tgs.append("ID == \"\" {");
+        tgs.newLine();
+        tgs.append("  err := fmt.Errorf(\"invalid data: missing ");
+        tgs.append(fromNameLow);
+        tgs.append(" or ");
+        tgs.append(tonameLow);
+        tgs.append(" ID\")");
+        tgs.newLine();
+        tgs.append("  span.RecordError(err)");
+        tgs.newLine();
+        tgs.append("  _ = req.RespondError(\"400\", err.Error(), nil)");
+        tgs.newLine();
+        tgs.append("  return");
+        tgs.newLine();
+        tgs.append(" }");
+        tgs.newLine();
+      }
 
-    tgs.append(" responseData := s.post");
-    tgs.append("{???-opName}");
-    tgs.append("Hook(ctx, span, &event, reply.Data)");
-    tgs.newLine();
-    tgs.append(" _ = req.Respond(responseData)");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
+      if (opKind.equals("list")) {
+        tgs.append(" if event.");
+        tgs.append(fromName);
+        tgs.append("ID == \"\" {");
+        tgs.newLine();
+        tgs.append("  err := fmt.Errorf(\"invalid request: missing ");
+        tgs.append(fromNameLow);
+        tgs.append(" ID\")");
+        tgs.newLine();
+        tgs.append("  span.RecordError(err)");
+        tgs.newLine();
+        tgs.append("  _ = req.RespondError(\"400\", err.Error(), nil)");
+        tgs.newLine();
+        tgs.append("  return");
+        tgs.newLine();
+        tgs.append(" }");
+        tgs.newLine();
+      }
 
-    tgs.append("{???-}}");
+      tgs.newLine();
+      tgs.append(" span.SetAttributes(");
+      tgs.newLine();
 
-    tgs.append("{???-foreach op in node.operations {}");
-    tgs.append("{???-string hookName = op.capitalizedName();}");
+      if (opKind.equals("assign") || opKind.equals("remove")) {
+        tgs.append("  tracer.StringAttr(\"");
+        tgs.append(fromNameLow);
+        tgs.append(".id\", event.");
+        tgs.append(fromName);
+        tgs.append("ID),");
+        tgs.newLine();
+        tgs.append("  tracer.StringAttr(\"");
+        tgs.append(tonameLow);
+        tgs.append(".id\", event.");
+        tgs.append(toName);
+        tgs.append("ID),");
+        tgs.newLine();
+      }
+      if (opKind.equals("list")) {
+        tgs.append("  tracer.StringAttr(\"");
+        tgs.append(fromNameLow);
+        tgs.append(".id\", event.");
+        tgs.append(fromName);
+        tgs.append("ID),");
+        tgs.newLine();
+      }
 
-    tgs.append("{???-if (op.relationOperation == RelationOperation:assign) {}");
-    tgs.append("func (s *");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("Handler) pre");
-    tgs.append("{???-hookName}");
-    tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("AssignedEvent) error {");
-    tgs.newLine();
-    tgs.append(" return nil");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("func (s *");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("Handler) post");
-    tgs.append("{???-hookName}");
-    tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("AssignedEvent, data []byte) []byte {");
-    tgs.newLine();
-    tgs.append(" return data");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("{???-}}");
 
-    tgs.append("{???-if (op.relationOperation == RelationOperation:remove) {}");
-    tgs.append("func (s *");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("Handler) pre");
-    tgs.append("{???-hookName}");
-    tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("RemovedEvent) error {");
-    tgs.newLine();
-    tgs.append(" return nil");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("func (s *");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("Handler) post");
-    tgs.append("{???-hookName}");
-    tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("RemovedEvent, data []byte) []byte {");
-    tgs.newLine();
-    tgs.append(" return data");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("{???-}}");
+      tgs.append("  tracer.StringAttr(\"tenant.id\", req.Header(core.HeaderTenantID)),");
+      tgs.newLine();
+      tgs.append(" )");
+      tgs.newLine();
+      tgs.newLine();
 
-    tgs.append("{???-if (op.relationOperation == RelationOperation:list) {}");
-    tgs.append("func (s *");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("Handler) pre");
-    tgs.append("{???-hookName}");
-    tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("ListRequest) error {");
-    tgs.newLine();
-    tgs.append(" return nil");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("func (s *");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("Handler) post");
-    tgs.append("{???-hookName}");
-    tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
-    tgs.append("{???-fromName}");
-    tgs.append("{???-toName}");
-    tgs.append("ListRequest, data []byte) []byte {");
-    tgs.newLine();
-    tgs.append(" return data");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("{???-}}");
+      tgs.append(" if err := s.pre");
+      tgs.append(opName);
+      tgs.append("Hook(ctx, span, &event); err != nil {");
+      tgs.newLine();
+      tgs.append("  span.RecordError(err)");
+      tgs.newLine();
+      tgs.append("  _ = req.RespondError(\"400\", \"pre-hook: \" + err.Error(), nil)");
+      tgs.newLine();
+      tgs.append("  return");
+      tgs.newLine();
+      tgs.append(" }");
+      tgs.newLine();
+      tgs.newLine();
 
-    tgs.append("{???-}}");
+      tgs.append(" dalSubject := s.subjectPrefix + \".");
+      tgs.append(fromNameLow);
+      tgs.append(".");
+      tgs.append(tonameLow);
+      tgs.append(".db.");
+      tgs.append(opKind);
+      tgs.append("\"");
+      tgs.newLine();
+      tgs.append(" outMsg := &nats.Msg{Data: req.Data()}");
+      tgs.newLine();
+      tgs.append(" outMsg.Header = core.ExtractHeaders(ctx, nil)");
+      tgs.newLine();
+      tgs.append(" outMsg.Header.Set(\"X-Business-Validated\", \"true\")");
+      tgs.newLine();
+      tgs.newLine();
+      tgs.append(" dalCtx, dalCancel := context.WithTimeout(ctx, 10*time.Second)");
+      tgs.newLine();
+      tgs.append(" defer dalCancel()");
+      tgs.newLine();
+      tgs.newLine();
+      tgs.append(" reply, err := s.publisher.Request(dalCtx, dalSubject, outMsg)");
+      tgs.newLine();
+      tgs.append(" if err != nil {");
+      tgs.newLine();
+      tgs.append("  span.RecordError(err)");
+      tgs.newLine();
+      tgs.append("  _ = req.RespondError(\"500\", \"DAL request error: \" + err.Error(), nil)");
+      tgs.newLine();
+      tgs.append("  return");
+      tgs.newLine();
+      tgs.append(" }");
+      tgs.newLine();
+      tgs.newLine();
+      tgs.append(" log.Printf(\"");
+      tgs.append(fromName);
+      tgs.append(toName);
+      tgs.append(".");
+      tgs.append(opKind);
+      tgs.append(" DAL reply: %d bytes\", len(reply.Data))");
+      tgs.newLine();
+      tgs.newLine();
 
-    tgs.append("{???-}}");
-    tgs.append("{???-}}");
+      tgs.append(" responseData := s.post");
+      tgs.append(opName);
+      tgs.append("Hook(ctx, span, &event, reply.Data)");
+      tgs.newLine();
+      tgs.append(" _ = req.Respond(responseData)");
+      tgs.newLine();
+      tgs.append("}");
+      tgs.newLine();
+      tgs.newLine();
 
+    }
+
+    for (SNode op : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.operations$REVM))) {
+      String opKind = SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.relationOperation$RG8k));
+      String hookName = RelationOperationHolder__BehaviorDescriptor.capitalize_id6LRrEr56jrv.invoke(op);
+
+      if (opKind.equals("assign")) {
+        tgs.append("func (s *");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("Handler) pre");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("AssignedEvent) error {");
+        tgs.newLine();
+        tgs.append(" return nil");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+        tgs.append("func (s *");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("Handler) post");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("AssignedEvent, data []byte) []byte {");
+        tgs.newLine();
+        tgs.append(" return data");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+      }
+
+      if (opKind.equals("remove")) {
+        tgs.append("func (s *");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("Handler) pre");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("RemovedEvent) error {");
+        tgs.newLine();
+        tgs.append(" return nil");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+        tgs.append("func (s *");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("Handler) post");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("RemovedEvent, data []byte) []byte {");
+        tgs.newLine();
+        tgs.append(" return data");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+      }
+
+      if (opKind.equals("list")) {
+        tgs.append("func (s *");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("Handler) pre");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("ListRequest) error {");
+        tgs.newLine();
+        tgs.append(" return nil");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+        tgs.append("func (s *");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("Handler) post");
+        tgs.append(hookName);
+        tgs.append("Hook(ctx context.Context, span tracer.Span, event *");
+        tgs.append(fromName);
+        tgs.append(toName);
+        tgs.append("ListRequest, data []byte) []byte {");
+        tgs.newLine();
+        tgs.append(" return data");
+        tgs.newLine();
+        tgs.append("}");
+        tgs.newLine();
+        tgs.newLine();
+      }
+
+    }
   }
 
   private static final class CONCEPTS {
@@ -756,7 +467,7 @@ public class Relation_TextGen extends TextGenDescriptorBase {
   }
 
   private static final class LINKS {
-    /*package*/ static final SReferenceLink with$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "with");
+    /*package*/ static final SReferenceLink to$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "to");
     /*package*/ static final SContainmentLink operations$REVM = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac9aL, "operations");
   }
 }

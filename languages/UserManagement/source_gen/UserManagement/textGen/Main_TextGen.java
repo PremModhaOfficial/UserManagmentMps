@@ -5,13 +5,14 @@ package UserManagement.textGen;
 import jetbrains.mps.text.rt.TextGenDescriptorBase;
 import jetbrains.mps.text.rt.TextGenContext;
 import jetbrains.mps.text.impl.TextGenSupport;
-import org.jetbrains.mps.openapi.model.SNode;
 import jetbrains.mps.lang.smodel.generator.smodelAdapter.SPropertyOperations;
+import org.jetbrains.mps.openapi.model.SNode;
 import jetbrains.mps.internal.collections.runtime.ListSequence;
 import jetbrains.mps.lang.smodel.generator.smodelAdapter.SLinkOperations;
 import jetbrains.mps.lang.smodel.generator.smodelAdapter.SNodeOperations;
-import jetbrains.mps.lang.smodel.generator.smodelAdapter.SEnumOperations;
+import UserManagement.behavior.Entity__BehaviorDescriptor;
 import UserManagement.behavior.EntityOperationHolder__BehaviorDescriptor;
+import jetbrains.mps.lang.smodel.generator.smodelAdapter.SEnumOperations;
 import UserManagement.behavior.RelationOperationHolder__BehaviorDescriptor;
 import org.jetbrains.mps.openapi.language.SProperty;
 import jetbrains.mps.smodel.adapter.structure.MetaAdapterFactory;
@@ -23,223 +24,17 @@ public class Main_TextGen extends TextGenDescriptorBase {
   @Override
   public void generateText(final TextGenContext ctx) {
     final TextGenSupport tgs = new TextGenSupport(ctx);
-    SNode n = ctx.getPrimaryInput();
-    tgs.append("package main");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append("import (");
-    tgs.newLine();
-    tgs.append(" \"context\"");
-    tgs.newLine();
-    tgs.append(" \"log\"");
-    tgs.newLine();
-    tgs.append(" \"os\"");
-    tgs.newLine();
-    tgs.append(" \"os/signal\"");
-    tgs.newLine();
-    tgs.append(" \"syscall\"");
-    tgs.newLine();
-    tgs.append(" \"time\"");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/auth\"");
-    tgs.newLine();
-    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/config\"");
-    tgs.newLine();
-    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core\"");
-    tgs.newLine();
-    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/transport/nats\"");
-    tgs.newLine();
-    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel\"");
-    tgs.newLine();
-    tgs.append(")");
-    tgs.newLine();
-    tgs.newLine();
-
-    tgs.append(" const  prefix = \"");
-    tgs.append(SPropertyOperations.getString(n, PROPS.subjectPrefix$O1Ig));
-    tgs.append("\"");
-    tgs.newLine();
-
-    tgs.append("func main() {");
-    tgs.newLine();
-    tgs.append(" log.Println(\"Starting ");
-    tgs.append(SPropertyOperations.getString(n, PROPS.name$MnvL));
-    tgs.append(" ...\")");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" otel.InitFromEnv()");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" natsURL := os.Getenv(\"NATS_URL\")");
-    tgs.newLine();
-    tgs.append(" if natsURL == \"\" {");
-    tgs.newLine();
-    tgs.append("  natsURL = \"");
-    tgs.append(SPropertyOperations.getString(n, PROPS.defaultNatsUrl$NP3q));
-    tgs.append("\"");
-    tgs.newLine();
-    tgs.append(" }");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" cfg := config.DefaultConfig()");
-    tgs.newLine();
-    tgs.append(" cfg.Servers = []string{natsURL}");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" creds := &auth.Credentials{Type: auth.TypeNone}");
-    tgs.newLine();
-    tgs.append(" conn := nats.NewConnection(\"");
-    tgs.append(SPropertyOperations.getString(n, PROPS.clientId$Oz27));
-    tgs.append("\", cfg, creds)");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)");
-    tgs.newLine();
-    tgs.append(" defer cancel()");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" if err := conn.Connect(ctx); err != nil {");
-    tgs.newLine();
-    tgs.append("  log.Fatalf(\"failed to connect to NATS: %v\", err)");
-    tgs.newLine();
-    tgs.append(" }");
-    tgs.newLine();
-    tgs.append(" defer conn.Close(context.Background())");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" publisher := nats.NewPublisher(conn)");
-    tgs.newLine();
-    tgs.newLine();
-
-    for (SNode en : ListSequence.fromList(SLinkOperations.getChildren(n, LINKS.entities$RLwe))) {
-      SNode e = SLinkOperations.getTarget(en, LINKS.entity$k9hN);
-      tgs.append(" ");
-      tgs.append(SPropertyOperations.getString(e, PROPS.name$MnvL).toLowerCase());
-      tgs.append("Handler := New");
-      tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(en, LINKS.entity$k9hN), PROPS.name$MnvL));
-      tgs.append("Handler(publisher, prefix)");
-      tgs.newLine();
-    }
-
-    for (SNode entity : ListSequence.fromList(SLinkOperations.getChildren(n, LINKS.entities$RLwe))) {
-      for (SNode r : ListSequence.fromList(SLinkOperations.getChildren(SLinkOperations.getTarget(entity, LINKS.entity$k9hN), LINKS.relations$Mn4T))) {
-        String relationName = SPropertyOperations.getString(SNodeOperations.getNodeAncestor(r, CONCEPTS.Entity$iI, false, false), PROPS.name$MnvL);
-        tgs.append(" ");
-        tgs.append(relationName.toLowerCase());
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.with$R_jq), PROPS.name$MnvL));
-        tgs.append("Handler := New");
-        tgs.append(relationName);
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.with$R_jq), PROPS.name$MnvL));
-        tgs.append("Handler(publisher, prefix)");
-        tgs.newLine();
-      }
-    }
-
-    tgs.newLine();
-    tgs.append(" subscriber := nats.NewSubscriber(conn)");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" subjects := map[string]core.MessageHandler{");
-    tgs.newLine();
-
-
-    for (SNode en : ListSequence.fromList(SLinkOperations.getChildren(n, LINKS.entities$RLwe))) {
-      SNode e = SLinkOperations.getTarget(en, LINKS.entity$k9hN);
-      tgs.append("  // ");
-      tgs.append(SPropertyOperations.getString(e, PROPS.name$MnvL));
-      tgs.append(" handlers");
-      tgs.newLine();
-      for (SNode op : ListSequence.fromList(SLinkOperations.getChildren(e, LINKS.operations$RrWf))) {
-        tgs.append("  \"");
-        tgs.append(SPropertyOperations.getString(n, PROPS.subjectPrefix$O1Ig));
-        tgs.append(".");
-        tgs.append(SPropertyOperations.getString(e, PROPS.name$MnvL).toLowerCase());
-        tgs.append(".");
-        tgs.append(SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO)));
-        tgs.append("\": ");
-        tgs.append(SPropertyOperations.getString(e, PROPS.name$MnvL).toLowerCase());
-        tgs.append("Handler.Handle");
-        tgs.append(EntityOperationHolder__BehaviorDescriptor.capitalize_id6DJmAW$mchD.invoke(op));
-        tgs.append(",");
-        tgs.newLine();
-      }
-
-    }
-
-
-
-    for (SNode ent : ListSequence.fromList(SLinkOperations.getChildren(n, LINKS.entities$RLwe))) {
-      for (SNode r : ListSequence.fromList(SLinkOperations.getChildren(SLinkOperations.getTarget(ent, LINKS.entity$k9hN), LINKS.relations$Mn4T))) {
-        String parentName = SPropertyOperations.getString(SNodeOperations.getNodeAncestor(r, CONCEPTS.Entity$iI, false, false), PROPS.name$MnvL);
-        tgs.append("  // ");
-        tgs.append(parentName);
-        tgs.append(" -> ");
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.with$R_jq), PROPS.name$MnvL));
-        tgs.append(" handlers");
-        tgs.newLine();
-
-        for (SNode op : ListSequence.fromList(SLinkOperations.getChildren(r, LINKS.operations$REVM))) {
-          tgs.append("  \"");
-          tgs.append(SPropertyOperations.getString(n, PROPS.subjectPrefix$O1Ig));
-          tgs.append(".");
-          tgs.append(parentName.toLowerCase());
-          tgs.append(".");
-          tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
-          tgs.append(".");
-          tgs.append(SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.relationOperation$RG8k)));
-          tgs.append("\": ");
-          tgs.append(parentName.toLowerCase());
-          tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.with$R_jq), PROPS.name$MnvL));
-          tgs.append("Handler.Handle");
-          tgs.append(RelationOperationHolder__BehaviorDescriptor.capitalize_id6LRrEr56jrv.invoke(op));
-          tgs.append(",");
-          tgs.newLine();
-        }
-
-      }
-    }
-
-    tgs.append(" }");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" for subject, handler := range subjects {");
-    tgs.newLine();
-    tgs.append("  if _, err := subscriber.Subscribe(context.Background(), subject, handler); err != nil {");
-    tgs.newLine();
-    tgs.append("   log.Fatalf(\"failed to subscribe to %s: %v\", subject, err)");
-    tgs.newLine();
-    tgs.append("  }");
-    tgs.newLine();
-    tgs.append(" }");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" log.Println(\"");
-    tgs.append(SPropertyOperations.getString(n, PROPS.name$MnvL));
-    tgs.append(" listening on all subjects\")");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" sigCh := make(chan os.Signal, 1)");
-    tgs.newLine();
-    tgs.append(" signal.Notify(sigCh, syscall.SIGINT, syscall.SIGTERM)");
-    tgs.newLine();
-    tgs.append(" <-sigCh");
-    tgs.newLine();
-    tgs.newLine();
-    tgs.append(" log.Println(\"");
-    tgs.append(SPropertyOperations.getString(n, PROPS.name$MnvL));
-    tgs.append(" shutting down.\")");
-    tgs.newLine();
-    tgs.append("}");
-    tgs.newLine();
     // neaa
 
 
-    String svcName = SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.name$MnvL);
+    String svcName = SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.tenantName$kehk);
     String prefix = SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.subjectPrefix$O1Ig);
     String clientID = SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.clientId$Oz27);
     String natsUrlString = SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.defaultNatsUrl$NP3q);
 
+    tgs.append("// ");
+    tgs.append(svcName);
+    tgs.newLine();
     tgs.append("package main");
     tgs.newLine();
     tgs.newLine();
@@ -355,7 +150,7 @@ public class Main_TextGen extends TextGenDescriptorBase {
     tgs.append(" if natsURL == \"\" {");
     tgs.newLine();
     tgs.append("  natsURL = \"");
-    tgs.append("{???-natsUrl}");
+    tgs.append(natsUrlString);
     tgs.append("\"");
     tgs.newLine();
     tgs.append(" }");
@@ -369,7 +164,7 @@ public class Main_TextGen extends TextGenDescriptorBase {
     tgs.append(" creds := &auth.Credentials{Type: auth.TypeNone}");
     tgs.newLine();
     tgs.append(" conn := events.NewConnection(\"");
-    tgs.append("{???-clientID}");
+    tgs.append(clientID);
     tgs.append("\", cfg, creds)");
     tgs.newLine();
     tgs.newLine();
@@ -391,30 +186,32 @@ public class Main_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.newLine();
 
-    tgs.append("{???-foreach entity in node.entities {}");
-    tgs.append("{???-string eName = entity.name;}");
-    tgs.append("{???-string eVar = entity.name.toLowerCaseFirst();}");
-    tgs.append(" ");
-    tgs.append("{???-eVar}");
-    tgs.append("Handler := New");
-    tgs.append("{???-eName}");
-    tgs.append("Handler(publisher, prefix)");
-    tgs.newLine();
-    tgs.append("{???-}}");
-
-    tgs.append("{???-foreach relation in node.relations {}");
-    tgs.append("{???-string rFrom = relation.from.name;}");
-    tgs.append("{???-string rTo = relation.to.name;}");
-    tgs.append("{???-string rVar = relation.from.name.toLowerCaseFirst();}");
-    tgs.append(" ");
-    tgs.append("{???-rVar}");
-    tgs.append("{???-rTo}");
-    tgs.append("Handler := New");
-    tgs.append("{???-rFrom}");
-    tgs.append("{???-rTo}");
-    tgs.append("Handler(publisher, prefix)");
-    tgs.newLine();
-    tgs.append("{???-}}");
+    for (SNode entity : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.entities$RLwe))) {
+      String eName = SPropertyOperations.getString(SLinkOperations.getTarget(entity, LINKS.entity$k9hN), PROPS.name$MnvL);
+      String eVar = eName.toLowerCase();
+      tgs.append(" ");
+      tgs.append(eVar);
+      tgs.append("Handler := New");
+      tgs.append(eName);
+      tgs.append("Handler(publisher, prefix)");
+      tgs.newLine();
+    }
+    for (SNode entity : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.entities$RLwe))) {
+      for (SNode relation : ListSequence.fromList(SLinkOperations.getChildren(SLinkOperations.getTarget(entity, LINKS.entity$k9hN), LINKS.relations$Mn4T))) {
+        String rFrom = SPropertyOperations.getString(SNodeOperations.getNodeAncestor(relation, CONCEPTS.Entity$iI, false, false), PROPS.name$MnvL);
+        String rTo = SPropertyOperations.getString(SLinkOperations.getTarget(relation, LINKS.to$R_jq), PROPS.name$MnvL);
+        String rVar = rFrom.toLowerCase();
+        tgs.append(" ");
+        tgs.append(rVar);
+        tgs.append(rTo);
+        tgs.append("Handler := New");
+        tgs.append(rFrom);
+        tgs.append(rTo);
+        tgs.append("Handler(publisher, prefix)");
+        tgs.newLine();
+      }
+      // skip
+    }
 
     tgs.newLine();
 
@@ -439,76 +236,85 @@ public class Main_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.newLine();
 
-    tgs.append("{???-foreach entity in node.entities {}");
-    tgs.append("{???-string eName = entity.name;}");
-    tgs.append("{???-string eVar = entity.name.toLowerCaseFirst();}");
-    tgs.append("{???-string eLower = entity.name.toLowerCase();}");
-    tgs.append(" // ");
-    tgs.append("{???-eName}");
-    tgs.append(" endpoints");
-    tgs.newLine();
-    tgs.append(" ");
-    tgs.append("{???-eVar}");
-    tgs.append("Group := root.AddGroup(\"");
-    tgs.append("{???-eLower}");
-    tgs.append("\")");
-    tgs.newLine();
-    tgs.append("{???-foreach op in entity.operations {}");
-    tgs.append("{???-string epName = op.capitalizedName();}");
-    tgs.append("{???-string epKind = op.entityOperation.name;}");
-    tgs.append(" ");
-    tgs.append("{???-eVar}");
-    tgs.append("Group.AddEndpoint(\"");
-    tgs.append("{???-epKind}");
-    tgs.append("\", micro.HandlerFunc(func(mr micro.Request) { ");
-    tgs.append("{???-eVar}");
-    tgs.append("Handler.Handle");
-    tgs.append("{???-epName}");
-    tgs.append("(adaptRequest(mr)) }))");
-    tgs.newLine();
-    tgs.append("{???-}}");
-    tgs.newLine();
-    tgs.append("{???-}}");
+    for (SNode entity : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.entities$RLwe))) {
 
-    tgs.append("{???-foreach relation in node.relations {}");
-    tgs.append("{???-string rFrom = relation.from.name;}");
-    tgs.append("{???-string rTo = relation.to.name;}");
-    tgs.append("{???-string rVar = relation.from.name.toLowerCaseFirst();}");
-    tgs.append("{???-string rFromLower = relation.from.name.toLowerCase();}");
-    tgs.append("{???-string rToLower = relation.to.name.toLowerCase();}");
-    tgs.append(" // ");
-    tgs.append("{???-rFrom}");
-    tgs.append(" -> ");
-    tgs.append("{???-rTo}");
-    tgs.append(" endpoints");
-    tgs.newLine();
-    tgs.append(" ");
-    tgs.append("{???-rVar}");
-    tgs.append("{???-rTo}");
-    tgs.append("Group := root.AddGroup(\"");
-    tgs.append("{???-rFromLower}");
-    tgs.append("\").AddGroup(\"");
-    tgs.append("{???-rToLower}");
-    tgs.append("\")");
-    tgs.newLine();
-    tgs.append("{???-foreach op in relation.operations {}");
-    tgs.append("{???-string rpName = op.capitalizedName();}");
-    tgs.append("{???-string rpKind = op.relationOperation.name;}");
-    tgs.append(" ");
-    tgs.append("{???-rVar}");
-    tgs.append("{???-rTo}");
-    tgs.append("Group.AddEndpoint(\"");
-    tgs.append("{???-rpKind}");
-    tgs.append("\", micro.HandlerFunc(func(mr micro.Request) { ");
-    tgs.append("{???-rVar}");
-    tgs.append("{???-rTo}");
-    tgs.append("Handler.Handle");
-    tgs.append("{???-rpName}");
-    tgs.append("(adaptRequest(mr)) }))");
-    tgs.newLine();
-    tgs.append("{???-}}");
-    tgs.newLine();
-    tgs.append("{???-}}");
+      String eName = SPropertyOperations.getString(SLinkOperations.getTarget(entity, LINKS.entity$k9hN), PROPS.name$MnvL);
+      String eVar = Entity__BehaviorDescriptor.toLoverCaseFirst_id6LRrEr4Y7HY.invoke(SLinkOperations.getTarget(entity, LINKS.entity$k9hN));
+      String eLower = eName.toLowerCase();
+
+      tgs.append(" // ");
+      tgs.append(eName);
+      tgs.append(" endpoints");
+      tgs.newLine();
+      tgs.append(" ");
+      tgs.append(eVar);
+      tgs.append("Group := root.AddGroup(\"");
+      tgs.append(eLower);
+      tgs.append("\")");
+      tgs.newLine();
+      for (SNode op : ListSequence.fromList(SLinkOperations.getChildren(SLinkOperations.getTarget(entity, LINKS.entity$k9hN), LINKS.operations$RrWf))) {
+        String epName = EntityOperationHolder__BehaviorDescriptor.capitalize_id6DJmAW$mchD.invoke(op);
+        String epKind = SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.entityOperation$RtmO));
+
+        tgs.append(" ");
+        tgs.append(eVar);
+        tgs.append("Group.AddEndpoint(\"");
+        tgs.append(epKind);
+        tgs.append("\", micro.HandlerFunc(func(mr micro.Request) { ");
+        tgs.append(eVar);
+        tgs.append("Handler.Handle");
+        tgs.append(epName);
+        tgs.append("(adaptRequest(mr)) }))");
+        tgs.newLine();
+      }
+      tgs.newLine();
+    }
+
+    for (SNode eref : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.entities$RLwe))) {
+      for (SNode relation : ListSequence.fromList(SLinkOperations.getChildren(SLinkOperations.getTarget(eref, LINKS.entity$k9hN), LINKS.relations$Mn4T))) {
+        SNode parentEntity = SNodeOperations.getNodeAncestor(relation, CONCEPTS.Entity$iI, false, false);
+        String rFrom = SPropertyOperations.getString(parentEntity, PROPS.name$MnvL);
+        String rTo = SPropertyOperations.getString(SLinkOperations.getTarget(relation, LINKS.to$R_jq), PROPS.name$MnvL);
+        String rVar = Entity__BehaviorDescriptor.toLoverCaseFirst_id6LRrEr4Y7HY.invoke(parentEntity);
+        String rFronLower = SPropertyOperations.getString(parentEntity, PROPS.name$MnvL).toLowerCase();
+        String rToLower = SPropertyOperations.getString(SLinkOperations.getTarget(relation, LINKS.to$R_jq), PROPS.name$MnvL).toLowerCase();
+        tgs.append(" // ");
+        tgs.append(rFrom);
+        tgs.append(" -> ");
+        tgs.append(rTo);
+        tgs.append(" endpoints");
+        tgs.newLine();
+        tgs.append(" ");
+        tgs.append(rVar);
+        tgs.append(rTo);
+        tgs.append("Group := root.AddGroup(\"");
+        tgs.append(rFronLower);
+        tgs.append("\").AddGroup(\"");
+        tgs.append(rToLower);
+        tgs.append("\")");
+        tgs.newLine();
+
+
+        for (SNode op : ListSequence.fromList(SLinkOperations.getChildren(relation, LINKS.operations$REVM))) {
+          String rpName = RelationOperationHolder__BehaviorDescriptor.capitalize_id6LRrEr56jrv.invoke(op);
+          String rpKind = SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.relationOperation$RG8k));
+          tgs.append(" ");
+          tgs.append(rVar);
+          tgs.append(rTo);
+          tgs.append("Group.AddEndpoint(\"");
+          tgs.append(rpKind);
+          tgs.append("\", micro.HandlerFunc(func(mr micro.Request) { ");
+          tgs.append(rVar);
+          tgs.append(rTo);
+          tgs.append("Handler.Handle");
+          tgs.append(rpName);
+          tgs.append("(adaptRequest(mr)) }))");
+          tgs.newLine();
+        }
+        tgs.newLine();
+      }
+      // skip
+    }
 
     tgs.append(" log.Println(\"");
     tgs.append(svcName);
@@ -539,17 +345,14 @@ public class Main_TextGen extends TextGenDescriptorBase {
     tgs.append("}");
     tgs.newLine();
 
-    tgs.append("{???-}}");
-    tgs.append("{???-}}");
-
-
   }
 
   private static final class PROPS {
+    /*package*/ static final SProperty tenantName$kehk = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L, 0x4e35d519f284490dL, "tenantName");
     /*package*/ static final SProperty subjectPrefix$O1Ig = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L, 0x6a6f5a6f2407ac35L, "subjectPrefix");
-    /*package*/ static final SProperty name$MnvL = MetaAdapterFactory.getProperty(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L, 0x110396ec041L, "name");
-    /*package*/ static final SProperty defaultNatsUrl$NP3q = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L, 0x6a6f5a6f2407ac29L, "defaultNatsUrl");
     /*package*/ static final SProperty clientId$Oz27 = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L, 0x6c776ea6c4f7ea04L, "clientId");
+    /*package*/ static final SProperty defaultNatsUrl$NP3q = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L, 0x6a6f5a6f2407ac29L, "defaultNatsUrl");
+    /*package*/ static final SProperty name$MnvL = MetaAdapterFactory.getProperty(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L, 0x110396ec041L, "name");
     /*package*/ static final SProperty entityOperation$RtmO = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac89L, 0x6a6f5a6f2407ac8bL, "entityOperation");
     /*package*/ static final SProperty relationOperation$RG8k = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac9cL, 0x6a6f5a6f2407ac9eL, "relationOperation");
   }
@@ -557,7 +360,7 @@ public class Main_TextGen extends TextGenDescriptorBase {
   private static final class LINKS {
     /*package*/ static final SReferenceLink entity$k9hN = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4ec1L, 0x6a6f5a6f243a4ec2L, "entity");
     /*package*/ static final SContainmentLink entities$RLwe = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L, 0x6a6f5a6f2407acacL, "entities");
-    /*package*/ static final SReferenceLink with$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "with");
+    /*package*/ static final SReferenceLink to$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "to");
     /*package*/ static final SContainmentLink relations$Mn4T = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x210dfbd5ddf5be7aL, "relations");
     /*package*/ static final SContainmentLink operations$RrWf = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x6a6f5a6f2407ac86L, "operations");
     /*package*/ static final SContainmentLink operations$REVM = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac9aL, "operations");

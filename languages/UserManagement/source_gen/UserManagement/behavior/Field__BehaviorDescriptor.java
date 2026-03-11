@@ -22,7 +22,6 @@ import org.jetbrains.annotations.Nullable;
 import jetbrains.mps.core.aspects.behaviour.api.BHMethodNotFoundException;
 import org.jetbrains.mps.openapi.language.SProperty;
 import org.jetbrains.mps.openapi.language.SContainmentLink;
-import org.jetbrains.mps.openapi.language.SReferenceLink;
 
 public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
   private static final SAbstractConcept CONCEPT = MetaAdapterFactory.getConcept(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L, "UserManagement.structure.Field");
@@ -33,10 +32,9 @@ public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
   public static final SMethod<String> goType_id6DJmAW$aE7I = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("goType").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123829887470L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> jsonTag_id6DJmAW$b545 = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("jsonTag").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123829997829L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> jsonName_id6DJmAW$7ald = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("jsonName").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123828970829L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
-  public static final SMethod<String> fkConstrainst_id6DJmAW$cjVl = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("fkConstrainst").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123830320853L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> dbName_id6DJmAW$7pGu = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("dbName").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123829033758L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
 
-  private static final List<SMethod<?>> BH_METHODS = Arrays.<SMethod<?>>asList(hasAnotation_id6DJmAW$hoUl, capitalize_id5Lqw_By60m2, sqlType_id6DJmAW$aWx9, goType_id6DJmAW$aE7I, jsonTag_id6DJmAW$b545, jsonName_id6DJmAW$7ald, fkConstrainst_id6DJmAW$cjVl, dbName_id6DJmAW$7pGu);
+  private static final List<SMethod<?>> BH_METHODS = Arrays.<SMethod<?>>asList(hasAnotation_id6DJmAW$hoUl, capitalize_id5Lqw_By60m2, sqlType_id6DJmAW$aWx9, goType_id6DJmAW$aE7I, jsonTag_id6DJmAW$b545, jsonName_id6DJmAW$7ald, dbName_id6DJmAW$7pGu);
 
   private static void ___init___(@NotNull SNode __thisNode__) {
   }
@@ -144,12 +142,6 @@ public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
     }
     return sb.toString().strip();
   }
-  /*package*/ static String fkConstrainst_id6DJmAW$cjVl(@NotNull SNode __thisNode__) {
-    if (SPropertyOperations.getEnum(SLinkOperations.getTarget(__thisNode__, LINKS.type$KBb7), PROPS.fieldType$RkpN).getPresentation().equals("entityRef") && SLinkOperations.getTarget(__thisNode__, LINKS.targetEntity$5$qj) != null) {
-      return "REFERENCES " + Entity__BehaviorDescriptor.tableName_id6DJmAW$e3L$.invoke(SLinkOperations.getTarget(__thisNode__, LINKS.targetEntity$5$qj)) + "(id)";
-    }
-    return "";
-  }
   /*package*/ static String dbName_id6DJmAW$7pGu(@NotNull SNode __thisNode__) {
     return ((String) Field__BehaviorDescriptor.jsonName_id6DJmAW$7ald.invoke(__thisNode__));
   }
@@ -182,8 +174,6 @@ public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
       case 5:
         return (T) ((String) jsonName_id6DJmAW$7ald(node));
       case 6:
-        return (T) ((String) fkConstrainst_id6DJmAW$cjVl(node));
-      case 7:
         return (T) ((String) dbName_id6DJmAW$7pGu(node));
       default:
         throw new BHMethodNotFoundException(this, method);
@@ -223,6 +213,5 @@ public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
   private static final class LINKS {
     /*package*/ static final SContainmentLink anotations$R8V0 = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L, 0x6a6f5a6f2407ac76L, "anotations");
     /*package*/ static final SContainmentLink type$KBb7 = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L, 0x6a6f5a6f240f1046L, "type");
-    /*package*/ static final SReferenceLink targetEntity$5$qj = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L, 0x6a6f5a6f242a92c6L, "targetEntity");
   }
 }

@@ -70,7 +70,7 @@ import org.jetbrains.mps.openapi.language.SConcept;
     return editorCell;
   }
   private EditorCell createConstant_0() {
-    EditorCell_Constant editorCell = new EditorCell_Constant(getEditorContext(), myNode, "nats server");
+    EditorCell_Constant editorCell = new EditorCell_Constant(getEditorContext(), myNode, "tenent Name:");
     editorCell.setCellId("Constant_w8a4ih_a0");
     editorCell.setDefaultText("");
     return editorCell;
@@ -78,11 +78,11 @@ import org.jetbrains.mps.openapi.language.SConcept;
   private EditorCell createProperty_0() {
     getCellFactory().pushCellContext();
     try {
-      final SProperty property = PROPS.name$MnvL;
+      final SProperty property = PROPS.tenantName$kehk;
       getCellFactory().setPropertyInfo(new SPropertyInfo(myNode, property));
       EditorCell_Property editorCell = EditorCell_Property.create(getEditorContext(), new SPropertyAccessor(myNode, property, false, false), myNode);
-      editorCell.setDefaultText("<no name>");
-      editorCell.setCellId("property_name");
+      editorCell.setDefaultText("<no tenantName>");
+      editorCell.setCellId("property_tenantName");
       editorCell.setSubstituteInfo(new SPropertySubstituteInfo(editorCell, property));
       setCellContext(editorCell);
       Iterable<SNode> propertyAttributes = SNodeOperations.ofConcept(new IAttributeDescriptor.AllAttributes().list(myNode), CONCEPTS.PropertyAttribute$Gb);
@@ -401,7 +401,7 @@ import org.jetbrains.mps.openapi.language.SConcept;
   }
 
   private static final class PROPS {
-    /*package*/ static final SProperty name$MnvL = MetaAdapterFactory.getProperty(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L, 0x110396ec041L, "name");
+    /*package*/ static final SProperty tenantName$kehk = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L, 0x4e35d519f284490dL, "tenantName");
     /*package*/ static final SProperty tenentID$NO_o = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L, 0x6a6f5a6f2407ac27L, "tenentID");
     /*package*/ static final SProperty defaultNatsUrl$NP3q = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L, 0x6a6f5a6f2407ac29L, "defaultNatsUrl");
     /*package*/ static final SProperty subjectPrefix$O1Ig = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L, 0x6a6f5a6f2407ac35L, "subjectPrefix");

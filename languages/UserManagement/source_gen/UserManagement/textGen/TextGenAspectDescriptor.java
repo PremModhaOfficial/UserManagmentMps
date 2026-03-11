@@ -49,13 +49,13 @@ public class TextGenAspectDescriptor extends TextGenAspectBase {
       if (root.getConcept().equals(CONCEPTS.Entity$iI)) {
         String fname = getFileName_Entity(root);
         String ext = getFileExtension_Entity(root);
-        outline.registerTextUnit((ext == null ? fname : (fname + '.' + ext)), root);
+        outline.registerTextUnit((ext == null ? fname : (fname + '.' + ext)), getPath_Entity(root), root);
         continue;
       }
       if (root.getConcept().equals(CONCEPTS.Main$eN)) {
         String fname = getFileName_Main(root);
         String ext = getFileExtension_Main(root);
-        outline.registerTextUnit((ext == null ? fname : (fname + '.' + ext)), root);
+        outline.registerTextUnit((ext == null ? fname : (fname + '.' + ext)), getPath_Main(root), root);
         continue;
       }
     }
@@ -77,6 +77,12 @@ public class TextGenAspectDescriptor extends TextGenAspectBase {
   }
   private static String getFileExtension_Main(SNode node) {
     return "go";
+  }
+  private static String getPath_Entity(SNode node) {
+    return "/src/";
+  }
+  private static String getPath_Main(SNode node) {
+    return "/src/";
   }
 
   private static final class CONCEPTS {

@@ -110,6 +110,8 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
     b.associate("server", 0x6a6f5a6f243a4ec9L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L).optional(true).origin("7669448123830914761").done();
     b.aggregate("fields", 0x6a6f5a6f2407ac84L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L).optional(false).ordered(true).multiple(true).origin("7669448123827596420").done();
     b.aggregate("operations", 0x6a6f5a6f2407ac86L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac89L).optional(false).ordered(true).multiple(true).origin("7669448123827596422").done();
+    b.aggregate("preHooks", 0x4e35d519f236377aL).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac89L).optional(true).ordered(true).multiple(true).origin("5635644816138581882").done();
+    b.aggregate("postHooks", 0x4e35d519f2393161L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac89L).optional(true).ordered(true).multiple(true).origin("5635644816138776929").done();
     b.aggregate("relations", 0x210dfbd5ddf5be7aL).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL).optional(true).ordered(true).multiple(true).origin("2381836673919336058").done();
     return b.create();
   }
@@ -135,7 +137,6 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
     b.parent(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L);
     b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596392");
     b.version(3);
-    b.associate("targetEntity", 0x6a6f5a6f242a92c6L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL).optional(true).origin("7669448123829883590").done();
     b.aggregate("anotations", 0x6a6f5a6f2407ac76L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac73L).optional(true).ordered(true).multiple(true).origin("7669448123827596406").done();
     b.aggregate("type", 0x6a6f5a6f240f1046L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7aL).optional(false).ordered(true).multiple(false).origin("7669448123828080710").done();
     b.alias("f");
@@ -160,9 +161,9 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
   private static ConceptDescriptor createDescriptorForMain() {
     ConceptDescriptorBuilder2 b = new ConceptDescriptorBuilder2("UserManagement", "Main", 0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L);
     b.class_(false, false, true);
-    b.parent(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L);
     b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596321");
     b.version(3);
+    b.property("tenantName", 0x4e35d519f284490dL).type(PrimitiveTypeId.STRING).origin("5635644816143698189").done();
     b.property("tenentID", 0x6a6f5a6f2407ac27L).type(PrimitiveTypeId.STRING).origin("7669448123827596327").done();
     b.property("defaultNatsUrl", 0x6a6f5a6f2407ac29L).type(PrimitiveTypeId.STRING).origin("7669448123827596329").done();
     b.property("subjectPrefix", 0x6a6f5a6f2407ac35L).type(PrimitiveTypeId.STRING).origin("7669448123827596341").done();
@@ -177,7 +178,7 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
     b.parent(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L);
     b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596431");
     b.version(3);
-    b.associate("with", 0x6a6f5a6f2407ac97L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL).optional(false).origin("7669448123827596439").done();
+    b.associate("to", 0x6a6f5a6f2407ac97L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL).optional(false).origin("7669448123827596439").done();
     b.aggregate("operations", 0x6a6f5a6f2407ac9aL).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac9cL).optional(false).ordered(true).multiple(true).origin("7669448123827596442").done();
     b.aggregate("extraFields", 0x6a6f5a6f2407aca2L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L).optional(true).ordered(true).multiple(true).origin("7669448123827596450").done();
     return b.create();

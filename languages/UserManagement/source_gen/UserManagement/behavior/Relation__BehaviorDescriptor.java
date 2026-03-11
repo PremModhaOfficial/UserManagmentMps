@@ -36,7 +36,7 @@ public final class Relation__BehaviorDescriptor extends BaseBHDescriptor {
 
   /*package*/ static String tableName_id6DJmAW$ebFg(@NotNull SNode __thisNode__) {
     String frm = SPropertyOperations.getString(SNodeOperations.getNodeAncestor(__thisNode__, CONCEPTS.Entity$iI, false, false), PROPS.name$MnvL);
-    String to = SPropertyOperations.getString(SLinkOperations.getTarget(__thisNode__, LINKS.with$R_jq), PROPS.name$MnvL);
+    String to = SPropertyOperations.getString(SLinkOperations.getTarget(__thisNode__, LINKS.to$R_jq), PROPS.name$MnvL);
 
     frm = frm.strip();
     to = to.strip();
@@ -104,6 +104,6 @@ public final class Relation__BehaviorDescriptor extends BaseBHDescriptor {
   }
 
   private static final class LINKS {
-    /*package*/ static final SReferenceLink with$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "with");
+    /*package*/ static final SReferenceLink to$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "to");
   }
 }

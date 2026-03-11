@@ -140,11 +140,11 @@ public class SqlSchem_TextGen extends TextGenDescriptorBase {
         tgs.append("(id) ON DELETE CASCADE,");
         tgs.newLine();
         tgs.append(" ");
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.to$R_jq), PROPS.name$MnvL).toLowerCase());
         tgs.append("_id UUID NOT NULL REFERENCES ");
         tgs.append(SPropertyOperations.getString(ctx.getPrimaryInput(), PROPS.dbSchema$kn9b));
         tgs.append(".");
-        tgs.append(Entity__BehaviorDescriptor.tableName_id6DJmAW$e3L$.invoke(SLinkOperations.getTarget(r, LINKS.with$R_jq)));
+        tgs.append(Entity__BehaviorDescriptor.tableName_id6DJmAW$e3L$.invoke(SLinkOperations.getTarget(r, LINKS.to$R_jq)));
         tgs.append("(id) ON DELETE CASCADE");
         for (SNode fex : ListSequence.fromList(SLinkOperations.getChildren(r, LINKS.extraFields$RLJf))) {
           tgs.append(",");
@@ -175,7 +175,7 @@ public class SqlSchem_TextGen extends TextGenDescriptorBase {
         tgs.append(" PRIMARY KEY (");
         tgs.append(parentNamr.toLowerCase());
         tgs.append("_id, ");
-        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.with$R_jq), PROPS.name$MnvL).toLowerCase());
+        tgs.append(SPropertyOperations.getString(SLinkOperations.getTarget(r, LINKS.to$R_jq), PROPS.name$MnvL).toLowerCase());
         tgs.append("_id)");
         tgs.newLine();
         tgs.append(");");
@@ -197,7 +197,7 @@ public class SqlSchem_TextGen extends TextGenDescriptorBase {
     /*package*/ static final SContainmentLink fields$Rrud = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x6a6f5a6f2407ac84L, "fields");
     /*package*/ static final SContainmentLink entityrefs$ko5f = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f243a4eceL, 0x6a6f5a6f243a4ed6L, "entityrefs");
     /*package*/ static final SContainmentLink relations$Mn4T = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x210dfbd5ddf5be7aL, "relations");
-    /*package*/ static final SReferenceLink with$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "with");
+    /*package*/ static final SReferenceLink to$R_jq = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407ac97L, "to");
     /*package*/ static final SContainmentLink extraFields$RLJf = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL, 0x6a6f5a6f2407aca2L, "extraFields");
   }
 

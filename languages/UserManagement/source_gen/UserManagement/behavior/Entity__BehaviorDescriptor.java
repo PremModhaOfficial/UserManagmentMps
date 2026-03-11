@@ -79,7 +79,8 @@ public final class Entity__BehaviorDescriptor extends BaseBHDescriptor {
     return SPropertyOperations.getString(__thisNode__, PROPS.name$MnvL).toLowerCase();
   }
   /*package*/ static String toLoverCaseFirst_id6LRrEr4Y7HY(@NotNull SNode __thisNode__) {
-    return SPropertyOperations.getString(__thisNode__, PROPS.name$MnvL).toLowerCase() + "to";
+    String s = SPropertyOperations.getString(__thisNode__, PROPS.name$MnvL);
+    return (s.charAt(0) + "").toLowerCase() + s.subSequence(1, s.length());
   }
   /*package*/ static String createValidation_id6DJmAW$cIRR(@NotNull SNode __thisNode__) {
     String result = "";

@@ -30,11 +30,6 @@ import jetbrains.mps.openapi.editor.cells.DefaultSubstituteInfo;
 import jetbrains.mps.nodeEditor.cellMenu.SEmptyContainmentSubstituteInfo;
 import jetbrains.mps.nodeEditor.cellMenu.SChildSubstituteInfo;
 import jetbrains.mps.openapi.editor.menus.transformation.SNodeLocation;
-import org.jetbrains.mps.openapi.language.SReferenceLink;
-import jetbrains.mps.lang.editor.cellProviders.SReferenceCellProvider;
-import jetbrains.mps.editor.runtime.impl.CellUtil;
-import jetbrains.mps.nodeEditor.cellMenu.SReferenceSubstituteInfo;
-import jetbrains.mps.lang.core.behavior.LinkAttribute__BehaviorDescriptor;
 import jetbrains.mps.nodeEditor.cellProviders.AbstractCellListHandler;
 import jetbrains.mps.nodeEditor.cellLayout.CellLayout_Vertical;
 import jetbrains.mps.lang.editor.cellProviders.RefNodeListHandler;
@@ -70,7 +65,6 @@ import org.jetbrains.mps.openapi.language.SConcept;
     editorCell.addEditorCell(createProperty_0());
     editorCell.addEditorCell(createConstant_0());
     editorCell.addEditorCell(createRefNode_0());
-    editorCell.addEditorCell(createRefCell_0());
     editorCell.addEditorCell(createConstant_1());
     editorCell.addEditorCell(createRefNodeList_0());
     return editorCell;
@@ -157,96 +151,25 @@ import org.jetbrains.mps.openapi.language.SConcept;
       return "<no type>";
     }
   }
-  private EditorCell createRefCell_0() {
-    final SReferenceLink referenceLink = LINKS.targetEntity$5$qj;
-    SReferenceCellProvider provider = new SReferenceCellProvider(getNode(), referenceLink, getEditorContext()) {
-      protected EditorCell createReferenceCell(final SNode targetNode) {
-        EditorCell cell = getUpdateSession().updateReferencedNodeCell(() -> new Inline_Builder0(getEditorContext(), getNode(), targetNode).createCell(), targetNode, LINKS.targetEntity$5$qj);
-        CellUtil.setupIDeprecatableStyles(targetNode, cell);
-        setSemanticNodeToCells(cell, getNode());
-        installDeleteActions_nullable_reference(cell);
-        return cell;
-      }
-    };
-
-    provider.setNoTargetText("<no targetEntity>");
-    EditorCell editorCell = provider.createCell();
-
-    if (editorCell.getSRole() == null) {
-      editorCell.setReferenceCell(true);
-      editorCell.setSRole(LINKS.targetEntity$5$qj);
-    }
-    editorCell.setSubstituteInfo(new SReferenceSubstituteInfo(editorCell, referenceLink));
-    Iterable<SNode> referenceAttributes = SNodeOperations.ofConcept(new IAttributeDescriptor.AllAttributes().list(myNode), CONCEPTS.LinkAttribute$v_);
-    Iterable<SNode> currentReferenceAttributes = Sequence.fromIterable(referenceAttributes).where((it) -> Objects.equals(LinkAttribute__BehaviorDescriptor.getLink_id1avfQ4BEFo6.invoke(it), referenceLink));
-    if (Sequence.fromIterable(currentReferenceAttributes).isNotEmpty()) {
-      EditorManager manager = EditorManager.getInstanceFromContext(getEditorContext());
-      return manager.createNodeRoleAttributeCell(Sequence.fromIterable(currentReferenceAttributes).first(), AttributeKind.REFERENCE, editorCell);
-    } else
-    return editorCell;
-  }
-  /*package*/ static class Inline_Builder0 extends AbstractEditorBuilder {
-    @NotNull
-    private SNode myNode;
-    private SNode myReferencingNode;
-
-    /*package*/ Inline_Builder0(@NotNull EditorContext context, SNode referencingNode, @NotNull SNode node) {
-      super(context);
-      myReferencingNode = referencingNode;
-      myNode = node;
-    }
-
-    /*package*/ EditorCell createCell() {
-      return createProperty_1();
-    }
-
-    @NotNull
-    @Override
-    public SNode getNode() {
-      return myNode;
-    }
-
-    private EditorCell createProperty_1() {
-      getCellFactory().pushCellContext();
-      try {
-        final SProperty property = PROPS.name$MnvL;
-        getCellFactory().setPropertyInfo(new SPropertyInfo(myNode, property));
-        EditorCell_Property editorCell = EditorCell_Property.create(getEditorContext(), new SPropertyAccessor(myNode, property, true, false), myNode);
-        editorCell.setDefaultText("<no name>");
-        editorCell.setCellId("property_name1");
-        editorCell.setSubstituteInfo(new SPropertySubstituteInfo(editorCell, property));
-        setCellContext(editorCell);
-        Iterable<SNode> propertyAttributes = SNodeOperations.ofConcept(new IAttributeDescriptor.AllAttributes().list(myNode), CONCEPTS.PropertyAttribute$Gb);
-        Iterable<SNode> currentPropertyAttributes = Sequence.fromIterable(propertyAttributes).where((it) -> Objects.equals(PropertyAttribute__BehaviorDescriptor.getProperty_id1avfQ4BBzOo.invoke(it), property));
-        if (Sequence.fromIterable(currentPropertyAttributes).isNotEmpty()) {
-          EditorManager manager = EditorManager.getInstanceFromContext(getEditorContext());
-          return manager.createNodeRoleAttributeCell(Sequence.fromIterable(currentPropertyAttributes).first(), AttributeKind.PROPERTY, editorCell);
-        } else
-        return editorCell;
-      } finally {
-        getCellFactory().popCellContext();
-      }
-    }
-  }
   private EditorCell createConstant_1() {
     EditorCell_Constant editorCell = new EditorCell_Constant(getEditorContext(), myNode, "anotations: ");
-    editorCell.setCellId("Constant_s65pvt_e0");
+    editorCell.setCellId("Constant_s65pvt_d0");
     editorCell.setDefaultText("");
     return editorCell;
   }
   private EditorCell createRefNodeList_0() {
-    AbstractCellListHandler handler = new anotationsListHandler_s65pvt_f0(myNode, getEditorContext());
+    AbstractCellListHandler handler = new anotationsListHandler_s65pvt_e0(myNode, getEditorContext());
     EditorCell_Collection editorCell = handler.createCells(new CellLayout_Vertical(), false);
     editorCell.setCellId("refNodeList_anotations");
     editorCell.setGridLayout(true);
     editorCell.setSRole(handler.getElementSRole());
     return editorCell;
   }
-  private static class anotationsListHandler_s65pvt_f0 extends RefNodeListHandler {
+  private static class anotationsListHandler_s65pvt_e0 extends RefNodeListHandler {
     @NotNull
     private SNode myNode;
 
-    public anotationsListHandler_s65pvt_f0(SNode ownerNode, EditorContext context) {
+    public anotationsListHandler_s65pvt_e0(SNode ownerNode, EditorContext context) {
       super(context, false);
       myNode = ownerNode;
     }
@@ -269,7 +192,7 @@ import org.jetbrains.mps.openapi.language.SConcept;
     }
     public EditorCell createEmptyCell() {
       getCellFactory().pushCellContext();
-      getCellFactory().setNodeLocation(new SNodeLocation.FromParentAndLink(anotationsListHandler_s65pvt_f0.this.getNode(), LINKS.anotations$R8V0));
+      getCellFactory().setNodeLocation(new SNodeLocation.FromParentAndLink(anotationsListHandler_s65pvt_e0.this.getNode(), LINKS.anotations$R8V0));
       try {
         EditorCell emptyCell = null;
         emptyCell = super.createEmptyCell();
@@ -316,13 +239,11 @@ import org.jetbrains.mps.openapi.language.SConcept;
 
   private static final class CONCEPTS {
     /*package*/ static final SConcept PropertyAttribute$Gb = MetaAdapterFactory.getConcept(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x2eb1ad060897da56L, "jetbrains.mps.lang.core.structure.PropertyAttribute");
-    /*package*/ static final SConcept LinkAttribute$v_ = MetaAdapterFactory.getConcept(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x2eb1ad060897da51L, "jetbrains.mps.lang.core.structure.LinkAttribute");
     /*package*/ static final SConcept FieldAnnotationHolder$3e = MetaAdapterFactory.getConcept(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac73L, "UserManagement.structure.FieldAnnotationHolder");
   }
 
   private static final class LINKS {
     /*package*/ static final SContainmentLink type$KBb7 = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L, 0x6a6f5a6f240f1046L, "type");
-    /*package*/ static final SReferenceLink targetEntity$5$qj = MetaAdapterFactory.getReferenceLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L, 0x6a6f5a6f242a92c6L, "targetEntity");
     /*package*/ static final SContainmentLink anotations$R8V0 = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L, 0x6a6f5a6f2407ac76L, "anotations");
   }
 }

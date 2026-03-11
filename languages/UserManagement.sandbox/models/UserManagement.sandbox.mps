@@ -20,6 +20,8 @@
       </concept>
       <concept id="7669448123827596414" name="UserManagement.structure.Entity" flags="ng" index="1eqfoh">
         <reference id="7669448123830914761" name="server" index="1elhiA" />
+        <child id="5635644816138581882" name="preHooks" index="2W0Y9z" />
+        <child id="5635644816138776929" name="postHooks" index="2W3ehS" />
         <child id="7669448123827596422" name="operations" index="1eqfrD" />
         <child id="7669448123827596420" name="fields" index="1eqfrF" />
         <child id="2381836673919336058" name="relations" index="3WY4mJ" />
@@ -31,6 +33,8 @@
         <property id="7669448123827596404" name="annotation" index="1eqfor" />
       </concept>
       <concept id="7669448123827596321" name="UserManagement.structure.Main" flags="ng" index="1eqfpe">
+        <property id="5635644816142537696" name="generationPath" index="2WhOrT" />
+        <property id="5635644816143698189" name="tenantName" index="2WGpKk" />
         <property id="7669448123827596329" name="defaultNatsUrl" index="1eqfp6" />
         <property id="7669448123827596327" name="tenentID" index="1eqfp8" />
         <property id="7669448123827596342" name="dbSchema" index="1eqfpp" />
@@ -38,7 +42,7 @@
         <child id="7669448123827596460" name="entities" index="1eqfr3" />
       </concept>
       <concept id="7669448123827596431" name="UserManagement.structure.Relation" flags="ng" index="1eqfrw">
-        <reference id="7669448123827596439" name="with" index="1eqfrS" />
+        <reference id="7669448123827596439" name="to" index="1eqfrS" />
         <child id="7669448123827596450" name="extraFields" index="1eqfrd" />
         <child id="7669448123827596442" name="operations" index="1eqfrP" />
       </concept>
@@ -61,10 +65,12 @@
   <node concept="1eqfpe" id="6DJmAW$eZZl">
     <property role="TrG5h" value="main" />
     <property role="1eqfp8" value="motadata" />
-    <property role="1eqfp6" value="default" />
+    <property role="1eqfp6" value="nats://localhost:4229 " />
     <property role="1eqfpq" value="motadata" />
     <property role="1eqfpp" value="iam" />
     <property role="3GE5qa" value="usrmng" />
+    <property role="2WhOrT" value="/home/prem-modha/projects/dsl_gen" />
+    <property role="2WGpKk" value="MotaUserManagement" />
     <node concept="1elhiI" id="6DJmAW$jFhM" role="1eqfr3">
       <ref role="1elhiH" node="6DJmAW$fZlt" resolve="Roles" />
     </node>
@@ -75,7 +81,13 @@
   <node concept="1eqfoh" id="6DJmAW$fl8W">
     <property role="TrG5h" value="User" />
     <property role="3GE5qa" value="usrmng" />
-    <ref role="1elhiA" node="6DJmAW$eZZl" resolve="main" />
+    <ref role="1elhiA" node="6DJmAW$eZZl" />
+    <node concept="1eqfrA" id="4SPPhBMfxZK" role="2W3ehS">
+      <property role="1eqfr$" value="6DJmAW$1ULr/delete" />
+    </node>
+    <node concept="1eqfrA" id="4SPPhBMfxZL" role="2W3ehS">
+      <property role="1eqfr$" value="6DJmAW$1ULu/get" />
+    </node>
     <node concept="1eqfrw" id="24dYXnufenB" role="3WY4mJ">
       <property role="TrG5h" value="UserRoll" />
       <ref role="1eqfrS" node="6DJmAW$fZlt" resolve="Roles" />
@@ -103,7 +115,7 @@
       <node concept="1eqfol" id="6DJmAW$fl9b" role="1eo4CD">
         <property role="1eqfok" value="6DJmAW$1UKT/uuid" />
       </node>
-      <node concept="1eqfos" id="6DJmAW$fZlr" role="1eqfop">
+      <node concept="1eqfos" id="4SPPhBMht_7" role="1eqfop">
         <property role="1eqfor" value="6DJmAW$1UL7/primaryKey" />
       </node>
     </node>
@@ -161,11 +173,17 @@
     <node concept="1eqfrA" id="6DJmAW$fl93" role="1eqfrD">
       <property role="1eqfr$" value="6DJmAW$1ULs/list" />
     </node>
+    <node concept="1eqfrA" id="4SPPhBMfxZI" role="2W0Y9z">
+      <property role="1eqfr$" value="6DJmAW$1ULo/create" />
+    </node>
+    <node concept="1eqfrA" id="4SPPhBMfxZJ" role="2W0Y9z">
+      <property role="1eqfr$" value="6DJmAW$1ULr/delete" />
+    </node>
   </node>
   <node concept="1eqfoh" id="6DJmAW$fZlt">
     <property role="TrG5h" value="Roles" />
     <property role="3GE5qa" value="usrmng" />
-    <ref role="1elhiA" node="6DJmAW$eZZl" resolve="main" />
+    <ref role="1elhiA" node="6DJmAW$eZZl" />
     <node concept="1eqfo7" id="6DJmAW$fZlu" role="1eqfrF">
       <property role="TrG5h" value="ID" />
       <node concept="1eqfol" id="6DJmAW$fZlv" role="1eo4CD">

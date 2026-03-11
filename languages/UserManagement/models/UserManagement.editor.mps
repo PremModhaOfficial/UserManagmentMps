@@ -7,7 +7,7 @@
     <devkit ref="fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)" />
   </languages>
   <imports>
-    <import index="laam" ref="r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)" implicit="true" />
+    <import index="laam" ref="r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)" />
     <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
   </imports>
   <registry>
@@ -56,6 +56,7 @@
       </concept>
       <concept id="1073389882823" name="jetbrains.mps.lang.editor.structure.CellModel_RefNode" flags="sg" stub="730538219795960754" index="3F1sOY" />
       <concept id="1073390211982" name="jetbrains.mps.lang.editor.structure.CellModel_RefNodeList" flags="sg" stub="2794558372793454595" index="3F2HdR" />
+      <concept id="1198256887712" name="jetbrains.mps.lang.editor.structure.CellModel_Indent" flags="ng" index="3XFhqQ" />
       <concept id="1166049232041" name="jetbrains.mps.lang.editor.structure.AbstractComponent" flags="ng" index="1XWOmA">
         <reference id="1166049300910" name="conceptDeclaration" index="1XX52x" />
       </concept>
@@ -65,11 +66,11 @@
     <ref role="1XX52x" to="laam:6DJmAW$1UKx" resolve="Main" />
     <node concept="3EZMnI" id="6DJmAW$1Y0h" role="2wV5jI">
       <node concept="l2Vlx" id="6DJmAW$1Y0i" role="2iSdaV" />
-      <node concept="3F0ifn" id="6DJmAW$1Y0j" role="3EZMnx">
-        <property role="3F0ifm" value="nats server" />
+      <node concept="3F0ifn" id="4SPPhBMx4Yf" role="3EZMnx">
+        <property role="3F0ifm" value="tenent Name:" />
       </node>
       <node concept="3F0A7n" id="6DJmAW$1Y0k" role="3EZMnx">
-        <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+        <ref role="1NtTu8" to="laam:4SPPhBMx4$d" resolve="tenantName" />
       </node>
       <node concept="3F0ifn" id="6DJmAW$1Y0l" role="3EZMnx">
         <property role="3F0ifm" value="{" />
@@ -186,65 +187,101 @@
   </node>
   <node concept="24kQdi" id="6DJmAW$2axO">
     <ref role="1XX52x" to="laam:6DJmAW$1ULY" resolve="Entity" />
-    <node concept="3EZMnI" id="6DJmAW$2axR" role="2wV5jI">
-      <node concept="2iRkQZ" id="6DJmAW$2axS" role="2iSdaV" />
-      <node concept="3EZMnI" id="6DJmAW$eBc2" role="3EZMnx">
-        <node concept="2iRfu4" id="6DJmAW$eBc3" role="2iSdaV" />
-        <node concept="3F0ifn" id="6DJmAW$eBbZ" role="3EZMnx">
-          <property role="3F0ifm" value="forServer:" />
-        </node>
-        <node concept="1iCGBv" id="6DJmAW$eBc5" role="3EZMnx">
-          <ref role="1NtTu8" to="laam:6DJmAW$e$V9" resolve="server" />
-          <node concept="1sVBvm" id="6DJmAW$eBc7" role="1sWHZn">
-            <node concept="3F0A7n" id="6DJmAW$eBcb" role="2wV5jI">
-              <property role="1Intyy" value="true" />
-              <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+    <node concept="3EZMnI" id="4SPPhBMeluM" role="2wV5jI">
+      <node concept="2iRkQZ" id="4SPPhBMeluN" role="2iSdaV" />
+      <node concept="3EZMnI" id="6DJmAW$2axR" role="3EZMnx">
+        <node concept="2iRkQZ" id="6DJmAW$2axS" role="2iSdaV" />
+        <node concept="3EZMnI" id="6DJmAW$eBc2" role="3EZMnx">
+          <node concept="2iRfu4" id="6DJmAW$eBc3" role="2iSdaV" />
+          <node concept="3F0ifn" id="6DJmAW$eBbZ" role="3EZMnx">
+            <property role="3F0ifm" value="forServer:" />
+          </node>
+          <node concept="1iCGBv" id="6DJmAW$eBc5" role="3EZMnx">
+            <ref role="1NtTu8" to="laam:6DJmAW$e$V9" resolve="server" />
+            <node concept="1sVBvm" id="6DJmAW$eBc7" role="1sWHZn">
+              <node concept="3F0A7n" id="6DJmAW$eBcb" role="2wV5jI">
+                <property role="1Intyy" value="true" />
+                <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+              </node>
             </node>
           </node>
         </node>
-      </node>
-      <node concept="3EZMnI" id="6DJmAW$2ay0" role="3EZMnx">
-        <node concept="2iRfu4" id="6DJmAW$2ay1" role="2iSdaV" />
-        <node concept="3F0ifn" id="6DJmAW$2axX" role="3EZMnx">
-          <property role="3F0ifm" value="entity:" />
+        <node concept="3EZMnI" id="6DJmAW$2ay0" role="3EZMnx">
+          <node concept="2iRfu4" id="6DJmAW$2ay1" role="2iSdaV" />
+          <node concept="3F0ifn" id="6DJmAW$2axX" role="3EZMnx">
+            <property role="3F0ifm" value="entity:" />
+          </node>
+          <node concept="3F0A7n" id="6DJmAW$2ay3" role="3EZMnx">
+            <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+          </node>
         </node>
-        <node concept="3F0A7n" id="6DJmAW$2ay3" role="3EZMnx">
-          <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+        <node concept="3F0ifn" id="4SPPhBMht_8" role="3EZMnx" />
+        <node concept="3EZMnI" id="4SPPhBMfxZT" role="3EZMnx">
+          <node concept="3F0ifn" id="4SPPhBMfxZR" role="3EZMnx">
+            <property role="3F0ifm" value="allowed_to:" />
+          </node>
+          <node concept="2iRkQZ" id="4SPPhBMfxZW" role="2iSdaV" />
+          <node concept="3F2HdR" id="4SPPhBMfxZZ" role="3EZMnx">
+            <ref role="1NtTu8" to="laam:6DJmAW$1UM6" resolve="operations" />
+            <node concept="2iRkQZ" id="4SPPhBMfy01" role="2czzBx" />
+          </node>
         </node>
-        <node concept="3F0ifn" id="6DJmAW$2ay7" role="3EZMnx">
-          <property role="3F0ifm" value="" />
+        <node concept="3F0ifn" id="4SPPhBMht_9" role="3EZMnx" />
+        <node concept="3EZMnI" id="4SPPhBMeUdI" role="3EZMnx">
+          <node concept="3F0ifn" id="4SPPhBMeUdJ" role="3EZMnx">
+            <property role="3F0ifm" value="preHooks:" />
+          </node>
+          <node concept="2iRkQZ" id="4SPPhBMeUdK" role="2iSdaV" />
+          <node concept="3EZMnI" id="4SPPhBMeUdL" role="3EZMnx">
+            <node concept="2iRfu4" id="4SPPhBMeUdM" role="2iSdaV" />
+            <node concept="3XFhqQ" id="4SPPhBMeUdN" role="3EZMnx" />
+            <node concept="3F2HdR" id="4SPPhBMeUdO" role="3EZMnx">
+              <ref role="1NtTu8" to="laam:4SPPhBMdztU" resolve="preHooks" />
+              <node concept="2iRkQZ" id="4SPPhBMeUdP" role="2czzBx" />
+            </node>
+          </node>
         </node>
-        <node concept="3F2HdR" id="6DJmAW$2q_R" role="3EZMnx">
-          <ref role="1NtTu8" to="laam:6DJmAW$1UM6" resolve="operations" />
-          <node concept="2iRfu4" id="6DJmAW$2q_T" role="2czzBx" />
+        <node concept="3EZMnI" id="4SPPhBMeluT" role="3EZMnx">
+          <node concept="3F0ifn" id="4SPPhBMeluR" role="3EZMnx">
+            <property role="3F0ifm" value="postHooks:" />
+          </node>
+          <node concept="2iRkQZ" id="4SPPhBMeUdw" role="2iSdaV" />
+          <node concept="3EZMnI" id="4SPPhBMeUdA" role="3EZMnx">
+            <node concept="2iRfu4" id="4SPPhBMeUdB" role="2iSdaV" />
+            <node concept="3XFhqQ" id="4SPPhBMeUdz" role="3EZMnx" />
+            <node concept="3F2HdR" id="4SPPhBMeUdD" role="3EZMnx">
+              <ref role="1NtTu8" to="laam:4SPPhBMej5x" resolve="postHooks" />
+              <node concept="2iRkQZ" id="4SPPhBMeUdG" role="2czzBx" />
+            </node>
+          </node>
         </node>
-      </node>
-      <node concept="3EZMnI" id="6DJmAW$6Do2" role="3EZMnx">
-        <node concept="VPM3Z" id="6DJmAW$6Do4" role="3F10Kt" />
-        <node concept="3F0ifn" id="6DJmAW$6Do6" role="3EZMnx">
-          <property role="3F0ifm" value="fields:" />
+        <node concept="3F0ifn" id="4SPPhBMht_a" role="3EZMnx" />
+        <node concept="3EZMnI" id="6DJmAW$6Do2" role="3EZMnx">
+          <node concept="VPM3Z" id="6DJmAW$6Do4" role="3F10Kt" />
+          <node concept="3F0ifn" id="6DJmAW$6Do6" role="3EZMnx">
+            <property role="3F0ifm" value="fields:" />
+          </node>
+          <node concept="3F2HdR" id="6DJmAW$6Do9" role="3EZMnx">
+            <ref role="1NtTu8" to="laam:6DJmAW$1UM4" resolve="fields" />
+            <node concept="2EHx9g" id="6DJmAW$7VYA" role="2czzBx" />
+          </node>
+          <node concept="2iRkQZ" id="6DJmAW$6Do7" role="2iSdaV" />
         </node>
-        <node concept="3F2HdR" id="6DJmAW$6Do9" role="3EZMnx">
-          <ref role="1NtTu8" to="laam:6DJmAW$1UM4" resolve="fields" />
-          <node concept="2EHx9g" id="6DJmAW$7VYA" role="2czzBx" />
+        <node concept="3F0ifn" id="24dYXnu13px" role="3EZMnx">
+          <property role="3F0ifm" value="relations:" />
         </node>
-        <node concept="2iRkQZ" id="6DJmAW$6Do7" role="2iSdaV" />
-      </node>
-      <node concept="3F0ifn" id="24dYXnu13pv" role="3EZMnx" />
-      <node concept="3F0ifn" id="24dYXnu13px" role="3EZMnx">
-        <property role="3F0ifm" value="relations:" />
-      </node>
-      <node concept="3F2HdR" id="24dYXnu13p$" role="3EZMnx">
-        <ref role="1NtTu8" to="laam:24dYXntXrTU" resolve="relations" />
-        <node concept="2iRkQZ" id="24dYXnu13pA" role="2czzBx" />
+        <node concept="3F2HdR" id="24dYXnu13p$" role="3EZMnx">
+          <ref role="1NtTu8" to="laam:24dYXntXrTU" resolve="relations" />
+          <node concept="2iRkQZ" id="24dYXnu13pA" role="2czzBx" />
+        </node>
       </node>
     </node>
   </node>
   <node concept="24kQdi" id="6DJmAW$2yjl">
     <ref role="1XX52x" to="laam:6DJmAW$1UM9" resolve="EntityOperationHolder" />
     <node concept="3EZMnI" id="6DJmAW$2yjn" role="2wV5jI">
-      <node concept="3F0ifn" id="6DJmAW$8Vbm" role="3EZMnx">
-        <property role="3F0ifm" value="" />
+      <node concept="3F0ifn" id="4SPPhBMelv2" role="3EZMnx">
+        <property role="3F0ifm" value="-" />
       </node>
       <node concept="3F0A7n" id="6DJmAW$2yjz" role="3EZMnx">
         <ref role="1NtTu8" to="laam:6DJmAW$1UMb" resolve="entityOperation" />
@@ -252,7 +289,7 @@
           <property role="VOm3f" value="true" />
         </node>
       </node>
-      <node concept="2iRfu4" id="6DJmAW$8Vbj" role="2iSdaV" />
+      <node concept="2iRfu4" id="4SPPhBMelv0" role="2iSdaV" />
     </node>
   </node>
   <node concept="24kQdi" id="6DJmAW$2VIq">
@@ -283,7 +320,7 @@
           <property role="3F0ifm" value="with: " />
         </node>
         <node concept="1iCGBv" id="6DJmAW$2VLw" role="3EZMnx">
-          <ref role="1NtTu8" to="laam:6DJmAW$1UMn" resolve="with" />
+          <ref role="1NtTu8" to="laam:6DJmAW$1UMn" resolve="to" />
           <node concept="1sVBvm" id="6DJmAW$2VLy" role="1sWHZn">
             <node concept="3F0A7n" id="6DJmAW$2VLA" role="2wV5jI">
               <property role="1Intyy" value="true" />
@@ -376,15 +413,6 @@
       </node>
       <node concept="3F1sOY" id="6DJmAW$4hC$" role="3EZMnx">
         <ref role="1NtTu8" to="laam:6DJmAW$3L16" resolve="type" />
-      </node>
-      <node concept="1iCGBv" id="6DJmAW$d5IR" role="3EZMnx">
-        <ref role="1NtTu8" to="laam:6DJmAW$aDb6" resolve="targetEntity" />
-        <node concept="1sVBvm" id="6DJmAW$d5IT" role="1sWHZn">
-          <node concept="3F0A7n" id="6DJmAW$d5IZ" role="2wV5jI">
-            <property role="1Intyy" value="true" />
-            <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
-          </node>
-        </node>
       </node>
       <node concept="3F0ifn" id="6DJmAW$9aWp" role="3EZMnx">
         <property role="3F0ifm" value="anotations: " />
