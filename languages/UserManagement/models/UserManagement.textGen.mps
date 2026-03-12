@@ -257,15 +257,6 @@
           <node concept="l8MVK" id="1cQKuyWkzYl" role="lcghm" />
         </node>
         <node concept="3clFbH" id="1cQKuyWkzYm" role="3cqZAp" />
-        <node concept="1X3_iC" id="1cQKuyWk_EK" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="1cQKuyWkzYn" role="8Wnug">
-            <node concept="la8eA" id="1cQKuyWkzYo" role="lcghm">
-              <property role="lacIc" value="{???-foreach entity in node.entities {}" />
-            </node>
-          </node>
-        </node>
         <node concept="2Gpval" id="1cQKuyWk_cg" role="3cqZAp">
           <node concept="2GrKxI" id="1cQKuyWk_ci" role="2Gsz3X">
             <property role="TrG5h" value="e" />
@@ -350,24 +341,6 @@
                 <node concept="10Oyi0" id="1cQKuyWkC2t" role="1tU5fm" />
                 <node concept="3cmrfG" id="1cQKuyWkC8v" role="33vP2m">
                   <property role="3cmrfH" value="0" />
-                </node>
-              </node>
-            </node>
-            <node concept="1X3_iC" id="1cQKuyWkC8Z" role="lGtFl">
-              <property role="3V$3am" value="statement" />
-              <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-              <node concept="lc7rE" id="1cQKuyWkzYB" role="8Wnug">
-                <node concept="la8eA" id="1cQKuyWkzYC" role="lcghm">
-                  <property role="lacIc" value="{???-int fieldIdx = 0;}" />
-                </node>
-              </node>
-            </node>
-            <node concept="1X3_iC" id="1cQKuyWkClI" role="lGtFl">
-              <property role="3V$3am" value="statement" />
-              <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-              <node concept="lc7rE" id="1cQKuyWkzYD" role="8Wnug">
-                <node concept="la8eA" id="1cQKuyWkzYE" role="lcghm">
-                  <property role="lacIc" value="{???-foreach field in entity.fields {}" />
                 </node>
               </node>
             </node>
@@ -1111,15 +1084,6 @@
           </node>
         </node>
         <node concept="3clFbH" id="1cQKuyWkzYA" role="3cqZAp" />
-        <node concept="1X3_iC" id="1cQKuyWlN41" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="1cQKuyWkzZ_" role="8Wnug">
-            <node concept="la8eA" id="7tgPrsAdk" role="lcghm">
-              <property role="lacIc" value="{???-foreach relation in node.relations {}" />
-            </node>
-          </node>
-        </node>
         <node concept="2Gpval" id="24dYXnuegWd" role="3cqZAp">
           <node concept="2GrKxI" id="24dYXnuegWf" role="2Gsz3X">
             <property role="TrG5h" value="entiref" />
@@ -1361,15 +1325,6 @@
                             </node>
                             <node concept="l8MVK" id="1cQKuyWk$02" role="lcghm" />
                           </node>
-                          <node concept="1X3_iC" id="1cQKuyWmm9k" role="lGtFl">
-                            <property role="3V$3am" value="statement" />
-                            <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-                            <node concept="lc7rE" id="1cQKuyWk$03" role="8Wnug">
-                              <node concept="la8eA" id="1cQKuyWk$04" role="lcghm">
-                                <property role="lacIc" value="{???-if (field.hasAnnotation(FieldAnnotation:auto)) {}" />
-                              </node>
-                            </node>
-                          </node>
                           <node concept="3clFbJ" id="1cQKuyWmih_" role="3cqZAp">
                             <node concept="3clFbS" id="1cQKuyWmihB" role="3clFbx">
                               <node concept="lc7rE" id="7tgPrsAd2" role="3cqZAp">
@@ -1403,15 +1358,6 @@
                                   <property role="lacIc" value=" NOT NULL DEFAULT NOW()" />
                                 </node>
                               </node>
-                              <node concept="1X3_iC" id="1cQKuyWmk_p" role="lGtFl">
-                                <property role="3V$3am" value="statement" />
-                                <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-                                <node concept="lc7rE" id="7tgPrsAd3" role="8Wnug">
-                                  <node concept="la8eA" id="1cQKuyWk$08" role="lcghm">
-                                    <property role="lacIc" value="{???-}}" />
-                                  </node>
-                                </node>
-                              </node>
                             </node>
                             <node concept="2OqwBi" id="1cQKuyWmiqJ" role="3clFbw">
                               <node concept="2GrUjf" id="1cQKuyWmii7" role="2Oq$k0">
@@ -1422,15 +1368,6 @@
                                 <node concept="Xl_RD" id="1cQKuyWmjQE" role="37wK5m">
                                   <property role="Xl_RC" value="auto" />
                                 </node>
-                              </node>
-                            </node>
-                          </node>
-                          <node concept="1X3_iC" id="1cQKuyWmv6g" role="lGtFl">
-                            <property role="3V$3am" value="statement" />
-                            <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-                            <node concept="lc7rE" id="7tgPrsAd5" role="8Wnug">
-                              <node concept="la8eA" id="1cQKuyWk$09" role="lcghm">
-                                <property role="lacIc" value="{???-if (field.hasAnnotation(FieldAnnotation:nullable)) {}" />
                               </node>
                             </node>
                           </node>
@@ -1464,15 +1401,6 @@
                                   </node>
                                 </node>
                               </node>
-                              <node concept="1X3_iC" id="1cQKuyWmvNm" role="lGtFl">
-                                <property role="3V$3am" value="statement" />
-                                <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-                                <node concept="lc7rE" id="7tgPrsAec" role="8Wnug">
-                                  <node concept="la8eA" id="1cQKuyWk$0e" role="lcghm">
-                                    <property role="lacIc" value="{???-}}" />
-                                  </node>
-                                </node>
-                              </node>
                             </node>
                             <node concept="2OqwBi" id="1cQKuyWmsu0" role="3clFbw">
                               <node concept="2GrUjf" id="1cQKuyWmslo" role="2Oq$k0">
@@ -1483,15 +1411,6 @@
                                 <node concept="Xl_RD" id="1cQKuyWmtNu" role="37wK5m">
                                   <property role="Xl_RC" value="nullable" />
                                 </node>
-                              </node>
-                            </node>
-                          </node>
-                          <node concept="1X3_iC" id="1cQKuyWmHmg" role="lGtFl">
-                            <property role="3V$3am" value="statement" />
-                            <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-                            <node concept="lc7rE" id="1cQKuyWk$0f" role="8Wnug">
-                              <node concept="la8eA" id="1cQKuyWk$0g" role="lcghm">
-                                <property role="lacIc" value="{???-if (!(field.hasAnnotation(FieldAnnotation:auto)) &amp;&amp; !(field.hasAnnotation(FieldAnnotation:nullable))) {}" />
                               </node>
                             </node>
                           </node>
@@ -1528,15 +1447,6 @@
                                   <property role="lacIc" value=" NOT NULL" />
                                 </node>
                               </node>
-                              <node concept="1X3_iC" id="1cQKuyWmBK_" role="lGtFl">
-                                <property role="3V$3am" value="statement" />
-                                <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-                                <node concept="lc7rE" id="1cQKuyWmBKA" role="8Wnug">
-                                  <node concept="la8eA" id="1cQKuyWmBKB" role="lcghm">
-                                    <property role="lacIc" value="{???-}}" />
-                                  </node>
-                                </node>
-                              </node>
                             </node>
                             <node concept="1Wc70l" id="1cQKuyWmEzP" role="3clFbw">
                               <node concept="3fqX7Q" id="1cQKuyWmEEd" role="3uHU7w">
@@ -1568,15 +1478,6 @@
                                     </node>
                                   </node>
                                 </node>
-                              </node>
-                            </node>
-                          </node>
-                          <node concept="1X3_iC" id="1cQKuyWmSot" role="lGtFl">
-                            <property role="3V$3am" value="statement" />
-                            <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-                            <node concept="lc7rE" id="7tgPrsAeo" role="8Wnug">
-                              <node concept="la8eA" id="7tgPrsAep" role="lcghm">
-                                <property role="lacIc" value="{???-}}" />
                               </node>
                             </node>
                           </node>
@@ -1654,41 +1555,6 @@
                       <property role="TrG5h" value="it" />
                       <node concept="2jxLKc" id="24dYXnueu7J" role="1tU5fm" />
                     </node>
-                  </node>
-                </node>
-              </node>
-            </node>
-          </node>
-        </node>
-        <node concept="1X3_iC" id="24dYXnue$Fp" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="2Gpval" id="1cQKuyWlGCp" role="8Wnug">
-            <node concept="2GrKxI" id="1cQKuyWlGCr" role="2Gsz3X">
-              <property role="TrG5h" value="rref" />
-            </node>
-            <node concept="2OqwBi" id="1cQKuyWlHML" role="2GsD0m">
-              <node concept="117lpO" id="1cQKuyWlHkY" role="2Oq$k0" />
-              <node concept="3Tsc0h" id="1cQKuyWlIt1" role="2OqNvi">
-                <ref role="3TtcxE" to="laam:6DJmAW$e$Vn" resolve="relations" />
-              </node>
-            </node>
-            <node concept="3clFbS" id="1cQKuyWlGCv" role="2LFqv$">
-              <node concept="1X3_iC" id="1cQKuyWmebj" role="lGtFl">
-                <property role="3V$3am" value="statement" />
-                <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-                <node concept="lc7rE" id="1cQKuyWkzZY" role="8Wnug">
-                  <node concept="la8eA" id="1cQKuyWkzZZ" role="lcghm">
-                    <property role="lacIc" value="{???-foreach field in relation.extraFields {}" />
-                  </node>
-                </node>
-              </node>
-              <node concept="1X3_iC" id="1cQKuyWmUVR" role="lGtFl">
-                <property role="3V$3am" value="statement" />
-                <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-                <node concept="lc7rE" id="1cQKuyWk$0A" role="8Wnug">
-                  <node concept="la8eA" id="1cQKuyWk$0B" role="lcghm">
-                    <property role="lacIc" value="{???-}}" />
                   </node>
                 </node>
               </node>
@@ -1797,12 +1663,6 @@
           </node>
           <node concept="l8MVK" id="24dYXnuoiQn" role="lcghm" />
         </node>
-        <node concept="lc7rE" id="24dYXnuoiQo" role="3cqZAp">
-          <node concept="la8eA" id="24dYXnuoiQp" role="lcghm">
-            <property role="lacIc" value=" &quot;log&quot;" />
-          </node>
-          <node concept="l8MVK" id="24dYXnuoiQq" role="lcghm" />
-        </node>
         <node concept="lc7rE" id="24dYXnuoiQr" role="3cqZAp">
           <node concept="la8eA" id="24dYXnuoiQs" role="lcghm">
             <property role="lacIc" value=" &quot;time&quot;" />
@@ -1838,6 +1698,12 @@
             <property role="lacIc" value=" &quot;dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/tracer&quot;" />
           </node>
           <node concept="l8MVK" id="24dYXnuoiQC" role="lcghm" />
+        </node>
+        <node concept="lc7rE" id="FY3t2vRdd4" role="3cqZAp">
+          <node concept="la8eA" id="FY3t2vRdd5" role="lcghm">
+            <property role="lacIc" value=" &quot;dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/logger&quot;" />
+          </node>
+          <node concept="l8MVK" id="FY3t2vRdd6" role="lcghm" />
         </node>
         <node concept="lc7rE" id="24dYXnuoiQD" role="3cqZAp">
           <node concept="la8eA" id="24dYXnuoiQE" role="lcghm">
@@ -3618,27 +3484,26 @@
             <node concept="lc7rE" id="7tgPrsAls" role="3cqZAp">
               <node concept="l8MVK" id="7tgPrsAlr" role="lcghm" />
             </node>
-            <node concept="lc7rE" id="7tgPrsAlz" role="3cqZAp">
-              <node concept="la8eA" id="7tgPrsAlt" role="lcghm">
-                <property role="lacIc" value=" log.Printf(&quot;" />
+            <node concept="lc7rE" id="FY3t2vRg9Q" role="3cqZAp">
+              <node concept="la8eA" id="FY3t2vRgwG" role="lcghm">
+                <property role="lacIc" value="logger.Info(ctx, &quot;DAL reply received&quot;, logger.String(&quot;handler&quot;, &quot;" />
               </node>
-              <node concept="l9hG8" id="24dYXnupdMK" role="lcghm">
-                <node concept="37vLTw" id="24dYXnupdML" role="lb14g">
+              <node concept="l9hG8" id="FY3t2vRgAy" role="lcghm">
+                <node concept="37vLTw" id="FY3t2vRgAz" role="lb14g">
                   <ref role="3cqZAo" node="24dYXnuoZbg" resolve="name" />
                 </node>
               </node>
-              <node concept="la8eA" id="7tgPrsAlv" role="lcghm">
+              <node concept="la8eA" id="FY3t2vRgA$" role="lcghm">
                 <property role="lacIc" value="." />
               </node>
-              <node concept="l9hG8" id="4yIuq2m29MZ" role="lcghm">
-                <node concept="37vLTw" id="4yIuq2m29NB" role="lb14g">
+              <node concept="l9hG8" id="FY3t2vRgA_" role="lcghm">
+                <node concept="37vLTw" id="FY3t2vRgAA" role="lb14g">
                   <ref role="3cqZAo" node="4yIuq2lZqbD" resolve="opKind" />
                 </node>
               </node>
-              <node concept="la8eA" id="7tgPrsAlx" role="lcghm">
-                <property role="lacIc" value=" DAL reply: %d bytes&quot;, len(reply.Data))" />
+              <node concept="la8eA" id="FY3t2vRgyq" role="lcghm">
+                <property role="lacIc" value="&quot;), logger.Int(&quot;bytes&quot;, len(reply.Data)))" />
               </node>
-              <node concept="l8MVK" id="7tgPrsAly" role="lcghm" />
             </node>
             <node concept="lc7rE" id="7tgPrsAlB" role="3cqZAp">
               <node concept="l8MVK" id="7tgPrsAlA" role="lcghm" />
@@ -4977,147 +4842,6 @@
           </node>
         </node>
         <node concept="3clFbH" id="4yIuq2m3u32" role="3cqZAp" />
-        <node concept="1X3_iC" id="4SPPhBMl11q" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_q4" role="8Wnug">
-            <node concept="la8eA" id="24dYXnup_q5" role="lcghm">
-              <property role="lacIc" value="package main" />
-            </node>
-            <node concept="l8MVK" id="24dYXnup_q6" role="lcghm" />
-          </node>
-        </node>
-        <node concept="1X3_iC" id="4SPPhBMl11r" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_q7" role="8Wnug">
-            <node concept="l8MVK" id="24dYXnup_q8" role="lcghm" />
-          </node>
-        </node>
-        <node concept="1X3_iC" id="4SPPhBMl11s" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_q9" role="8Wnug">
-            <node concept="la8eA" id="24dYXnup_qa" role="lcghm">
-              <property role="lacIc" value="import (" />
-            </node>
-            <node concept="l8MVK" id="24dYXnup_qb" role="lcghm" />
-          </node>
-        </node>
-        <node concept="1X3_iC" id="4SPPhBMl11t" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_qc" role="8Wnug">
-            <node concept="la8eA" id="24dYXnup_qd" role="lcghm">
-              <property role="lacIc" value=" &quot;context&quot;" />
-            </node>
-            <node concept="l8MVK" id="24dYXnup_qe" role="lcghm" />
-          </node>
-        </node>
-        <node concept="1X3_iC" id="4SPPhBMl11u" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_qf" role="8Wnug">
-            <node concept="la8eA" id="24dYXnup_qg" role="lcghm">
-              <property role="lacIc" value=" &quot;encoding/json&quot;" />
-            </node>
-            <node concept="l8MVK" id="24dYXnup_qh" role="lcghm" />
-          </node>
-        </node>
-        <node concept="1X3_iC" id="4SPPhBMl11v" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_qi" role="8Wnug">
-            <node concept="la8eA" id="24dYXnup_qj" role="lcghm">
-              <property role="lacIc" value=" &quot;fmt&quot;" />
-            </node>
-            <node concept="l8MVK" id="24dYXnup_qk" role="lcghm" />
-          </node>
-        </node>
-        <node concept="1X3_iC" id="4SPPhBMl11w" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_ql" role="8Wnug">
-            <node concept="la8eA" id="24dYXnup_qm" role="lcghm">
-              <property role="lacIc" value=" &quot;log&quot;" />
-            </node>
-            <node concept="l8MVK" id="24dYXnup_qn" role="lcghm" />
-          </node>
-        </node>
-        <node concept="1X3_iC" id="4SPPhBMl11x" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_qo" role="8Wnug">
-            <node concept="la8eA" id="24dYXnup_qp" role="lcghm">
-              <property role="lacIc" value=" &quot;time&quot;" />
-            </node>
-            <node concept="l8MVK" id="24dYXnup_qq" role="lcghm" />
-          </node>
-        </node>
-        <node concept="1X3_iC" id="4SPPhBMl11y" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_qr" role="8Wnug">
-            <node concept="l8MVK" id="24dYXnup_qs" role="lcghm" />
-          </node>
-        </node>
-        <node concept="1X3_iC" id="4SPPhBMl11z" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_qt" role="8Wnug">
-            <node concept="la8eA" id="24dYXnup_qu" role="lcghm">
-              <property role="lacIc" value=" &quot;github.com/nats-io/nats.go&quot;" />
-            </node>
-            <node concept="l8MVK" id="24dYXnup_qv" role="lcghm" />
-          </node>
-        </node>
-        <node concept="1X3_iC" id="4SPPhBMl11$" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_qw" role="8Wnug">
-            <node concept="l8MVK" id="24dYXnup_qx" role="lcghm" />
-          </node>
-        </node>
-        <node concept="1X3_iC" id="4SPPhBMl11_" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_qy" role="8Wnug">
-            <node concept="la8eA" id="24dYXnup_qz" role="lcghm">
-              <property role="lacIc" value=" &quot;dev.azure.com/Motadata/NextGen/motadata-go-sdk/events&quot;" />
-            </node>
-            <node concept="l8MVK" id="24dYXnup_q$" role="lcghm" />
-          </node>
-        </node>
-        <node concept="1X3_iC" id="4SPPhBMl11A" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_q_" role="8Wnug">
-            <node concept="la8eA" id="24dYXnup_qA" role="lcghm">
-              <property role="lacIc" value=" &quot;dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core&quot;" />
-            </node>
-            <node concept="l8MVK" id="24dYXnup_qB" role="lcghm" />
-          </node>
-        </node>
-        <node concept="1X3_iC" id="4SPPhBMl11B" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_qC" role="8Wnug">
-            <node concept="la8eA" id="24dYXnup_qD" role="lcghm">
-              <property role="lacIc" value=" &quot;dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/tracer&quot;" />
-            </node>
-            <node concept="l8MVK" id="24dYXnup_qE" role="lcghm" />
-          </node>
-        </node>
-        <node concept="1X3_iC" id="4SPPhBMl11C" role="lGtFl">
-          <property role="3V$3am" value="statement" />
-          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-          <node concept="lc7rE" id="24dYXnup_qF" role="8Wnug">
-            <node concept="la8eA" id="24dYXnup_qG" role="lcghm">
-              <property role="lacIc" value=")" />
-            </node>
-            <node concept="l8MVK" id="24dYXnup_qH" role="lcghm" />
-          </node>
-        </node>
         <node concept="lc7rE" id="24dYXnup_qI" role="3cqZAp">
           <node concept="l8MVK" id="24dYXnup_qJ" role="lcghm" />
         </node>
@@ -6253,9 +5977,9 @@
             <node concept="lc7rE" id="24dYXnup_wT" role="3cqZAp">
               <node concept="l8MVK" id="24dYXnup_wU" role="lcghm" />
             </node>
-            <node concept="lc7rE" id="24dYXnup_wV" role="3cqZAp">
-              <node concept="la8eA" id="24dYXnup_wW" role="lcghm">
-                <property role="lacIc" value=" log.Printf(&quot;" />
+            <node concept="lc7rE" id="FY3t2vRkVM" role="3cqZAp">
+              <node concept="la8eA" id="FY3t2vRl9m" role="lcghm">
+                <property role="lacIc" value=" logger.Info(ctx, &quot;DAL reply received&quot;, logger.String(&quot;handler&quot;, &quot;" />
               </node>
               <node concept="l9hG8" id="4yIuq2m4yTB" role="lcghm">
                 <node concept="37vLTw" id="4yIuq2m4yTC" role="lb14g">
@@ -6275,10 +5999,9 @@
                   <ref role="3cqZAo" node="4yIuq2m3A5L" resolve="opKind" />
                 </node>
               </node>
-              <node concept="la8eA" id="24dYXnup_x1" role="lcghm">
-                <property role="lacIc" value=" DAL reply: %d bytes&quot;, len(reply.Data))" />
+              <node concept="la8eA" id="FY3t2vRlbV" role="lcghm">
+                <property role="lacIc" value="&quot;), logger.Int(&quot;bytes&quot;, len(reply.Data)))\n" />
               </node>
-              <node concept="l8MVK" id="24dYXnup_x2" role="lcghm" />
             </node>
             <node concept="lc7rE" id="24dYXnup_x3" role="3cqZAp">
               <node concept="l8MVK" id="24dYXnup_x4" role="lcghm" />
@@ -6858,12 +6581,6 @@
           </node>
           <node concept="l8MVK" id="4yIuq2lYWWq" role="lcghm" />
         </node>
-        <node concept="lc7rE" id="4yIuq2lYWWr" role="3cqZAp">
-          <node concept="la8eA" id="4yIuq2lYWWs" role="lcghm">
-            <property role="lacIc" value=" &quot;log&quot;" />
-          </node>
-          <node concept="l8MVK" id="4yIuq2lYWWt" role="lcghm" />
-        </node>
         <node concept="lc7rE" id="4yIuq2lYWWu" role="3cqZAp">
           <node concept="la8eA" id="4yIuq2lYWWv" role="lcghm">
             <property role="lacIc" value=" &quot;os&quot;" />
@@ -6935,6 +6652,12 @@
             <property role="lacIc" value=" &quot;dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel&quot;" />
           </node>
           <node concept="l8MVK" id="4yIuq2lYWX2" role="lcghm" />
+        </node>
+        <node concept="lc7rE" id="FY3t2vS2$b" role="3cqZAp">
+          <node concept="la8eA" id="FY3t2vS2$c" role="lcghm">
+            <property role="lacIc" value=" &quot;dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/logger&quot;" />
+          </node>
+          <node concept="l8MVK" id="FY3t2vS2$d" role="lcghm" />
         </node>
         <node concept="lc7rE" id="4yIuq2lYWX3" role="3cqZAp">
           <node concept="la8eA" id="4yIuq2lYWX4" role="lcghm">
@@ -7141,19 +6864,45 @@
           </node>
           <node concept="l8MVK" id="4yIuq2lYWYF" role="lcghm" />
         </node>
-        <node concept="lc7rE" id="4yIuq2lYWYG" role="3cqZAp">
-          <node concept="la8eA" id="4yIuq2lYWYH" role="lcghm">
-            <property role="lacIc" value=" log.Println(&quot;Starting " />
+        <node concept="lc7rE" id="FY3t2vQTGM" role="3cqZAp">
+          <node concept="la8eA" id="FY3t2vQUvn" role="lcghm">
+            <property role="lacIc" value=" logcfg := logger.DefaultConfig()\n logcfg.ServiceName = &quot;" />
           </node>
-          <node concept="l9hG8" id="4yIuq2lZeMn" role="lcghm">
-            <node concept="37vLTw" id="4yIuq2lZf3h" role="lb14g">
+          <node concept="l9hG8" id="FY3t2vQVTT" role="lcghm">
+            <node concept="37vLTw" id="FY3t2vQVY4" role="lb14g">
               <ref role="3cqZAo" node="4yIuq2lZ1zg" resolve="svcName" />
             </node>
           </node>
-          <node concept="la8eA" id="4yIuq2lYWYJ" role="lcghm">
-            <property role="lacIc" value=" (Business Logic Layer)...&quot;)" />
+          <node concept="la8eA" id="FY3t2vQVLM" role="lcghm">
+            <property role="lacIc" value="&quot;\n logcfg.ServiceVersion = &quot;0.1.0&quot;\n logcfg.Environment = &quot;development&quot;\n logger.MustInit(logcfg)\n defer logger.Close()\n\n ctx0 := context.Background()\n logger.Info(ctx0, &quot;Starting " />
           </node>
-          <node concept="l8MVK" id="4yIuq2lYWYK" role="lcghm" />
+          <node concept="l9hG8" id="FY3t2vR65t" role="lcghm">
+            <node concept="37vLTw" id="FY3t2vR69C" role="lb14g">
+              <ref role="3cqZAo" node="4yIuq2lZ1zg" resolve="svcName" />
+            </node>
+          </node>
+          <node concept="la8eA" id="FY3t2vR5zQ" role="lcghm">
+            <property role="lacIc" value="&quot;)" />
+          </node>
+          <node concept="l8MVK" id="FY3t2vQUBu" role="lcghm" />
+        </node>
+        <node concept="1X3_iC" id="FY3t2vQYkt" role="lGtFl">
+          <property role="3V$3am" value="statement" />
+          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
+          <node concept="lc7rE" id="4yIuq2lYWYG" role="8Wnug">
+            <node concept="la8eA" id="4yIuq2lYWYH" role="lcghm">
+              <property role="lacIc" value=" log.Println(&quot;Starting " />
+            </node>
+            <node concept="l9hG8" id="4yIuq2lZeMn" role="lcghm">
+              <node concept="37vLTw" id="4yIuq2lZf3h" role="lb14g">
+                <ref role="3cqZAo" node="4yIuq2lZ1zg" resolve="svcName" />
+              </node>
+            </node>
+            <node concept="la8eA" id="4yIuq2lYWYJ" role="lcghm">
+              <property role="lacIc" value=" (Business Logic Layer)...&quot;)" />
+            </node>
+            <node concept="l8MVK" id="4yIuq2lYWYK" role="lcghm" />
+          </node>
         </node>
         <node concept="lc7rE" id="4yIuq2lYWYL" role="3cqZAp">
           <node concept="l8MVK" id="4yIuq2lYWYM" role="lcghm" />
@@ -7263,7 +7012,7 @@
         </node>
         <node concept="lc7rE" id="4yIuq2lYWZ_" role="3cqZAp">
           <node concept="la8eA" id="4yIuq2lYWZA" role="lcghm">
-            <property role="lacIc" value="  log.Fatalf(&quot;failed to connect to NATS: %v&quot;, err)" />
+            <property role="lacIc" value="logger.Fatal(ctx, &quot;failed to connect to NATS&quot;, logger.Err(err))\n" />
           </node>
           <node concept="l8MVK" id="4yIuq2lYWZB" role="lcghm" />
         </node>
@@ -7533,9 +7282,10 @@
           </node>
           <node concept="l8MVK" id="4yIuq2lYX0H" role="lcghm" />
         </node>
+        <node concept="3clFbH" id="FY3t2vQZo8" role="3cqZAp" />
         <node concept="lc7rE" id="4yIuq2lYX0I" role="3cqZAp">
           <node concept="la8eA" id="4yIuq2lYX0J" role="lcghm">
-            <property role="lacIc" value="  log.Fatalf(&quot;failed to create micro service: %v&quot;, err)" />
+            <property role="lacIc" value="logger.Fatal(ctx, &quot;failed to connect to NATS&quot;, logger.Err(err))\n" />
           </node>
           <node concept="l8MVK" id="4yIuq2lYX0K" role="lcghm" />
         </node>
@@ -8064,19 +7814,36 @@
           </node>
         </node>
         <node concept="3clFbH" id="4yIuq2lYX2u" role="3cqZAp" />
-        <node concept="lc7rE" id="4yIuq2lYX2v" role="3cqZAp">
-          <node concept="la8eA" id="4yIuq2lYX2w" role="lcghm">
-            <property role="lacIc" value=" log.Println(&quot;" />
+        <node concept="1X3_iC" id="FY3t2vR8i8" role="lGtFl">
+          <property role="3V$3am" value="statement" />
+          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
+          <node concept="lc7rE" id="4yIuq2lYX2v" role="8Wnug">
+            <node concept="la8eA" id="4yIuq2lYX2w" role="lcghm">
+              <property role="lacIc" value=" log.Println(&quot;" />
+            </node>
+            <node concept="l9hG8" id="4yIuq2lZfqI" role="lcghm">
+              <node concept="37vLTw" id="4yIuq2lZfqJ" role="lb14g">
+                <ref role="3cqZAo" node="4yIuq2lZ1zg" resolve="svcName" />
+              </node>
+            </node>
+            <node concept="la8eA" id="4yIuq2lYX2y" role="lcghm">
+              <property role="lacIc" value=" listening on all subjects&quot;)" />
+            </node>
+            <node concept="l8MVK" id="4yIuq2lYX2z" role="lcghm" />
           </node>
-          <node concept="l9hG8" id="4yIuq2lZfqI" role="lcghm">
-            <node concept="37vLTw" id="4yIuq2lZfqJ" role="lb14g">
+        </node>
+        <node concept="lc7rE" id="FY3t2vR7dJ" role="3cqZAp">
+          <node concept="la8eA" id="FY3t2vR7Jp" role="lcghm">
+            <property role="lacIc" value="logger.Info(ctx0, &quot;" />
+          </node>
+          <node concept="l9hG8" id="FY3t2vR8cY" role="lcghm">
+            <node concept="37vLTw" id="FY3t2vR8h9" role="lb14g">
               <ref role="3cqZAo" node="4yIuq2lZ1zg" resolve="svcName" />
             </node>
           </node>
-          <node concept="la8eA" id="4yIuq2lYX2y" role="lcghm">
-            <property role="lacIc" value=" listening on all subjects&quot;)" />
+          <node concept="la8eA" id="FY3t2vR84a" role="lcghm">
+            <property role="lacIc" value=" listening on all subjects&quot;)\n" />
           </node>
-          <node concept="l8MVK" id="4yIuq2lYX2z" role="lcghm" />
         </node>
         <node concept="lc7rE" id="4yIuq2lYX2$" role="3cqZAp">
           <node concept="l8MVK" id="4yIuq2lYX2_" role="lcghm" />
@@ -8102,19 +7869,36 @@
         <node concept="lc7rE" id="4yIuq2lYX2J" role="3cqZAp">
           <node concept="l8MVK" id="4yIuq2lYX2K" role="lcghm" />
         </node>
-        <node concept="lc7rE" id="4yIuq2lYX2L" role="3cqZAp">
-          <node concept="la8eA" id="4yIuq2lYX2M" role="lcghm">
-            <property role="lacIc" value=" log.Println(&quot;" />
+        <node concept="1X3_iC" id="FY3t2vR48H" role="lGtFl">
+          <property role="3V$3am" value="statement" />
+          <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
+          <node concept="lc7rE" id="4yIuq2lYX2L" role="8Wnug">
+            <node concept="la8eA" id="4yIuq2lYX2M" role="lcghm">
+              <property role="lacIc" value=" log.Println(&quot;" />
+            </node>
+            <node concept="l9hG8" id="4yIuq2lZfFK" role="lcghm">
+              <node concept="37vLTw" id="4yIuq2lZfFL" role="lb14g">
+                <ref role="3cqZAo" node="4yIuq2lZ1zg" resolve="svcName" />
+              </node>
+            </node>
+            <node concept="la8eA" id="4yIuq2lYX2O" role="lcghm">
+              <property role="lacIc" value=" shutting down...&quot;)" />
+            </node>
+            <node concept="l8MVK" id="4yIuq2lYX2P" role="lcghm" />
           </node>
-          <node concept="l9hG8" id="4yIuq2lZfFK" role="lcghm">
-            <node concept="37vLTw" id="4yIuq2lZfFL" role="lb14g">
+        </node>
+        <node concept="lc7rE" id="FY3t2vR2Xe" role="3cqZAp">
+          <node concept="la8eA" id="FY3t2vR3uA" role="lcghm">
+            <property role="lacIc" value="logger.Info(ctx0, &quot;" />
+          </node>
+          <node concept="l9hG8" id="FY3t2vR43z" role="lcghm">
+            <node concept="37vLTw" id="FY3t2vR47I" role="lb14g">
               <ref role="3cqZAo" node="4yIuq2lZ1zg" resolve="svcName" />
             </node>
           </node>
-          <node concept="la8eA" id="4yIuq2lYX2O" role="lcghm">
-            <property role="lacIc" value=" shutting down...&quot;)" />
+          <node concept="la8eA" id="FY3t2vR3Js" role="lcghm">
+            <property role="lacIc" value=" shutting down&quot;)\n" />
           </node>
-          <node concept="l8MVK" id="4yIuq2lYX2P" role="lcghm" />
         </node>
         <node concept="lc7rE" id="4yIuq2lYX2Q" role="3cqZAp">
           <node concept="la8eA" id="4yIuq2lYX2R" role="lcghm">
@@ -8124,7 +7908,7 @@
         </node>
         <node concept="lc7rE" id="4yIuq2lYX2T" role="3cqZAp">
           <node concept="la8eA" id="4yIuq2lYX2U" role="lcghm">
-            <property role="lacIc" value="  log.Printf(&quot;error stopping service: %v&quot;, err)" />
+            <property role="lacIc" value="  logger.Error(ctx0, &quot;error stopping service: %v&quot;, logger.Err(err)" />
           </node>
           <node concept="l8MVK" id="4yIuq2lYX2V" role="lcghm" />
         </node>
@@ -8136,7 +7920,7 @@
         </node>
         <node concept="lc7rE" id="4yIuq2lYX2Z" role="3cqZAp">
           <node concept="la8eA" id="4yIuq2lYX30" role="lcghm">
-            <property role="lacIc" value=" log.Println(&quot;" />
+            <property role="lacIc" value=" logger.Info(ctx0, &quot;" />
           </node>
           <node concept="l9hG8" id="4yIuq2lZfLH" role="lcghm">
             <node concept="37vLTw" id="4yIuq2lZfLI" role="lb14g">

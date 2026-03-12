@@ -42,8 +42,6 @@ public class Main_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.append(" \"context\"");
     tgs.newLine();
-    tgs.append(" \"log\"");
-    tgs.newLine();
     tgs.append(" \"os\"");
     tgs.newLine();
     tgs.append(" \"os/signal\"");
@@ -67,6 +65,8 @@ public class Main_TextGen extends TextGenDescriptorBase {
     tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core\"");
     tgs.newLine();
     tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel\"");
+    tgs.newLine();
+    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/logger\"");
     tgs.newLine();
     tgs.append(")");
     tgs.newLine();
@@ -137,9 +137,11 @@ public class Main_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.append("func main() {");
     tgs.newLine();
-    tgs.append(" log.Println(\"Starting ");
+    tgs.append(" logcfg := logger.DefaultConfig()\n logcfg.ServiceName = \"");
     tgs.append(svcName);
-    tgs.append(" (Business Logic Layer)...\")");
+    tgs.append("\"\n logcfg.ServiceVersion = \"0.1.0\"\n logcfg.Environment = \"development\"\n logger.MustInit(logcfg)\n defer logger.Close()\n\n ctx0 := context.Background()\n logger.Info(ctx0, \"Starting ");
+    tgs.append(svcName);
+    tgs.append("\")");
     tgs.newLine();
     tgs.newLine();
     tgs.append(" otel.InitFromEnv()");
@@ -175,7 +177,7 @@ public class Main_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.append(" if err := conn.Connect(ctx); err != nil {");
     tgs.newLine();
-    tgs.append("  log.Fatalf(\"failed to connect to NATS: %v\", err)");
+    tgs.append("logger.Fatal(ctx, \"failed to connect to NATS\", logger.Err(err))\n");
     tgs.newLine();
     tgs.append(" }");
     tgs.newLine();
@@ -227,7 +229,8 @@ public class Main_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.append(" if err != nil {");
     tgs.newLine();
-    tgs.append("  log.Fatalf(\"failed to create micro service: %v\", err)");
+
+    tgs.append("logger.Fatal(ctx, \"failed to connect to NATS\", logger.Err(err))\n");
     tgs.newLine();
     tgs.append(" }");
     tgs.newLine();
@@ -316,10 +319,9 @@ public class Main_TextGen extends TextGenDescriptorBase {
       // skip
     }
 
-    tgs.append(" log.Println(\"");
+    tgs.append("logger.Info(ctx0, \"");
     tgs.append(svcName);
-    tgs.append(" listening on all subjects\")");
-    tgs.newLine();
+    tgs.append(" listening on all subjects\")\n");
     tgs.newLine();
     tgs.append(" sigCh := make(chan os.Signal, 1)");
     tgs.newLine();
@@ -328,17 +330,16 @@ public class Main_TextGen extends TextGenDescriptorBase {
     tgs.append(" <-sigCh");
     tgs.newLine();
     tgs.newLine();
-    tgs.append(" log.Println(\"");
+    tgs.append("logger.Info(ctx0, \"");
     tgs.append(svcName);
-    tgs.append(" shutting down...\")");
-    tgs.newLine();
+    tgs.append(" shutting down\")\n");
     tgs.append(" if err := srv.Stop(); err != nil {");
     tgs.newLine();
-    tgs.append("  log.Printf(\"error stopping service: %v\", err)");
+    tgs.append("  logger.Error(ctx0, \"error stopping service: %v\", logger.Err(err)");
     tgs.newLine();
     tgs.append(" }");
     tgs.newLine();
-    tgs.append(" log.Println(\"");
+    tgs.append(" logger.Info(ctx0, \"");
     tgs.append(svcName);
     tgs.append(" stopped.\")");
     tgs.newLine();

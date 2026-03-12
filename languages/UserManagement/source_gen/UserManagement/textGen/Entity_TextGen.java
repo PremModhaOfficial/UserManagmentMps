@@ -37,8 +37,6 @@ public class Entity_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.append(" \"fmt\"");
     tgs.newLine();
-    tgs.append(" \"log\"");
-    tgs.newLine();
     tgs.append(" \"time\"");
     tgs.newLine();
     tgs.newLine();
@@ -50,6 +48,8 @@ public class Entity_TextGen extends TextGenDescriptorBase {
     tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core\"");
     tgs.newLine();
     tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/tracer\"");
+    tgs.newLine();
+    tgs.append(" \"dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/logger\"");
     tgs.newLine();
     tgs.append(")");
     tgs.newLine();
@@ -485,12 +485,11 @@ public class Entity_TextGen extends TextGenDescriptorBase {
       tgs.append(" }");
       tgs.newLine();
       tgs.newLine();
-      tgs.append(" log.Printf(\"");
+      tgs.append("logger.Info(ctx, \"DAL reply received\", logger.String(\"handler\", \"");
       tgs.append(name);
       tgs.append(".");
       tgs.append(opKind);
-      tgs.append(" DAL reply: %d bytes\", len(reply.Data))");
-      tgs.newLine();
+      tgs.append("\"), logger.Int(\"bytes\", len(reply.Data)))");
       tgs.newLine();
 
       boolean hasPostHook = false;

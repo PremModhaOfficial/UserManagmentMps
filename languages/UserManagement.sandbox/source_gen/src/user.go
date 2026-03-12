@@ -4,7 +4,6 @@ import (
  "context"
  "encoding/json"
  "fmt"
- "log"
  "time"
 
  "github.com/nats-io/nats.go"
@@ -12,6 +11,7 @@ import (
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/events"
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core"
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/tracer"
+ "dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/logger"
 )
 
 type User struct {
@@ -106,8 +106,7 @@ func (s *UserHandler) HandleCreate(req core.Request) {
   return
  }
 
- log.Printf("User.create DAL reply: %d bytes", len(reply.Data))
-
+logger.Info(ctx, "DAL reply received", logger.String("handler", "User.create"), logger.Int("bytes", len(reply.Data)))
  _ = req.Respond(reply.Data)
 }
 
@@ -151,8 +150,7 @@ func (s *UserHandler) HandleUpdate(req core.Request) {
   return
  }
 
- log.Printf("User.update DAL reply: %d bytes", len(reply.Data))
-
+logger.Info(ctx, "DAL reply received", logger.String("handler", "User.update"), logger.Int("bytes", len(reply.Data)))
  _ = req.Respond(reply.Data)
 }
 
@@ -202,8 +200,7 @@ func (s *UserHandler) HandleDelete(req core.Request) {
   return
  }
 
- log.Printf("User.delete DAL reply: %d bytes", len(reply.Data))
-
+logger.Info(ctx, "DAL reply received", logger.String("handler", "User.delete"), logger.Int("bytes", len(reply.Data)))
  responseData := s.postDeleteHook(ctx, span, &event, reply.Data)
  _ = req.Respond(responseData)
 }
@@ -248,8 +245,7 @@ func (s *UserHandler) HandleGet(req core.Request) {
   return
  }
 
- log.Printf("User.get DAL reply: %d bytes", len(reply.Data))
-
+logger.Info(ctx, "DAL reply received", logger.String("handler", "User.get"), logger.Int("bytes", len(reply.Data)))
  responseData := s.postGetHook(ctx, span, &event, reply.Data)
  _ = req.Respond(responseData)
 }
@@ -293,8 +289,7 @@ func (s *UserHandler) HandleList(req core.Request) {
   return
  }
 
- log.Printf("User.list DAL reply: %d bytes", len(reply.Data))
-
+logger.Info(ctx, "DAL reply received", logger.String("handler", "User.list"), logger.Int("bytes", len(reply.Data)))
  _ = req.Respond(reply.Data)
 }
 
@@ -393,7 +388,7 @@ func (s *UserRolesHandler) HandleAssign(req core.Request) {
   return
  }
 
- log.Printf("UserRoles.assign DAL reply: %d bytes", len(reply.Data))
+ logger.Info(ctx, "DAL reply received", logger.String("handler", "UserRoles.assign"), logger.Int("bytes", len(reply.Data)))
 
  responseData := s.postAssignHook(ctx, span, &event, reply.Data)
  _ = req.Respond(responseData)
@@ -445,7 +440,7 @@ func (s *UserRolesHandler) HandleList(req core.Request) {
   return
  }
 
- log.Printf("UserRoles.list DAL reply: %d bytes", len(reply.Data))
+ logger.Info(ctx, "DAL reply received", logger.String("handler", "UserRoles.list"), logger.Int("bytes", len(reply.Data)))
 
  responseData := s.postListHook(ctx, span, &event, reply.Data)
  _ = req.Respond(responseData)
@@ -498,7 +493,7 @@ func (s *UserRolesHandler) HandleRemove(req core.Request) {
   return
  }
 
- log.Printf("UserRoles.remove DAL reply: %d bytes", len(reply.Data))
+ logger.Info(ctx, "DAL reply received", logger.String("handler", "UserRoles.remove"), logger.Int("bytes", len(reply.Data)))
 
  responseData := s.postRemoveHook(ctx, span, &event, reply.Data)
  _ = req.Respond(responseData)

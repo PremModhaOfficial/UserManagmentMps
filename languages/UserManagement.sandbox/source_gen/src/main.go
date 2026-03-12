@@ -3,7 +3,6 @@ package main
 
 import (
  "context"
- "log"
  "os"
  "os/signal"
  "syscall"
@@ -17,6 +16,7 @@ import (
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/auth"
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core"
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel"
+ "dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/logger"
 )
 
 type microRequestAdapter struct {
@@ -53,7 +53,15 @@ func adaptRequest(mr micro.Request) core.Request {
 const prefix = "motadata"
 
 func main() {
- log.Println("Starting MotaUserManagement (Business Logic Layer)...")
+ logcfg := logger.DefaultConfig()
+ logcfg.ServiceName = "MotaUserManagement"
+ logcfg.ServiceVersion = "0.1.0"
+ logcfg.Environment = "development"
+ logger.MustInit(logcfg)
+ defer logger.Close()
+
+ ctx0 := context.Background()
+ logger.Info(ctx0, "Starting MotaUserManagement")
 
  otel.InitFromEnv()
 
@@ -72,7 +80,8 @@ func main() {
  defer cancel()
 
  if err := conn.Connect(ctx); err != nil {
-  log.Fatalf("failed to connect to NATS: %v", err)
+logger.Fatal(ctx, "failed to connect to NATS", logger.Err(err))
+
  }
  defer conn.Close(context.Background())
 
@@ -87,7 +96,8 @@ func main() {
   Version: "0.1.0",
  })
  if err != nil {
-  log.Fatalf("failed to create micro service: %v", err)
+logger.Fatal(ctx, "failed to connect to NATS", logger.Err(err))
+
  }
 
  root := srv.AddGroup(prefix)
@@ -114,15 +124,15 @@ func main() {
  userRolesGroup.AddEndpoint("list", micro.HandlerFunc(func(mr micro.Request) { userRolesHandler.HandleList(adaptRequest(mr)) }))
  userRolesGroup.AddEndpoint("remove", micro.HandlerFunc(func(mr micro.Request) { userRolesHandler.HandleRemove(adaptRequest(mr)) }))
 
- log.Println("MotaUserManagement listening on all subjects")
+logger.Info(ctx0, "MotaUserManagement listening on all subjects")
 
  sigCh := make(chan os.Signal, 1)
  signal.Notify(sigCh, syscall.SIGINT, syscall.SIGTERM)
  <-sigCh
 
- log.Println("MotaUserManagement shutting down...")
+logger.Info(ctx0, "MotaUserManagement shutting down")
  if err := srv.Stop(); err != nil {
-  log.Printf("error stopping service: %v", err)
+  logger.Error(ctx0, "error stopping service: %v", logger.Err(err)
  }
- log.Println("MotaUserManagement stopped.")
+ logger.Info(ctx0, "MotaUserManagement stopped.")
 }

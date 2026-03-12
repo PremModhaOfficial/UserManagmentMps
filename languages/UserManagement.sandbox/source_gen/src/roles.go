@@ -4,7 +4,6 @@ import (
  "context"
  "encoding/json"
  "fmt"
- "log"
  "time"
 
  "github.com/nats-io/nats.go"
@@ -12,6 +11,7 @@ import (
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/events"
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core"
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/tracer"
+ "dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/logger"
 )
 
 type Roles struct {
@@ -98,8 +98,7 @@ func (s *RolesHandler) HandleCreate(req core.Request) {
   return
  }
 
- log.Printf("Roles.create DAL reply: %d bytes", len(reply.Data))
-
+logger.Info(ctx, "DAL reply received", logger.String("handler", "Roles.create"), logger.Int("bytes", len(reply.Data)))
  _ = req.Respond(reply.Data)
 }
 
@@ -143,8 +142,7 @@ func (s *RolesHandler) HandleUpdate(req core.Request) {
   return
  }
 
- log.Printf("Roles.update DAL reply: %d bytes", len(reply.Data))
-
+logger.Info(ctx, "DAL reply received", logger.String("handler", "Roles.update"), logger.Int("bytes", len(reply.Data)))
  _ = req.Respond(reply.Data)
 }
 
@@ -187,8 +185,7 @@ func (s *RolesHandler) HandleList(req core.Request) {
   return
  }
 
- log.Printf("Roles.list DAL reply: %d bytes", len(reply.Data))
-
+logger.Info(ctx, "DAL reply received", logger.String("handler", "Roles.list"), logger.Int("bytes", len(reply.Data)))
  _ = req.Respond(reply.Data)
 }
 
@@ -232,8 +229,7 @@ func (s *RolesHandler) HandleDelete(req core.Request) {
   return
  }
 
- log.Printf("Roles.delete DAL reply: %d bytes", len(reply.Data))
-
+logger.Info(ctx, "DAL reply received", logger.String("handler", "Roles.delete"), logger.Int("bytes", len(reply.Data)))
  _ = req.Respond(reply.Data)
 }
 
@@ -277,8 +273,7 @@ func (s *RolesHandler) HandleGet(req core.Request) {
   return
  }
 
- log.Printf("Roles.get DAL reply: %d bytes", len(reply.Data))
-
+logger.Info(ctx, "DAL reply received", logger.String("handler", "Roles.get"), logger.Int("bytes", len(reply.Data)))
  _ = req.Respond(reply.Data)
 }
 

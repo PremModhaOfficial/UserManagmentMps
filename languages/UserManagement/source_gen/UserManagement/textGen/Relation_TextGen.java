@@ -330,13 +330,12 @@ public class Relation_TextGen extends TextGenDescriptorBase {
       tgs.append(" }");
       tgs.newLine();
       tgs.newLine();
-      tgs.append(" log.Printf(\"");
+      tgs.append(" logger.Info(ctx, \"DAL reply received\", logger.String(\"handler\", \"");
       tgs.append(fromName);
       tgs.append(toName);
       tgs.append(".");
       tgs.append(opKind);
-      tgs.append(" DAL reply: %d bytes\", len(reply.Data))");
-      tgs.newLine();
+      tgs.append("\"), logger.Int(\"bytes\", len(reply.Data)))\n");
       tgs.newLine();
 
       tgs.append(" responseData := s.post");
