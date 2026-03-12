@@ -1,4 +1,4 @@
-// MotaUserManagement
+// MotaDSLUM
 package main
 
 import (
@@ -54,20 +54,20 @@ const prefix = "motadata"
 
 func main() {
  logcfg := logger.DefaultConfig()
- logcfg.ServiceName = "MotaUserManagement"
+ logcfg.ServiceName = "MotaDSLUM"
  logcfg.ServiceVersion = "0.1.0"
  logcfg.Environment = "development"
- logger.MustInit(logcfg)
- defer logger.Close()
+ logInst := logger.MustInit(logcfg)
+ defer logInst.Close()
 
  ctx0 := context.Background()
- logger.Info(ctx0, "Starting MotaUserManagement")
+ logger.Info(ctx0, "Starting MotaDSLUM")
 
  otel.InitFromEnv()
 
  natsURL := os.Getenv("NATS_URL")
  if natsURL == "" {
-  natsURL = "nats://localhost:4229 "
+  natsURL = "nats://localhost:4230"
  }
 
  cfg := config.DefaultEventsConfig()
@@ -92,7 +92,7 @@ logger.Fatal(ctx, "failed to connect to NATS", logger.Err(err))
  userRolesHandler := NewUserRolesHandler(publisher, prefix)
 
  srv, err := micro.AddService(conn.Conn(), micro.Config{
-  Name:    "MotaUserManagement",
+  Name:    "MotaDSLUM",
   Version: "0.1.0",
  })
  if err != nil {
@@ -124,15 +124,15 @@ logger.Fatal(ctx, "failed to connect to NATS", logger.Err(err))
  userRolesGroup.AddEndpoint("list", micro.HandlerFunc(func(mr micro.Request) { userRolesHandler.HandleList(adaptRequest(mr)) }))
  userRolesGroup.AddEndpoint("remove", micro.HandlerFunc(func(mr micro.Request) { userRolesHandler.HandleRemove(adaptRequest(mr)) }))
 
-logger.Info(ctx0, "MotaUserManagement listening on all subjects")
+logger.Info(ctx0, "MotaDSLUM listening on all subjects")
 
  sigCh := make(chan os.Signal, 1)
  signal.Notify(sigCh, syscall.SIGINT, syscall.SIGTERM)
  <-sigCh
 
-logger.Info(ctx0, "MotaUserManagement shutting down")
+logger.Info(ctx0, "MotaDSLUM shutting down")
  if err := srv.Stop(); err != nil {
-  logger.Error(ctx0, "error stopping service: %v", logger.Err(err)
+  logger.Error(ctx0, "error stopping service:", logger.Err(err))
  }
- logger.Info(ctx0, "MotaUserManagement stopped.")
+ logger.Info(ctx0, "MotaDSLUM stopped.")
 }

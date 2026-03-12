@@ -201,7 +201,7 @@
             <node concept="1sVBvm" id="6DJmAW$eBc7" role="1sWHZn">
               <node concept="3F0A7n" id="6DJmAW$eBcb" role="2wV5jI">
                 <property role="1Intyy" value="true" />
-                <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+                <ref role="1NtTu8" to="laam:4SPPhBMx4$d" resolve="tenantName" />
               </node>
             </node>
           </node>

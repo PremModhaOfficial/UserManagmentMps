@@ -153,11 +153,11 @@ import org.jetbrains.mps.openapi.language.SConcept;
     private EditorCell createProperty_0() {
       getCellFactory().pushCellContext();
       try {
-        final SProperty property = PROPS.name$MnvL;
+        final SProperty property = PROPS.tenantName$kehk;
         getCellFactory().setPropertyInfo(new SPropertyInfo(myNode, property));
         EditorCell_Property editorCell = EditorCell_Property.create(getEditorContext(), new SPropertyAccessor(myNode, property, true, false), myNode);
-        editorCell.setDefaultText("<no name>");
-        editorCell.setCellId("property_name");
+        editorCell.setDefaultText("<no tenantName>");
+        editorCell.setCellId("property_tenantName");
         editorCell.setSubstituteInfo(new SPropertySubstituteInfo(editorCell, property));
         setCellContext(editorCell);
         Iterable<SNode> propertyAttributes = SNodeOperations.ofConcept(new IAttributeDescriptor.AllAttributes().list(myNode), CONCEPTS.PropertyAttribute$Gb);
@@ -192,7 +192,7 @@ import org.jetbrains.mps.openapi.language.SConcept;
       getCellFactory().setPropertyInfo(new SPropertyInfo(myNode, property));
       EditorCell_Property editorCell = EditorCell_Property.create(getEditorContext(), new SPropertyAccessor(myNode, property, false, false), myNode);
       editorCell.setDefaultText("<no name>");
-      editorCell.setCellId("property_name1");
+      editorCell.setCellId("property_name");
       editorCell.setSubstituteInfo(new SPropertySubstituteInfo(editorCell, property));
       setCellContext(editorCell);
       Iterable<SNode> propertyAttributes = SNodeOperations.ofConcept(new IAttributeDescriptor.AllAttributes().list(myNode), CONCEPTS.PropertyAttribute$Gb);
@@ -697,6 +697,7 @@ import org.jetbrains.mps.openapi.language.SConcept;
   }
 
   private static final class PROPS {
+    /*package*/ static final SProperty tenantName$kehk = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac21L, 0x4e35d519f284490dL, "tenantName");
     /*package*/ static final SProperty name$MnvL = MetaAdapterFactory.getProperty(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L, 0x110396ec041L, "name");
   }
 }

@@ -63,6 +63,7 @@ func (s *RolesHandler) HandleCreate(req core.Request) {
  ctx, span := tracer.StartConsumer(ctx, "Roles.HandleCreate")
  defer span.End()
  ctx = core.InjectContext(ctx, req.Headers())
+logger.Info(ctx, "request received", logger.String("handler", "Roles.Create"), logger.Int("bytes", len(req.Data())))
 
  var event RolesCreatedEvent
  if err := json.Unmarshal(req.Data(), &event); err != nil {
@@ -107,6 +108,7 @@ func (s *RolesHandler) HandleUpdate(req core.Request) {
  ctx, span := tracer.StartConsumer(ctx, "Roles.HandleUpdate")
  defer span.End()
  ctx = core.InjectContext(ctx, req.Headers())
+logger.Info(ctx, "request received", logger.String("handler", "Roles.Update"), logger.Int("bytes", len(req.Data())))
 
  var event RolesUpdatedEvent
  if err := json.Unmarshal(req.Data(), &event); err != nil {
@@ -151,6 +153,7 @@ func (s *RolesHandler) HandleList(req core.Request) {
  ctx, span := tracer.StartConsumer(ctx, "Roles.HandleList")
  defer span.End()
  ctx = core.InjectContext(ctx, req.Headers())
+logger.Info(ctx, "request received", logger.String("handler", "Roles.List"), logger.Int("bytes", len(req.Data())))
 
  var event RolesListRequest
  if err := json.Unmarshal(req.Data(), &event); err != nil {
@@ -194,6 +197,7 @@ func (s *RolesHandler) HandleDelete(req core.Request) {
  ctx, span := tracer.StartConsumer(ctx, "Roles.HandleDelete")
  defer span.End()
  ctx = core.InjectContext(ctx, req.Headers())
+logger.Info(ctx, "request received", logger.String("handler", "Roles.Delete"), logger.Int("bytes", len(req.Data())))
 
  var event RolesDeletedEvent
  if err := json.Unmarshal(req.Data(), &event); err != nil {
@@ -238,6 +242,7 @@ func (s *RolesHandler) HandleGet(req core.Request) {
  ctx, span := tracer.StartConsumer(ctx, "Roles.HandleGet")
  defer span.End()
  ctx = core.InjectContext(ctx, req.Headers())
+logger.Info(ctx, "request received", logger.String("handler", "Roles.Get"), logger.Int("bytes", len(req.Data())))
 
  var event RolesGetRequest
  if err := json.Unmarshal(req.Data(), &event); err != nil {

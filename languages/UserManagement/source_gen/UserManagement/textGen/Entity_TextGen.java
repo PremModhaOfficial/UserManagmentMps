@@ -224,6 +224,11 @@ public class Entity_TextGen extends TextGenDescriptorBase {
       tgs.newLine();
       tgs.append(" ctx = core.InjectContext(ctx, req.Headers())");
       tgs.newLine();
+      tgs.append("logger.Info(ctx, \"request received\", logger.String(\"handler\", \"");
+      tgs.append(name);
+      tgs.append(".");
+      tgs.append(opName);
+      tgs.append("\"), logger.Int(\"bytes\", len(req.Data())))\n");
       tgs.newLine();
 
       if (opKind.equals("create")) {

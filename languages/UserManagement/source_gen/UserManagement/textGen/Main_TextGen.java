@@ -139,7 +139,7 @@ public class Main_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.append(" logcfg := logger.DefaultConfig()\n logcfg.ServiceName = \"");
     tgs.append(svcName);
-    tgs.append("\"\n logcfg.ServiceVersion = \"0.1.0\"\n logcfg.Environment = \"development\"\n logger.MustInit(logcfg)\n defer logger.Close()\n\n ctx0 := context.Background()\n logger.Info(ctx0, \"Starting ");
+    tgs.append("\"\n logcfg.ServiceVersion = \"0.1.0\"\n logcfg.Environment = \"development\"\n logInst := logger.MustInit(logcfg)\n defer logInst.Close()\n\n ctx0 := context.Background()\n logger.Info(ctx0, \"Starting ");
     tgs.append(svcName);
     tgs.append("\")");
     tgs.newLine();
@@ -335,7 +335,7 @@ public class Main_TextGen extends TextGenDescriptorBase {
     tgs.append(" shutting down\")\n");
     tgs.append(" if err := srv.Stop(); err != nil {");
     tgs.newLine();
-    tgs.append("  logger.Error(ctx0, \"error stopping service: %v\", logger.Err(err)");
+    tgs.append("  logger.Error(ctx0, \"error stopping service:\", logger.Err(err))");
     tgs.newLine();
     tgs.append(" }");
     tgs.newLine();

@@ -2410,6 +2410,27 @@
               </node>
               <node concept="l8MVK" id="24dYXnuoiTu" role="lcghm" />
             </node>
+            <node concept="lc7rE" id="FY3t2w0XW$" role="3cqZAp">
+              <node concept="la8eA" id="FY3t2w0Yjq" role="lcghm">
+                <property role="lacIc" value="logger.Info(ctx, &quot;request received&quot;, logger.String(&quot;handler&quot;, &quot;" />
+              </node>
+              <node concept="l9hG8" id="FY3t2w0Ynt" role="lcghm">
+                <node concept="37vLTw" id="FY3t2w0Yoa" role="lb14g">
+                  <ref role="3cqZAo" node="24dYXnuoZbg" resolve="name" />
+                </node>
+              </node>
+              <node concept="la8eA" id="FY3t2w0YrG" role="lcghm">
+                <property role="lacIc" value="." />
+              </node>
+              <node concept="l9hG8" id="FY3t2w0Yp$" role="lcghm">
+                <node concept="37vLTw" id="FY3t2w0Yqh" role="lb14g">
+                  <ref role="3cqZAo" node="4yIuq2lZlqF" resolve="opName" />
+                </node>
+              </node>
+              <node concept="la8eA" id="FY3t2w0YlI" role="lcghm">
+                <property role="lacIc" value="&quot;), logger.Int(&quot;bytes&quot;, len(req.Data())))\n" />
+              </node>
+            </node>
             <node concept="lc7rE" id="24dYXnuoiTv" role="3cqZAp">
               <node concept="l8MVK" id="24dYXnuoiTw" role="lcghm" />
             </node>
@@ -5379,6 +5400,32 @@
               </node>
               <node concept="l8MVK" id="24dYXnup_tw" role="lcghm" />
             </node>
+            <node concept="lc7rE" id="FY3t2w0Zq$" role="3cqZAp">
+              <node concept="la8eA" id="FY3t2w0Zzl" role="lcghm">
+                <property role="lacIc" value="logger.Info(ctx, &quot;request received&quot;, logger.String(&quot;handler&quot;, &quot;" />
+              </node>
+              <node concept="l9hG8" id="FY3t2w0ZAr" role="lcghm">
+                <node concept="37vLTw" id="FY3t2w0ZGw" role="lb14g">
+                  <ref role="3cqZAo" node="4yIuq2m3pxd" resolve="fromName" />
+                </node>
+              </node>
+              <node concept="l9hG8" id="FY3t2w0ZI6" role="lcghm">
+                <node concept="37vLTw" id="FY3t2w0ZJ2" role="lb14g">
+                  <ref role="3cqZAo" node="4yIuq2m3qJs" resolve="toName" />
+                </node>
+              </node>
+              <node concept="la8eA" id="FY3t2w0ZLs" role="lcghm">
+                <property role="lacIc" value="." />
+              </node>
+              <node concept="l9hG8" id="FY3t2w0ZN_" role="lcghm">
+                <node concept="37vLTw" id="FY3t2w0ZWS" role="lb14g">
+                  <ref role="3cqZAo" node="4yIuq2m3Cf6" resolve="opName" />
+                </node>
+              </node>
+              <node concept="la8eA" id="FY3t2w10$k" role="lcghm">
+                <property role="lacIc" value="&quot;), logger.Int(&quot;bytes&quot;, len(req.Data())))\n" />
+              </node>
+            </node>
             <node concept="lc7rE" id="7tgPrsAeU" role="3cqZAp">
               <node concept="la8eA" id="24dYXnup_tx" role="lcghm">
                 <property role="lacIc" value=" ctx = core.InjectContext(ctx, req.Headers())" />
@@ -6874,7 +6921,7 @@
             </node>
           </node>
           <node concept="la8eA" id="FY3t2vQVLM" role="lcghm">
-            <property role="lacIc" value="&quot;\n logcfg.ServiceVersion = &quot;0.1.0&quot;\n logcfg.Environment = &quot;development&quot;\n logger.MustInit(logcfg)\n defer logger.Close()\n\n ctx0 := context.Background()\n logger.Info(ctx0, &quot;Starting " />
+            <property role="lacIc" value="&quot;\n logcfg.ServiceVersion = &quot;0.1.0&quot;\n logcfg.Environment = &quot;development&quot;\n logInst := logger.MustInit(logcfg)\n defer logInst.Close()\n\n ctx0 := context.Background()\n logger.Info(ctx0, &quot;Starting " />
           </node>
           <node concept="l9hG8" id="FY3t2vR65t" role="lcghm">
             <node concept="37vLTw" id="FY3t2vR69C" role="lb14g">
@@ -7908,7 +7955,7 @@
         </node>
         <node concept="lc7rE" id="4yIuq2lYX2T" role="3cqZAp">
           <node concept="la8eA" id="4yIuq2lYX2U" role="lcghm">
-            <property role="lacIc" value="  logger.Error(ctx0, &quot;error stopping service: %v&quot;, logger.Err(err)" />
+            <property role="lacIc" value="  logger.Error(ctx0, &quot;error stopping service:&quot;, logger.Err(err))" />
           </node>
           <node concept="l8MVK" id="4yIuq2lYX2V" role="lcghm" />
         </node>

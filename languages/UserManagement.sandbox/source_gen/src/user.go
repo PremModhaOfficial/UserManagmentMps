@@ -65,6 +65,7 @@ func (s *UserHandler) HandleCreate(req core.Request) {
  ctx, span := tracer.StartConsumer(ctx, "User.HandleCreate")
  defer span.End()
  ctx = core.InjectContext(ctx, req.Headers())
+logger.Info(ctx, "request received", logger.String("handler", "User.Create"), logger.Int("bytes", len(req.Data())))
 
  var event UserCreatedEvent
  if err := json.Unmarshal(req.Data(), &event); err != nil {
@@ -115,6 +116,7 @@ func (s *UserHandler) HandleUpdate(req core.Request) {
  ctx, span := tracer.StartConsumer(ctx, "User.HandleUpdate")
  defer span.End()
  ctx = core.InjectContext(ctx, req.Headers())
+logger.Info(ctx, "request received", logger.String("handler", "User.Update"), logger.Int("bytes", len(req.Data())))
 
  var event UserUpdatedEvent
  if err := json.Unmarshal(req.Data(), &event); err != nil {
@@ -159,6 +161,7 @@ func (s *UserHandler) HandleDelete(req core.Request) {
  ctx, span := tracer.StartConsumer(ctx, "User.HandleDelete")
  defer span.End()
  ctx = core.InjectContext(ctx, req.Headers())
+logger.Info(ctx, "request received", logger.String("handler", "User.Delete"), logger.Int("bytes", len(req.Data())))
 
  var event UserDeletedEvent
  if err := json.Unmarshal(req.Data(), &event); err != nil {
@@ -210,6 +213,7 @@ func (s *UserHandler) HandleGet(req core.Request) {
  ctx, span := tracer.StartConsumer(ctx, "User.HandleGet")
  defer span.End()
  ctx = core.InjectContext(ctx, req.Headers())
+logger.Info(ctx, "request received", logger.String("handler", "User.Get"), logger.Int("bytes", len(req.Data())))
 
  var event UserGetRequest
  if err := json.Unmarshal(req.Data(), &event); err != nil {
@@ -255,6 +259,7 @@ func (s *UserHandler) HandleList(req core.Request) {
  ctx, span := tracer.StartConsumer(ctx, "User.HandleList")
  defer span.End()
  ctx = core.InjectContext(ctx, req.Headers())
+logger.Info(ctx, "request received", logger.String("handler", "User.List"), logger.Int("bytes", len(req.Data())))
 
  var event UserListRequest
  if err := json.Unmarshal(req.Data(), &event); err != nil {
@@ -345,6 +350,7 @@ func (s *UserRolesHandler) HandleAssign(req core.Request) {
  ctx := req.Context()
  ctx, span := tracer.StartConsumer(ctx, "UserRoles.HandleAssign")
  defer span.End()
+logger.Info(ctx, "request received", logger.String("handler", "UserRoles.Assign"), logger.Int("bytes", len(req.Data())))
  ctx = core.InjectContext(ctx, req.Headers())
 
  var event UserRolesAssignedEvent
@@ -398,6 +404,7 @@ func (s *UserRolesHandler) HandleList(req core.Request) {
  ctx := req.Context()
  ctx, span := tracer.StartConsumer(ctx, "UserRoles.HandleList")
  defer span.End()
+logger.Info(ctx, "request received", logger.String("handler", "UserRoles.List"), logger.Int("bytes", len(req.Data())))
  ctx = core.InjectContext(ctx, req.Headers())
 
  var event UserRolesListRequest
@@ -450,6 +457,7 @@ func (s *UserRolesHandler) HandleRemove(req core.Request) {
  ctx := req.Context()
  ctx, span := tracer.StartConsumer(ctx, "UserRoles.HandleRemove")
  defer span.End()
+logger.Info(ctx, "request received", logger.String("handler", "UserRoles.Remove"), logger.Int("bytes", len(req.Data())))
  ctx = core.InjectContext(ctx, req.Headers())
 
  var event UserRolesRemovedEvent

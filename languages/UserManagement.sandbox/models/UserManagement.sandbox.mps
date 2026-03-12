@@ -33,7 +33,6 @@
         <property id="7669448123827596404" name="annotation" index="1eqfor" />
       </concept>
       <concept id="7669448123827596321" name="UserManagement.structure.Main" flags="ng" index="1eqfpe">
-        <property id="5635644816142537696" name="generationPath" index="2WhOrT" />
         <property id="5635644816143698189" name="tenantName" index="2WGpKk" />
         <property id="7669448123827596329" name="defaultNatsUrl" index="1eqfp6" />
         <property id="7669448123827596327" name="tenentID" index="1eqfp8" />
@@ -62,26 +61,10 @@
       </concept>
     </language>
   </registry>
-  <node concept="1eqfpe" id="6DJmAW$eZZl">
-    <property role="TrG5h" value="main" />
-    <property role="1eqfp8" value="motadata" />
-    <property role="1eqfp6" value="nats://localhost:4229 " />
-    <property role="1eqfpq" value="motadata" />
-    <property role="1eqfpp" value="iam" />
-    <property role="3GE5qa" value="usrmng" />
-    <property role="2WhOrT" value="/home/prem-modha/projects/dsl_gen" />
-    <property role="2WGpKk" value="MotaUserManagement" />
-    <node concept="1elhiI" id="6DJmAW$jFhM" role="1eqfr3">
-      <ref role="1elhiH" node="6DJmAW$fZlt" resolve="Roles" />
-    </node>
-    <node concept="1elhiI" id="6DJmAW$jFhI" role="1eqfr3">
-      <ref role="1elhiH" node="6DJmAW$fl8W" resolve="User" />
-    </node>
-  </node>
   <node concept="1eqfoh" id="6DJmAW$fl8W">
     <property role="TrG5h" value="User" />
     <property role="3GE5qa" value="usrmng" />
-    <ref role="1elhiA" node="6DJmAW$eZZl" />
+    <ref role="1elhiA" node="FY3t2vXu$C" />
     <node concept="1eqfrA" id="4SPPhBMfxZK" role="2W3ehS">
       <property role="1eqfr$" value="6DJmAW$1ULr/delete" />
     </node>
@@ -183,7 +166,7 @@
   <node concept="1eqfoh" id="6DJmAW$fZlt">
     <property role="TrG5h" value="Roles" />
     <property role="3GE5qa" value="usrmng" />
-    <ref role="1elhiA" node="6DJmAW$eZZl" />
+    <ref role="1elhiA" node="FY3t2vXu$C" />
     <node concept="1eqfo7" id="6DJmAW$fZlu" role="1eqfrF">
       <property role="TrG5h" value="ID" />
       <node concept="1eqfol" id="6DJmAW$fZlv" role="1eo4CD">
@@ -236,6 +219,20 @@
     </node>
     <node concept="1elhiI" id="1cQKuyWn6op" role="1elhiT">
       <ref role="1elhiH" node="6DJmAW$fZlt" resolve="Roles" />
+    </node>
+  </node>
+  <node concept="1eqfpe" id="FY3t2vXu$C">
+    <property role="2WGpKk" value="MotaDSLUM" />
+    <property role="1eqfp8" value="motadata" />
+    <property role="1eqfp6" value="nats://localhost:4230" />
+    <property role="1eqfpq" value="motadata" />
+    <property role="1eqfpp" value="iam" />
+    <property role="3GE5qa" value="usrmng" />
+    <node concept="1elhiI" id="FY3t2vXu$D" role="1eqfr3">
+      <ref role="1elhiH" node="6DJmAW$fZlt" resolve="Roles" />
+    </node>
+    <node concept="1elhiI" id="FY3t2vXu$E" role="1eqfr3">
+      <ref role="1elhiH" node="6DJmAW$fl8W" resolve="User" />
     </node>
   </node>
 </model>

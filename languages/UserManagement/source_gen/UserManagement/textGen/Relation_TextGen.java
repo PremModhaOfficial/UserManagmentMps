@@ -167,6 +167,12 @@ public class Relation_TextGen extends TextGenDescriptorBase {
       tgs.newLine();
       tgs.append(" defer span.End()");
       tgs.newLine();
+      tgs.append("logger.Info(ctx, \"request received\", logger.String(\"handler\", \"");
+      tgs.append(fromName);
+      tgs.append(toName);
+      tgs.append(".");
+      tgs.append(opName);
+      tgs.append("\"), logger.Int(\"bytes\", len(req.Data())))\n");
       tgs.append(" ctx = core.InjectContext(ctx, req.Headers())");
       tgs.newLine();
       tgs.newLine();
