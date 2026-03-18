@@ -216,45 +216,6 @@
           </node>
         </node>
         <node concept="3F0ifn" id="4SPPhBMht_8" role="3EZMnx" />
-        <node concept="3EZMnI" id="4SPPhBMfxZT" role="3EZMnx">
-          <node concept="3F0ifn" id="4SPPhBMfxZR" role="3EZMnx">
-            <property role="3F0ifm" value="allowed_to:" />
-          </node>
-          <node concept="2iRkQZ" id="4SPPhBMfxZW" role="2iSdaV" />
-          <node concept="3F2HdR" id="4SPPhBMfxZZ" role="3EZMnx">
-            <ref role="1NtTu8" to="laam:6DJmAW$1UM6" resolve="operations" />
-            <node concept="2iRkQZ" id="4SPPhBMfy01" role="2czzBx" />
-          </node>
-        </node>
-        <node concept="3F0ifn" id="4SPPhBMht_9" role="3EZMnx" />
-        <node concept="3EZMnI" id="4SPPhBMeUdI" role="3EZMnx">
-          <node concept="3F0ifn" id="4SPPhBMeUdJ" role="3EZMnx">
-            <property role="3F0ifm" value="preHooks:" />
-          </node>
-          <node concept="2iRkQZ" id="4SPPhBMeUdK" role="2iSdaV" />
-          <node concept="3EZMnI" id="4SPPhBMeUdL" role="3EZMnx">
-            <node concept="2iRfu4" id="4SPPhBMeUdM" role="2iSdaV" />
-            <node concept="3XFhqQ" id="4SPPhBMeUdN" role="3EZMnx" />
-            <node concept="3F2HdR" id="4SPPhBMeUdO" role="3EZMnx">
-              <ref role="1NtTu8" to="laam:4SPPhBMdztU" resolve="preHooks" />
-              <node concept="2iRkQZ" id="4SPPhBMeUdP" role="2czzBx" />
-            </node>
-          </node>
-        </node>
-        <node concept="3EZMnI" id="4SPPhBMeluT" role="3EZMnx">
-          <node concept="3F0ifn" id="4SPPhBMeluR" role="3EZMnx">
-            <property role="3F0ifm" value="postHooks:" />
-          </node>
-          <node concept="2iRkQZ" id="4SPPhBMeUdw" role="2iSdaV" />
-          <node concept="3EZMnI" id="4SPPhBMeUdA" role="3EZMnx">
-            <node concept="2iRfu4" id="4SPPhBMeUdB" role="2iSdaV" />
-            <node concept="3XFhqQ" id="4SPPhBMeUdz" role="3EZMnx" />
-            <node concept="3F2HdR" id="4SPPhBMeUdD" role="3EZMnx">
-              <ref role="1NtTu8" to="laam:4SPPhBMej5x" resolve="postHooks" />
-              <node concept="2iRkQZ" id="4SPPhBMeUdG" role="2czzBx" />
-            </node>
-          </node>
-        </node>
         <node concept="3F0ifn" id="4SPPhBMht_a" role="3EZMnx" />
         <node concept="3EZMnI" id="6DJmAW$6Do2" role="3EZMnx">
           <node concept="VPM3Z" id="6DJmAW$6Do4" role="3F10Kt" />
@@ -267,6 +228,38 @@
           </node>
           <node concept="2iRkQZ" id="6DJmAW$6Do7" role="2iSdaV" />
         </node>
+        <node concept="3EZMnI" id="4SPPhBMfxZT" role="3EZMnx">
+          <node concept="3F0ifn" id="4SPPhBMfxZR" role="3EZMnx">
+            <property role="3F0ifm" value="allowed_to:" />
+          </node>
+          <node concept="2iRkQZ" id="4SPPhBMfxZW" role="2iSdaV" />
+          <node concept="3F2HdR" id="4SPPhBMfxZZ" role="3EZMnx">
+            <ref role="1NtTu8" to="laam:6DJmAW$1UM6" resolve="operations" />
+            <node concept="2iRkQZ" id="4SPPhBMfy01" role="2czzBx" />
+          </node>
+        </node>
+        <node concept="3F0ifn" id="2H11bzbNEA_" role="3EZMnx" />
+        <node concept="3EZMnI" id="2H11bzb47RI" role="3EZMnx">
+          <node concept="3F0ifn" id="2H11bzb47RJ" role="3EZMnx">
+            <property role="3F0ifm" value="preHooks:" />
+          </node>
+          <node concept="3F2HdR" id="2H11bzb8M15" role="3EZMnx">
+            <ref role="1NtTu8" to="laam:2H11bzb47RG" resolve="preHooksNamed" />
+            <node concept="2iRkQZ" id="2H11bzb8M17" role="2czzBx" />
+          </node>
+          <node concept="2iRkQZ" id="2H11bzb47RK" role="2iSdaV" />
+        </node>
+        <node concept="3EZMnI" id="2H11bzblMwX" role="3EZMnx">
+          <node concept="3F0ifn" id="2H11bzblMwY" role="3EZMnx">
+            <property role="3F0ifm" value="postHooks:" />
+          </node>
+          <node concept="3F2HdR" id="2H11bzblMwZ" role="3EZMnx">
+            <ref role="1NtTu8" to="laam:2H11bzb47RH" resolve="postHooksNamed" />
+            <node concept="2iRkQZ" id="2H11bzblMx0" role="2czzBx" />
+          </node>
+          <node concept="2iRkQZ" id="2H11bzblMx1" role="2iSdaV" />
+        </node>
+        <node concept="3F0ifn" id="2H11bzbNEAy" role="3EZMnx" />
         <node concept="3F0ifn" id="24dYXnu13px" role="3EZMnx">
           <property role="3F0ifm" value="relations:" />
         </node>
@@ -404,6 +397,9 @@
   <node concept="24kQdi" id="6DJmAW$2VLI">
     <ref role="1XX52x" to="laam:6DJmAW$1ULC" resolve="Field" />
     <node concept="3EZMnI" id="6DJmAW$2VLS" role="2wV5jI">
+      <node concept="3F0ifn" id="2H11bzbOuCT" role="3EZMnx">
+        <property role="3F0ifm" value="-" />
+      </node>
       <node concept="2iRfu4" id="6DJmAW$2VLT" role="2iSdaV" />
       <node concept="3F0A7n" id="6DJmAW$7Gb$" role="3EZMnx">
         <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
@@ -468,6 +464,60 @@
       </node>
       <node concept="3F0A7n" id="6DJmAW$gDB1" role="3EZMnx">
         <ref role="1NtTu8" to="laam:6DJmAW$1UMu" resolve="relationOperation" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="2H11bzb4LuB">
+    <ref role="1XX52x" to="laam:2H11bzb47RD" resolve="HookTypeHooksHolder" />
+    <node concept="3EZMnI" id="2H11bzb4LuD" role="2wV5jI">
+      <node concept="3EZMnI" id="2H11bzb7qTj" role="3EZMnx">
+        <node concept="2iRfu4" id="2H11bzb7qTk" role="2iSdaV" />
+        <node concept="3XFhqQ" id="2H11bzb7qTm" role="3EZMnx" />
+        <node concept="3F0A7n" id="2H11bzb6JBy" role="3EZMnx">
+          <ref role="1NtTu8" to="laam:6DJmAW$1UMb" resolve="entityOperation" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="2H11bzb6JB_" role="3EZMnx">
+        <node concept="2iRfu4" id="2H11bzb6JBA" role="2iSdaV" />
+        <node concept="3XFhqQ" id="2H11bzb7qTt" role="3EZMnx" />
+        <node concept="3XFhqQ" id="2H11bzb7qTw" role="3EZMnx" />
+        <node concept="3F2HdR" id="2H11bzb4LuH" role="3EZMnx">
+          <ref role="1NtTu8" to="laam:2H11bzb47RE" resolve="Hooks" />
+          <node concept="2EHx9g" id="2H11bzb_UNC" role="2czzBx" />
+        </node>
+      </node>
+      <node concept="2EHx9g" id="2H11bzbACpH" role="2iSdaV" />
+    </node>
+  </node>
+  <node concept="24kQdi" id="2H11bzb64WL">
+    <ref role="1XX52x" to="laam:2H11bzb47RF" resolve="Hook" />
+    <node concept="3EZMnI" id="2H11bzb64WP" role="2wV5jI">
+      <node concept="2iRfu4" id="2H11bzbC4nZ" role="2iSdaV" />
+      <node concept="3F0ifn" id="2H11bzb64WT" role="3EZMnx">
+        <property role="3F0ifm" value="-" />
+      </node>
+      <node concept="3F0ifn" id="2H11bzbz2ZT" role="3EZMnx">
+        <property role="3F0ifm" value="name:" />
+      </node>
+      <node concept="3F0A7n" id="2H11bzb64WN" role="3EZMnx">
+        <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+      </node>
+      <node concept="3XFhqQ" id="2H11bzbC4o9" role="3EZMnx" />
+      <node concept="3F0ifn" id="2H11bzbC4o3" role="3EZMnx">
+        <property role="3F0ifm" value="-" />
+      </node>
+      <node concept="3F0ifn" id="2H11bzbmuxS" role="3EZMnx">
+        <property role="3F0ifm" value="priority:" />
+      </node>
+      <node concept="3F0A7n" id="2H11bzbmuxL" role="3EZMnx">
+        <ref role="1NtTu8" to="laam:2H11bzbmuxI" resolve="priority" />
+      </node>
+      <node concept="3XFhqQ" id="2H11bzbC4od" role="3EZMnx" />
+      <node concept="3F0ifn" id="2H11bzbz2ZY" role="3EZMnx">
+        <property role="3F0ifm" value="isAsync:" />
+      </node>
+      <node concept="3F0A7n" id="2H11bzbz301" role="3EZMnx">
+        <ref role="1NtTu8" to="laam:2H11bzbz2ZR" resolve="isAsync" />
       </node>
     </node>
   </node>

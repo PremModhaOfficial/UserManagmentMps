@@ -23,6 +23,8 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
   /*package*/ final ConceptDescriptor myConceptField = createDescriptorForField();
   /*package*/ final ConceptDescriptor myConceptFieldAnnotationHolder = createDescriptorForFieldAnnotationHolder();
   /*package*/ final ConceptDescriptor myConceptFieldTypeHolder = createDescriptorForFieldTypeHolder();
+  /*package*/ final ConceptDescriptor myConceptHook = createDescriptorForHook();
+  /*package*/ final ConceptDescriptor myConceptHookTypeHooksHolder = createDescriptorForHookTypeHooksHolder();
   /*package*/ final ConceptDescriptor myConceptMain = createDescriptorForMain();
   /*package*/ final ConceptDescriptor myConceptRelation = createDescriptorForRelation();
   /*package*/ final ConceptDescriptor myConceptRelationOperationHolder = createDescriptorForRelationOperationHolder();
@@ -46,7 +48,7 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
 
   @Override
   public Collection<ConceptDescriptor> getDescriptors() {
-    return Arrays.asList(myConceptConfiguration, myConceptEntity, myConceptEntityOperationHolder, myConceptEntityRef, myConceptField, myConceptFieldAnnotationHolder, myConceptFieldTypeHolder, myConceptMain, myConceptRelation, myConceptRelationOperationHolder, myConceptRelationRef, myConceptSqlSchem);
+    return Arrays.asList(myConceptConfiguration, myConceptEntity, myConceptEntityOperationHolder, myConceptEntityRef, myConceptField, myConceptFieldAnnotationHolder, myConceptFieldTypeHolder, myConceptHook, myConceptHookTypeHooksHolder, myConceptMain, myConceptRelation, myConceptRelationOperationHolder, myConceptRelationRef, myConceptSqlSchem);
   }
 
   @Override
@@ -67,6 +69,10 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
         return myConceptFieldAnnotationHolder;
       case LanguageConceptSwitch.FieldTypeHolder:
         return myConceptFieldTypeHolder;
+      case LanguageConceptSwitch.Hook:
+        return myConceptHook;
+      case LanguageConceptSwitch.HookTypeHooksHolder:
+        return myConceptHookTypeHooksHolder;
       case LanguageConceptSwitch.Main:
         return myConceptMain;
       case LanguageConceptSwitch.Relation:
@@ -111,6 +117,8 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
     b.aggregate("fields", 0x6a6f5a6f2407ac84L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L).optional(false).ordered(true).multiple(true).origin("7669448123827596420").done();
     b.aggregate("operations", 0x6a6f5a6f2407ac86L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac89L).optional(false).ordered(true).multiple(true).origin("7669448123827596422").done();
     b.aggregate("preHooks", 0x4e35d519f236377aL).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac89L).optional(true).ordered(true).multiple(true).origin("5635644816138581882").done();
+    b.aggregate("preHooksNamed", 0x2b4104b8cb107decL).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x2b4104b8cb107de9L).optional(true).ordered(true).multiple(true).origin("3116777608844443116").done();
+    b.aggregate("postHooksNamed", 0x2b4104b8cb107dedL).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x2b4104b8cb107de9L).optional(true).ordered(true).multiple(true).origin("3116777608844443117").done();
     b.aggregate("postHooks", 0x4e35d519f2393161L).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac89L).optional(true).ordered(true).multiple(true).origin("5635644816138776929").done();
     b.aggregate("relations", 0x210dfbd5ddf5be7aL).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac8fL).optional(true).ordered(true).multiple(true).origin("2381836673919336058").done();
     return b.create();
@@ -156,6 +164,26 @@ public class StructureAspectDescriptor extends BaseStructureAspectDescriptor {
     b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/7669448123827596410");
     b.version(3);
     b.property("fieldType", 0x6a6f5a6f2407ac7bL).type(MetaIdFactory.dataTypeId(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac38L)).origin("7669448123827596411").done();
+    return b.create();
+  }
+  private static ConceptDescriptor createDescriptorForHook() {
+    ConceptDescriptorBuilder2 b = new ConceptDescriptorBuilder2("UserManagement", "Hook", 0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x2b4104b8cb107debL);
+    b.class_(false, false, false);
+    b.parent(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L);
+    b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/3116777608844443115");
+    b.version(3);
+    b.property("priority", 0x2b4104b8cb59e86eL).type(PrimitiveTypeId.INTEGER).origin("3116777608849254510").done();
+    b.property("isAsync", 0x2b4104b8cb8c2ff7L).type(PrimitiveTypeId.BOOLEAN).origin("3116777608852549623").done();
+    return b.create();
+  }
+  private static ConceptDescriptor createDescriptorForHookTypeHooksHolder() {
+    ConceptDescriptorBuilder2 b = new ConceptDescriptorBuilder2("UserManagement", "HookTypeHooksHolder", 0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x2b4104b8cb107de9L);
+    b.class_(false, false, false);
+    // extends: UserManagement.structure.EntityOperationHolder
+    b.super_(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac89L);
+    b.origin("r:a3a366a2-da30-48fe-b644-04a6d92b06a4(UserManagement.structure)/3116777608844443113");
+    b.version(3);
+    b.aggregate("Hooks", 0x2b4104b8cb107deaL).target(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x2b4104b8cb107debL).optional(false).ordered(true).multiple(true).origin("3116777608844443114").done();
     return b.create();
   }
   private static ConceptDescriptor createDescriptorForMain() {

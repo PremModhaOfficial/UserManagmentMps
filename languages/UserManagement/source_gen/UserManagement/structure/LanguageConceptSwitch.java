@@ -16,11 +16,13 @@ public final class LanguageConceptSwitch {
   public static final int Field = 4;
   public static final int FieldAnnotationHolder = 5;
   public static final int FieldTypeHolder = 6;
-  public static final int Main = 7;
-  public static final int Relation = 8;
-  public static final int RelationOperationHolder = 9;
-  public static final int RelationRef = 10;
-  public static final int SqlSchem = 11;
+  public static final int Hook = 7;
+  public static final int HookTypeHooksHolder = 8;
+  public static final int Main = 9;
+  public static final int Relation = 10;
+  public static final int RelationOperationHolder = 11;
+  public static final int RelationRef = 12;
+  public static final int SqlSchem = 13;
 
   public LanguageConceptSwitch() {
     LanguageConceptIndexBuilder builder = new LanguageConceptIndexBuilder(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L);
@@ -31,6 +33,8 @@ public final class LanguageConceptSwitch {
     builder.put(0x6a6f5a6f2407ac68L, Field);
     builder.put(0x6a6f5a6f2407ac73L, FieldAnnotationHolder);
     builder.put(0x6a6f5a6f2407ac7aL, FieldTypeHolder);
+    builder.put(0x2b4104b8cb107debL, Hook);
+    builder.put(0x2b4104b8cb107de9L, HookTypeHooksHolder);
     builder.put(0x6a6f5a6f2407ac21L, Main);
     builder.put(0x6a6f5a6f2407ac8fL, Relation);
     builder.put(0x6a6f5a6f2407ac9cL, RelationOperationHolder);

@@ -29,12 +29,13 @@ public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
   public static final SMethod<Boolean> hasAnotation_id6DJmAW$hoUl = new SMethodBuilder<Boolean>(new SJavaCompoundTypeImpl(Boolean.TYPE)).name("hasAnotation").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123831651989L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2(SMethodBuilder.createJavaParameter(String.class, ""));
   public static final SMethod<String> capitalize_id5Lqw_By60m2 = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("capitalize").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(6654774721950254466L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> sqlType_id6DJmAW$aWx9 = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("sqlType").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123829962825L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
+  public static final SMethod<String> getDefault_id2hFdsTnFAcg = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("getDefault").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(2624250368224027408L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> goType_id6DJmAW$aE7I = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("goType").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123829887470L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> jsonTag_id6DJmAW$b545 = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("jsonTag").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123829997829L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> jsonName_id6DJmAW$7ald = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("jsonName").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123828970829L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> dbName_id6DJmAW$7pGu = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("dbName").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123829033758L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
 
-  private static final List<SMethod<?>> BH_METHODS = Arrays.<SMethod<?>>asList(hasAnotation_id6DJmAW$hoUl, capitalize_id5Lqw_By60m2, sqlType_id6DJmAW$aWx9, goType_id6DJmAW$aE7I, jsonTag_id6DJmAW$b545, jsonName_id6DJmAW$7ald, dbName_id6DJmAW$7pGu);
+  private static final List<SMethod<?>> BH_METHODS = Arrays.<SMethod<?>>asList(hasAnotation_id6DJmAW$hoUl, capitalize_id5Lqw_By60m2, sqlType_id6DJmAW$aWx9, getDefault_id2hFdsTnFAcg, goType_id6DJmAW$aE7I, jsonTag_id6DJmAW$b545, jsonName_id6DJmAW$7ald, dbName_id6DJmAW$7pGu);
 
   private static void ___init___(@NotNull SNode __thisNode__) {
   }
@@ -82,6 +83,37 @@ public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
     }
     if (ft.equals("entityRef")) {
       return "UUID";
+    }
+    return "TEXT";
+  }
+  /*package*/ static String getDefault_id2hFdsTnFAcg(@NotNull SNode __thisNode__) {
+    String ft = SEnumOperations.getMemberName0(SPropertyOperations.getEnum(SLinkOperations.getTarget(__thisNode__, LINKS.type$KBb7), PROPS.fieldType$RkpN));
+    if (ft.equals("uuid")) {
+      return "gen_random_uuid()";
+    }
+    if (ft.equals("string")) {
+      return "";
+    }
+    if (ft.equals("text")) {
+      return "";
+    }
+    if (ft.equals("int")) {
+      return "";
+    }
+    if (ft.equals("bool")) {
+      return "";
+    }
+    if (ft.equals("time")) {
+      return "DEFAULT NOW()";
+    }
+    if (ft.equals("json")) {
+      return "";
+    }
+    if (ft.equals("email")) {
+      return "";
+    }
+    if (ft.equals("password")) {
+      return "";
     }
     return "TEXT";
   }
@@ -168,12 +200,14 @@ public final class Field__BehaviorDescriptor extends BaseBHDescriptor {
       case 2:
         return (T) ((String) sqlType_id6DJmAW$aWx9(node));
       case 3:
-        return (T) ((String) goType_id6DJmAW$aE7I(node));
+        return (T) ((String) getDefault_id2hFdsTnFAcg(node));
       case 4:
-        return (T) ((String) jsonTag_id6DJmAW$b545(node));
+        return (T) ((String) goType_id6DJmAW$aE7I(node));
       case 5:
-        return (T) ((String) jsonName_id6DJmAW$7ald(node));
+        return (T) ((String) jsonTag_id6DJmAW$b545(node));
       case 6:
+        return (T) ((String) jsonName_id6DJmAW$7ald(node));
+      case 7:
         return (T) ((String) dbName_id6DJmAW$7pGu(node));
       default:
         throw new BHMethodNotFoundException(this, method);

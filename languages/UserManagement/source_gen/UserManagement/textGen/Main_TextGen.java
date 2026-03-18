@@ -137,14 +137,14 @@ public class Main_TextGen extends TextGenDescriptorBase {
     tgs.newLine();
     tgs.append("func main() {");
     tgs.newLine();
+    tgs.append(" otel.InitFromEnv()");
+    tgs.newLine();
     tgs.append(" logcfg := logger.DefaultConfig()\n logcfg.ServiceName = \"");
     tgs.append(svcName);
-    tgs.append("\"\n logcfg.ServiceVersion = \"0.1.0\"\n logcfg.Environment = \"development\"\n logInst := logger.MustInit(logcfg)\n defer logInst.Close()\n\n ctx0 := context.Background()\n logger.Info(ctx0, \"Starting ");
+    tgs.append("\"\n logcfg.ServiceVersion = \"0.1.0\"\n logcfg.Environment = \"development\"\n logcfg.Level = \"debug\"\n logInst := logger.MustInit(logcfg)\n defer logInst.Close()\n\n ctx0 := context.Background()\n logger.Info(ctx0, \"Starting ");
     tgs.append(svcName);
     tgs.append("\")");
     tgs.newLine();
-    tgs.newLine();
-    tgs.append(" otel.InitFromEnv()");
     tgs.newLine();
     tgs.newLine();
     tgs.append(" natsURL := os.Getenv(\"NATS_URL\")");

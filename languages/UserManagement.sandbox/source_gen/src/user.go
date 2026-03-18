@@ -12,14 +12,15 @@ import (
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core"
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/tracer"
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/logger"
+"dev.azure.com/Motadata/NextGen/motadata-go-sdk/core/pool/workerpool"
 )
 
 type User struct {
  ID string `json:"id" db:"id"`
  Password string `json:"password" db:"password"`
  UserName string `json:"user_name" db:"user_name"`
- CreatedAt time.Time `json:"created_at" db:"created_at"`
  UserMail string `json:"user_mail" db:"user_mail"`
+ CreatedAt time.Time `json:"created_at" db:"created_at"`
 }
 
 type UserCreatedEvent struct {
@@ -86,11 +87,35 @@ logger.Info(ctx, "request received", logger.String("handler", "User.Create"), lo
   tracer.StringAttr("tenant.id", req.Header(core.HeaderTenantID)),
  )
 
- if err := s.preCreateHook(ctx, span, &event); err != nil {
+ logger.Debug(ctx, "hook executing", logger.String("hook", "preCreateD"), logger.String("phase", "pre"),
+  logger.String("mode", "sync"))
+ if err := s.preCreateD(ctx, span, &event); err != nil {
+  logger.Error(ctx, "hook failed", logger.String("hook", "preCreateD"), logger.Err(err))
   span.RecordError(err)
   _ = req.RespondError("400", "pre-hook: " + err.Error(), nil)
   return
  }
+
+ logger.Debug(ctx, "hook dispatched", logger.String("hook", "preCreateC"), logger.String("phase", "pre"),
+  logger.String("mode", "async"))
+_ = workerpool.AsyncWithCtx(ctx, func(c context.Context) {
+   s.preCreateC(c, span, &event)
+ })
+
+ logger.Debug(ctx, "hook executing", logger.String("hook", "preCreateB"), logger.String("phase", "pre"),
+  logger.String("mode", "sync"))
+ if err := s.preCreateB(ctx, span, &event); err != nil {
+  logger.Error(ctx, "hook failed", logger.String("hook", "preCreateB"), logger.Err(err))
+  span.RecordError(err)
+  _ = req.RespondError("400", "pre-hook: " + err.Error(), nil)
+  return
+ }
+
+ logger.Debug(ctx, "hook dispatched", logger.String("hook", "preCreateA"), logger.String("phase", "pre"),
+  logger.String("mode", "async"))
+_ = workerpool.AsyncWithCtx(ctx, func(c context.Context) {
+   s.preCreateA(c, span, &event)
+ })
 
  dalSubject := s.subjectPrefix + ".user.db.create"
  outMsg := &nats.Msg{Data: req.Data()}
@@ -108,7 +133,20 @@ logger.Info(ctx, "request received", logger.String("handler", "User.Create"), lo
  }
 
 logger.Info(ctx, "DAL reply received", logger.String("handler", "User.create"), logger.Int("bytes", len(reply.Data)))
- _ = req.Respond(reply.Data)
+ responseData := reply.Data
+ logger.Debug(ctx, "hook dispatched", logger.String("hook", "postCreateNotifyAdmin"), logger.String("phase", "post"),
+  logger.String("mode", "async"))
+ _ = workerpool.AsyncWithCtx(ctx, func(c context.Context) {
+  s.postCreateNotifyAdmin(c, span, &event, responseData)
+ })
+
+ logger.Debug(ctx, "hook dispatched", logger.String("hook", "postCreateSendWelcome"), logger.String("phase", "post"),
+  logger.String("mode", "async"))
+ _ = workerpool.AsyncWithCtx(ctx, func(c context.Context) {
+  s.postCreateSendWelcome(c, span, &event, responseData)
+ })
+
+ _ = req.Respond(responseData)
 }
 
 func (s *UserHandler) HandleUpdate(req core.Request) {
@@ -137,6 +175,18 @@ logger.Info(ctx, "request received", logger.String("handler", "User.Update"), lo
   tracer.StringAttr("tenant.id", req.Header(core.HeaderTenantID)),
  )
 
+ logger.Debug(ctx, "hook dispatched", logger.String("hook", "preUpdateNotifyCache"), logger.String("phase", "pre"),
+  logger.String("mode", "async"))
+_ = workerpool.AsyncWithCtx(ctx, func(c context.Context) {
+   s.preUpdateNotifyCache(c, span, &event)
+ })
+
+ logger.Debug(ctx, "hook dispatched", logger.String("hook", "preUpdateAuditLog"), logger.String("phase", "pre"),
+  logger.String("mode", "async"))
+_ = workerpool.AsyncWithCtx(ctx, func(c context.Context) {
+   s.preUpdateAuditLog(c, span, &event)
+ })
+
  dalSubject := s.subjectPrefix + ".user.db.update"
  outMsg := &nats.Msg{Data: req.Data()}
  outMsg.Header = core.ExtractHeaders(ctx, nil)
@@ -153,7 +203,14 @@ logger.Info(ctx, "request received", logger.String("handler", "User.Update"), lo
  }
 
 logger.Info(ctx, "DAL reply received", logger.String("handler", "User.update"), logger.Int("bytes", len(reply.Data)))
- _ = req.Respond(reply.Data)
+ responseData := reply.Data
+ logger.Debug(ctx, "hook dispatched", logger.String("hook", "postUpdateInvalidate"), logger.String("phase", "post"),
+  logger.String("mode", "async"))
+ _ = workerpool.AsyncWithCtx(ctx, func(c context.Context) {
+  s.postUpdateInvalidate(c, span, &event, responseData)
+ })
+
+ _ = req.Respond(responseData)
 }
 
 func (s *UserHandler) HandleDelete(req core.Request) {
@@ -182,7 +239,28 @@ logger.Info(ctx, "request received", logger.String("handler", "User.Delete"), lo
   tracer.StringAttr("tenant.id", req.Header(core.HeaderTenantID)),
  )
 
- if err := s.preDeleteHook(ctx, span, &event); err != nil {
+ logger.Debug(ctx, "hook executing", logger.String("hook", "preDeleteXyz"), logger.String("phase", "pre"),
+  logger.String("mode", "sync"))
+ if err := s.preDeleteXyz(ctx, span, &event); err != nil {
+  logger.Error(ctx, "hook failed", logger.String("hook", "preDeleteXyz"), logger.Err(err))
+  span.RecordError(err)
+  _ = req.RespondError("400", "pre-hook: " + err.Error(), nil)
+  return
+ }
+
+ logger.Debug(ctx, "hook executing", logger.String("hook", "preDeleteAbc"), logger.String("phase", "pre"),
+  logger.String("mode", "sync"))
+ if err := s.preDeleteAbc(ctx, span, &event); err != nil {
+  logger.Error(ctx, "hook failed", logger.String("hook", "preDeleteAbc"), logger.Err(err))
+  span.RecordError(err)
+  _ = req.RespondError("400", "pre-hook: " + err.Error(), nil)
+  return
+ }
+
+ logger.Debug(ctx, "hook executing", logger.String("hook", "preDeleteValidateTen"), logger.String("phase", "pre"),
+  logger.String("mode", "sync"))
+ if err := s.preDeleteValidateTen(ctx, span, &event); err != nil {
+  logger.Error(ctx, "hook failed", logger.String("hook", "preDeleteValidateTen"), logger.Err(err))
   span.RecordError(err)
   _ = req.RespondError("400", "pre-hook: " + err.Error(), nil)
   return
@@ -204,7 +282,10 @@ logger.Info(ctx, "request received", logger.String("handler", "User.Delete"), lo
  }
 
 logger.Info(ctx, "DAL reply received", logger.String("handler", "User.delete"), logger.Int("bytes", len(reply.Data)))
- responseData := s.postDeleteHook(ctx, span, &event, reply.Data)
+ responseData := reply.Data
+ logger.Debug(ctx, "hook executing", logger.String("hook", "postDeleteMustDelete"), logger.String("phase", "post"),
+  logger.String("mode", "sync"))
+ responseData = s.postDeleteMustDelete(ctx, span, &event, responseData)
  _ = req.Respond(responseData)
 }
 
@@ -234,6 +315,12 @@ logger.Info(ctx, "request received", logger.String("handler", "User.Get"), logge
   tracer.StringAttr("tenant.id", req.Header(core.HeaderTenantID)),
  )
 
+ logger.Debug(ctx, "hook dispatched", logger.String("hook", "preGetTraceAcces"), logger.String("phase", "pre"),
+  logger.String("mode", "async"))
+_ = workerpool.AsyncWithCtx(ctx, func(c context.Context) {
+   s.preGetTraceAcces(c, span, &event)
+ })
+
  dalSubject := s.subjectPrefix + ".user.db.get"
  outMsg := &nats.Msg{Data: req.Data()}
  outMsg.Header = core.ExtractHeaders(ctx, nil)
@@ -250,7 +337,19 @@ logger.Info(ctx, "request received", logger.String("handler", "User.Get"), logge
  }
 
 logger.Info(ctx, "DAL reply received", logger.String("handler", "User.get"), logger.Int("bytes", len(reply.Data)))
- responseData := s.postGetHook(ctx, span, &event, reply.Data)
+ responseData := reply.Data
+ logger.Debug(ctx, "hook executing", logger.String("hook", "postGetFilterPII"), logger.String("phase", "post"),
+  logger.String("mode", "sync"))
+ responseData = s.postGetFilterPII(ctx, span, &event, responseData)
+ logger.Debug(ctx, "hook dispatched", logger.String("hook", "postGetCacheResult"), logger.String("phase", "post"),
+  logger.String("mode", "async"))
+ _ = workerpool.AsyncWithCtx(ctx, func(c context.Context) {
+  s.postGetCacheResult(c, span, &event, responseData)
+ })
+
+ logger.Debug(ctx, "hook executing", logger.String("hook", "postGetEnrichData"), logger.String("phase", "post"),
+  logger.String("mode", "sync"))
+ responseData = s.postGetEnrichData(ctx, span, &event, responseData)
  _ = req.Respond(responseData)
 }
 
@@ -298,22 +397,135 @@ logger.Info(ctx, "DAL reply received", logger.String("handler", "User.list"), lo
  _ = req.Respond(reply.Data)
 }
 
-func (s *UserHandler) preCreateHook(ctx context.Context, span tracer.Span, event *UserCreatedEvent) error {
- return nil
+// #HOOKS_START
+func (s *UserHandler) preCreateD(ctx context.Context, span tracer.Span, event *UserCreatedEvent) error {
+ctx, hookSpan := tracer.Start(ctx, "hook.pre.User.create.D")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+   return nil
 }
 
-func (s *UserHandler) preDeleteHook(ctx context.Context, span tracer.Span, event *UserDeletedEvent) error {
- return nil
+func (s *UserHandler) preCreateC(ctx context.Context, span tracer.Span, event *UserCreatedEvent) {
+ctx, hookSpan := tracer.Start(ctx, "hook.pre.User.create.C")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
 }
 
-func (s *UserHandler) postDeleteHook(ctx context.Context, span tracer.Span, event *UserDeletedEvent, data []byte) []byte {
- return data
+func (s *UserHandler) preCreateB(ctx context.Context, span tracer.Span, event *UserCreatedEvent) error {
+ctx, hookSpan := tracer.Start(ctx, "hook.pre.User.create.B")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+   return nil
 }
 
-func (s *UserHandler) postGetHook(ctx context.Context, span tracer.Span, event *UserGetRequest, data []byte) []byte {
- return data
+func (s *UserHandler) preCreateA(ctx context.Context, span tracer.Span, event *UserCreatedEvent) {
+ctx, hookSpan := tracer.Start(ctx, "hook.pre.User.create.A")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
 }
 
+func (s *UserHandler) preDeleteXyz(ctx context.Context, span tracer.Span, event *UserDeletedEvent) error {
+ctx, hookSpan := tracer.Start(ctx, "hook.pre.User.delete.Xyz")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+   return nil
+}
+
+func (s *UserHandler) preDeleteAbc(ctx context.Context, span tracer.Span, event *UserDeletedEvent) error {
+ctx, hookSpan := tracer.Start(ctx, "hook.pre.User.delete.Abc")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+   return nil
+}
+
+func (s *UserHandler) preDeleteValidateTen(ctx context.Context, span tracer.Span, event *UserDeletedEvent) error {
+ctx, hookSpan := tracer.Start(ctx, "hook.pre.User.delete.ValidateTen")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+   return nil
+}
+
+func (s *UserHandler) preUpdateNotifyCache(ctx context.Context, span tracer.Span, event *UserUpdatedEvent) {
+ctx, hookSpan := tracer.Start(ctx, "hook.pre.User.update.NotifyCache")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+}
+
+func (s *UserHandler) preUpdateAuditLog(ctx context.Context, span tracer.Span, event *UserUpdatedEvent) {
+ctx, hookSpan := tracer.Start(ctx, "hook.pre.User.update.AuditLog")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+}
+
+func (s *UserHandler) preGetTraceAcces(ctx context.Context, span tracer.Span, event *UserGetRequest) {
+ctx, hookSpan := tracer.Start(ctx, "hook.pre.User.get.TraceAcces")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+}
+
+func (s *UserHandler) postUpdateInvalidate(ctx context.Context, span tracer.Span, event *UserUpdatedEvent, data []byte) {
+ctx, hookSpan := tracer.Start(ctx, "hook.post.User.update.Invalidate")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+}
+
+func (s *UserHandler) postGetFilterPII(ctx context.Context, span tracer.Span, event *UserGetRequest, data []byte) []byte {
+ctx, hookSpan := tracer.Start(ctx, "hook.post.User.get.FilterPII")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+   return data
+}
+
+func (s *UserHandler) postGetCacheResult(ctx context.Context, span tracer.Span, event *UserGetRequest, data []byte) {
+ctx, hookSpan := tracer.Start(ctx, "hook.post.User.get.CacheResult")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+}
+
+func (s *UserHandler) postGetEnrichData(ctx context.Context, span tracer.Span, event *UserGetRequest, data []byte) []byte {
+ctx, hookSpan := tracer.Start(ctx, "hook.post.User.get.EnrichData")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+   return data
+}
+
+func (s *UserHandler) postCreateNotifyAdmin(ctx context.Context, span tracer.Span, event *UserCreatedEvent, data []byte) {
+ctx, hookSpan := tracer.Start(ctx, "hook.post.User.create.NotifyAdmin")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+}
+
+func (s *UserHandler) postCreateSendWelcome(ctx context.Context, span tracer.Span, event *UserCreatedEvent, data []byte) {
+ctx, hookSpan := tracer.Start(ctx, "hook.post.User.create.SendWelcome")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+}
+
+func (s *UserHandler) postDeleteMustDelete(ctx context.Context, span tracer.Span, event *UserDeletedEvent, data []byte) []byte {
+ctx, hookSpan := tracer.Start(ctx, "hook.post.User.delete.MustDelete")
+defer hookSpan.End()
+	// TODO: implement
+hookSpan.SetOK()
+   return data
+}
+
+// #HOOKS_END
 
 type UserRolesAssignedEvent struct {
  UserID string `json:"user_id"`
@@ -507,6 +719,7 @@ logger.Info(ctx, "request received", logger.String("handler", "UserRoles.Remove"
  _ = req.Respond(responseData)
 }
 
+// #HOOKS_START
 func (s *UserRolesHandler) preAssignHook(ctx context.Context, span tracer.Span, event *UserRolesAssignedEvent) error {
  return nil
 }
@@ -531,4 +744,5 @@ func (s *UserRolesHandler) postRemoveHook(ctx context.Context, span tracer.Span,
  return data
 }
 
+// #HOOKS_END
 

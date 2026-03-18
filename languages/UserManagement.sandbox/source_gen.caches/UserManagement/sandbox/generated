@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<product version="3" modelHash="8xnqy0obabbgybhbo1p7lt4ayopjf6i">
+<product version="3" modelHash="-2m2n0esqh1f39dwd2mzxuxx7bs1pw8z">
   <files names="sqlPrem_init_sql.sql" />
   <files dir="/src/" names="main.go:roles.go:user.go" />
 </product>

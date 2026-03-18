@@ -26,6 +26,7 @@ import org.jetbrains.mps.openapi.language.SProperty;
 public final class Entity__BehaviorDescriptor extends BaseBHDescriptor {
   private static final SAbstractConcept CONCEPT = MetaAdapterFactory.getConcept(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, "UserManagement.structure.Entity");
 
+  public static final SMethod<String> capitalizeString_id2H11bzbgsj$ = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("capitalizeString").modifiers(1, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(3116777608847672548L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2(SMethodBuilder.createJavaParameter(String.class, ""));
   public static final SMethod<String> apppendTypeIfEmailPass_id24dYXnugYNM = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("apppendTypeIfEmailPass").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(2381836673924459762L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<SNode> primaryKeyField_id6DJmAW$csS2 = new SMethodBuilder<SNode>(new SJavaCompoundTypeImpl((Class<SNode>) ((Class) Object.class))).name("primaryKeyField").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123830357506L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> creteValidation_id6DJmAW$hYDa = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("creteValidation").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123831806538L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
@@ -33,12 +34,16 @@ public final class Entity__BehaviorDescriptor extends BaseBHDescriptor {
   public static final SMethod<String> tableName_id6DJmAW$e3L$ = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("tableName").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123830778980L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> toLoverCaseFirst_id6LRrEr4Y7HY = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("toLoverCaseFirst").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7815837340873030526L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
   public static final SMethod<String> createValidation_id6DJmAW$cIRR = new SMethodBuilder<String>(new SJavaCompoundTypeImpl(String.class)).name("createValidation").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(7669448123830431223L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
+  public static final SMethod<Boolean> needWorkerPool_id2H11bzbGg3I = new SMethodBuilder<Boolean>(new SJavaCompoundTypeImpl(Boolean.TYPE)).name("needWorkerPool").modifiers(0, AccessPrivileges.PUBLIC).concept(CONCEPT).baseMethodId(3116777608854962414L).languageId(0x91c4fb1f5af2c6d7L, 0x2fbdea0625174783L).build2();
 
-  private static final List<SMethod<?>> BH_METHODS = Arrays.<SMethod<?>>asList(apppendTypeIfEmailPass_id24dYXnugYNM, primaryKeyField_id6DJmAW$csS2, creteValidation_id6DJmAW$hYDa, schemaTableName_id6DJmAW$eABX, tableName_id6DJmAW$e3L$, toLoverCaseFirst_id6LRrEr4Y7HY, createValidation_id6DJmAW$cIRR);
+  private static final List<SMethod<?>> BH_METHODS = Arrays.<SMethod<?>>asList(capitalizeString_id2H11bzbgsj$, apppendTypeIfEmailPass_id24dYXnugYNM, primaryKeyField_id6DJmAW$csS2, creteValidation_id6DJmAW$hYDa, schemaTableName_id6DJmAW$eABX, tableName_id6DJmAW$e3L$, toLoverCaseFirst_id6LRrEr4Y7HY, createValidation_id6DJmAW$cIRR, needWorkerPool_id2H11bzbGg3I);
 
   private static void ___init___(@NotNull SNode __thisNode__) {
   }
 
+  /*package*/ static String capitalizeString_id2H11bzbgsj$(@NotNull SAbstractConcept __thisConcept__, String in) {
+    return (in.charAt(0) + "").toUpperCase() + in.subSequence(1, in.length());
+  }
   /*package*/ static String apppendTypeIfEmailPass_id24dYXnugYNM(@NotNull SNode __thisNode__) {
     String returns = "";
 
@@ -102,6 +107,9 @@ public final class Entity__BehaviorDescriptor extends BaseBHDescriptor {
     }
     return result;
   }
+  /*package*/ static boolean needWorkerPool_id2H11bzbGg3I(@NotNull SNode __thisNode__) {
+    return ListSequence.fromList(SLinkOperations.getChildren(__thisNode__, LINKS.preHooksNamed$xIX)).any((hooksHolder) -> ListSequence.fromList(SLinkOperations.getChildren(hooksHolder, LINKS.Hooks$E6NN)).any((h) -> SPropertyOperations.getBoolean(h, PROPS.isAsync$Nysa))) || ListSequence.fromList(SLinkOperations.getChildren(__thisNode__, LINKS.postHooksNamed$xXY)).any((hooksHolder) -> ListSequence.fromList(SLinkOperations.getChildren(hooksHolder, LINKS.Hooks$E6NN)).any((h) -> SPropertyOperations.getBoolean(h, PROPS.isAsync$Nysa)));
+  }
 
   /*package*/ Entity__BehaviorDescriptor() {
   }
@@ -118,20 +126,22 @@ public final class Entity__BehaviorDescriptor extends BaseBHDescriptor {
       throw new BHMethodNotFoundException(this, method);
     }
     switch (methodIndex) {
-      case 0:
-        return (T) ((String) apppendTypeIfEmailPass_id24dYXnugYNM(node));
       case 1:
-        return (T) ((SNode) primaryKeyField_id6DJmAW$csS2(node));
+        return (T) ((String) apppendTypeIfEmailPass_id24dYXnugYNM(node));
       case 2:
-        return (T) ((String) creteValidation_id6DJmAW$hYDa(node));
+        return (T) ((SNode) primaryKeyField_id6DJmAW$csS2(node));
       case 3:
-        return (T) ((String) schemaTableName_id6DJmAW$eABX(node, (String) parameters[0]));
+        return (T) ((String) creteValidation_id6DJmAW$hYDa(node));
       case 4:
-        return (T) ((String) tableName_id6DJmAW$e3L$(node));
+        return (T) ((String) schemaTableName_id6DJmAW$eABX(node, (String) parameters[0]));
       case 5:
-        return (T) ((String) toLoverCaseFirst_id6LRrEr4Y7HY(node));
+        return (T) ((String) tableName_id6DJmAW$e3L$(node));
       case 6:
+        return (T) ((String) toLoverCaseFirst_id6LRrEr4Y7HY(node));
+      case 7:
         return (T) ((String) createValidation_id6DJmAW$cIRR(node));
+      case 8:
+        return (T) ((Boolean) needWorkerPool_id2H11bzbGg3I(node));
       default:
         throw new BHMethodNotFoundException(this, method);
     }
@@ -144,6 +154,8 @@ public final class Entity__BehaviorDescriptor extends BaseBHDescriptor {
       throw new BHMethodNotFoundException(this, method);
     }
     switch (methodIndex) {
+      case 0:
+        return (T) ((String) capitalizeString_id2H11bzbgsj$(concept, (String) parameters[0]));
       default:
         throw new BHMethodNotFoundException(this, method);
     }
@@ -165,11 +177,15 @@ public final class Entity__BehaviorDescriptor extends BaseBHDescriptor {
     /*package*/ static final SContainmentLink fields$Rrud = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x6a6f5a6f2407ac84L, "fields");
     /*package*/ static final SContainmentLink type$KBb7 = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L, 0x6a6f5a6f240f1046L, "type");
     /*package*/ static final SContainmentLink anotations$R8V0 = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac68L, 0x6a6f5a6f2407ac76L, "anotations");
+    /*package*/ static final SContainmentLink preHooksNamed$xIX = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x2b4104b8cb107decL, "preHooksNamed");
+    /*package*/ static final SContainmentLink Hooks$E6NN = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x2b4104b8cb107de9L, 0x2b4104b8cb107deaL, "Hooks");
+    /*package*/ static final SContainmentLink postHooksNamed$xXY = MetaAdapterFactory.getContainmentLink(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL, 0x2b4104b8cb107dedL, "postHooksNamed");
   }
 
   private static final class PROPS {
     /*package*/ static final SProperty fieldType$RkpN = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7aL, 0x6a6f5a6f2407ac7bL, "fieldType");
     /*package*/ static final SProperty name$MnvL = MetaAdapterFactory.getProperty(0xceab519525ea4f22L, 0x9b92103b95ca8c0cL, 0x110396eaaa4L, 0x110396ec041L, "name");
     /*package*/ static final SProperty annotation$RdBN = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac73L, 0x6a6f5a6f2407ac74L, "annotation");
+    /*package*/ static final SProperty isAsync$Nysa = MetaAdapterFactory.getProperty(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x2b4104b8cb107debL, 0x2b4104b8cb8c2ff7L, "isAsync");
   }
 }

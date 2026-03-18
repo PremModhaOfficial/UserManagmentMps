@@ -53,17 +53,18 @@ func adaptRequest(mr micro.Request) core.Request {
 const prefix = "motadata"
 
 func main() {
+ otel.InitFromEnv()
  logcfg := logger.DefaultConfig()
  logcfg.ServiceName = "MotaDSLUM"
  logcfg.ServiceVersion = "0.1.0"
  logcfg.Environment = "development"
+ logcfg.Level = "debug"
  logInst := logger.MustInit(logcfg)
  defer logInst.Close()
 
  ctx0 := context.Background()
  logger.Info(ctx0, "Starting MotaDSLUM")
 
- otel.InitFromEnv()
 
  natsURL := os.Getenv("NATS_URL")
  if natsURL == "" {

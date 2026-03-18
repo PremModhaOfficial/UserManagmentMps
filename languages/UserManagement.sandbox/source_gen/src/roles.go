@@ -12,6 +12,7 @@ import (
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/events/core"
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/tracer"
  "dev.azure.com/Motadata/NextGen/motadata-go-sdk/otel/logger"
+
 )
 
 type Roles struct {
@@ -282,3 +283,5 @@ logger.Info(ctx, "DAL reply received", logger.String("handler", "Roles.get"), lo
  _ = req.Respond(reply.Data)
 }
 
+// #HOOKS_START
+// #HOOKS_END

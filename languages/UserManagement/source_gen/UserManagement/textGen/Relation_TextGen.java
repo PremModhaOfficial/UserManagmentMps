@@ -356,6 +356,10 @@ public class Relation_TextGen extends TextGenDescriptorBase {
 
     }
 
+    tgs.append("// #HOOKS_START");
+    tgs.newLine();
+
+
     for (SNode op : ListSequence.fromList(SLinkOperations.getChildren(ctx.getPrimaryInput(), LINKS.operations$REVM))) {
       String opKind = SEnumOperations.getMemberName0(SPropertyOperations.getEnum(op, PROPS.relationOperation$RG8k));
       String hookName = RelationOperationHolder__BehaviorDescriptor.capitalize_id6LRrEr56jrv.invoke(op);
@@ -460,6 +464,10 @@ public class Relation_TextGen extends TextGenDescriptorBase {
       }
 
     }
+
+    tgs.append("// #HOOKS_END");
+    tgs.newLine();
+
   }
 
   private static final class CONCEPTS {

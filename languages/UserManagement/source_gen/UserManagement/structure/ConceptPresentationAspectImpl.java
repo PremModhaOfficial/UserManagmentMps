@@ -16,6 +16,8 @@ public class ConceptPresentationAspectImpl extends ConceptPresentationAspectBase
   private ConceptPresentation props_Field;
   private ConceptPresentation props_FieldAnnotationHolder;
   private ConceptPresentation props_FieldTypeHolder;
+  private ConceptPresentation props_Hook;
+  private ConceptPresentation props_HookTypeHooksHolder;
   private ConceptPresentation props_Main;
   private ConceptPresentation props_Relation;
   private ConceptPresentation props_RelationOperationHolder;
@@ -36,7 +38,9 @@ public class ConceptPresentationAspectImpl extends ConceptPresentationAspectBase
         return props_Configuration;
       case LanguageConceptSwitch.Entity:
         if (props_Entity == null) {
-          ConceptPresentationBuilder cpb = new ConceptPresentationBuilder();
+          ConceptPresentationBuilder cpb = new ConceptPresentationBuilder(0x2fbdea0625174783L, 0x91c4fb1f5af2c6d7L, 0x6a6f5a6f2407ac7eL);
+          cpb.deprecateAggregation(0x4e35d519f236377aL, "preHooks");
+          cpb.deprecateAggregation(0x4e35d519f2393161L, "postHooks");
           cpb.presentationByName();
           props_Entity = cpb.create();
         }
@@ -76,6 +80,20 @@ public class ConceptPresentationAspectImpl extends ConceptPresentationAspectBase
           props_FieldTypeHolder = cpb.create();
         }
         return props_FieldTypeHolder;
+      case LanguageConceptSwitch.Hook:
+        if (props_Hook == null) {
+          ConceptPresentationBuilder cpb = new ConceptPresentationBuilder();
+          cpb.presentationByName();
+          props_Hook = cpb.create();
+        }
+        return props_Hook;
+      case LanguageConceptSwitch.HookTypeHooksHolder:
+        if (props_HookTypeHooksHolder == null) {
+          ConceptPresentationBuilder cpb = new ConceptPresentationBuilder();
+          cpb.rawPresentation("HookTypeHooksHolder");
+          props_HookTypeHooksHolder = cpb.create();
+        }
+        return props_HookTypeHooksHolder;
       case LanguageConceptSwitch.Main:
         if (props_Main == null) {
           ConceptPresentationBuilder cpb = new ConceptPresentationBuilder();

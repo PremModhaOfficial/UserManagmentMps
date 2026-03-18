@@ -15,6 +15,7 @@
       <concept id="3348158742936976479" name="jetbrains.mps.lang.structure.structure.EnumerationDeclaration" flags="ng" index="25R3W">
         <child id="3348158742936976577" name="members" index="25R1y" />
       </concept>
+      <concept id="1224240836180" name="jetbrains.mps.lang.structure.structure.DeprecatedNodeAnnotation" flags="ig" index="asaX9" />
       <concept id="1082978164218" name="jetbrains.mps.lang.structure.structure.DataTypeDeclaration" flags="ng" index="AxPO6">
         <property id="7791109065626895363" name="datatypeId" index="3F6X1D" />
       </concept>
@@ -45,6 +46,9 @@
       </concept>
     </language>
     <language id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core">
+      <concept id="1133920641626" name="jetbrains.mps.lang.core.structure.BaseConcept" flags="ng" index="2VYdi">
+        <child id="5169995583184591170" name="smodelAttribute" index="lGtFl" />
+      </concept>
       <concept id="1169194658468" name="jetbrains.mps.lang.core.structure.INamedConcept" flags="ngI" index="TrEIO">
         <property id="1169194664001" name="name" index="TrG5h" />
       </concept>
@@ -284,6 +288,21 @@
       <property role="20kJfa" value="preHooks" />
       <property role="20lbJX" value="fLJekj5/_0__n" />
       <ref role="20lvS9" node="6DJmAW$1UM9" resolve="EntityOperationHolder" />
+      <node concept="asaX9" id="2H11bzblMwU" role="lGtFl" />
+    </node>
+    <node concept="1TJgyj" id="2H11bzb47RG" role="1TKVEi">
+      <property role="IQ2ns" value="3116777608844443116" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="preHooksNamed" />
+      <property role="20lbJX" value="fLJekj5/_0__n" />
+      <ref role="20lvS9" node="2H11bzb47RD" resolve="HookTypeHooksHolder" />
+    </node>
+    <node concept="1TJgyj" id="2H11bzb47RH" role="1TKVEi">
+      <property role="IQ2ns" value="3116777608844443117" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="postHooksNamed" />
+      <property role="20lbJX" value="fLJekj5/_0__n" />
+      <ref role="20lvS9" node="2H11bzb47RD" resolve="HookTypeHooksHolder" />
     </node>
     <node concept="1TJgyj" id="4SPPhBMej5x" role="1TKVEi">
       <property role="IQ2ns" value="5635644816138776929" />
@@ -291,6 +310,7 @@
       <property role="20kJfa" value="postHooks" />
       <property role="20lbJX" value="fLJekj5/_0__n" />
       <ref role="20lvS9" node="6DJmAW$1UM9" resolve="EntityOperationHolder" />
+      <node concept="asaX9" id="2H11bzblMwV" role="lGtFl" />
     </node>
     <node concept="1TJgyj" id="24dYXntXrTU" role="1TKVEi">
       <property role="IQ2ns" value="2381836673919336058" />
@@ -413,6 +433,35 @@
       <property role="IQ2nx" value="2381836673926329781" />
       <property role="TrG5h" value="tenetName" />
       <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="2H11bzb47RD">
+    <property role="EcuMT" value="3116777608844443113" />
+    <property role="TrG5h" value="HookTypeHooksHolder" />
+    <ref role="1TJDcQ" node="6DJmAW$1UM9" resolve="EntityOperationHolder" />
+    <node concept="1TJgyj" id="2H11bzb47RE" role="1TKVEi">
+      <property role="IQ2ns" value="3116777608844443114" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="Hooks" />
+      <property role="20lbJX" value="fLJekj6/_1__n" />
+      <ref role="20lvS9" node="2H11bzb47RF" resolve="Hook" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="2H11bzb47RF">
+    <property role="TrG5h" value="Hook" />
+    <property role="EcuMT" value="3116777608844443115" />
+    <node concept="PrWs8" id="2H11bzb5rfE" role="PzmwI">
+      <ref role="PrY4T" to="tpck:h0TrEE$" resolve="INamedConcept" />
+    </node>
+    <node concept="1TJgyi" id="2H11bzbmuxI" role="1TKVEl">
+      <property role="IQ2nx" value="3116777608849254510" />
+      <property role="TrG5h" value="priority" />
+      <ref role="AX2Wp" to="tpck:fKAQMTA" resolve="integer" />
+    </node>
+    <node concept="1TJgyi" id="2H11bzbz2ZR" role="1TKVEl">
+      <property role="IQ2nx" value="3116777608852549623" />
+      <property role="TrG5h" value="isAsync" />
+      <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
     </node>
   </node>
 </model>

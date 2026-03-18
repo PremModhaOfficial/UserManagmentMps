@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<product version="3" modelHash="-975qo6o8v0h04xz658j2uhr0kwnbqlx">
-  <files names="BehaviorAspectDescriptor.java:EntityOperationHolder__BehaviorDescriptor.java:Entity__BehaviorDescriptor.java:Field__BehaviorDescriptor.java:RelationOperationHolder__BehaviorDescriptor.java:Relation__BehaviorDescriptor.java" />
+<product version="3" modelHash="elw8xirqbmyeeuoxpgjwei61n1e25v">
+  <files names="BehaviorAspectDescriptor.java:EntityOperationHolder__BehaviorDescriptor.java:Entity__BehaviorDescriptor.java:FieldAnnotationHolder__BehaviorDescriptor.java:Field__BehaviorDescriptor.java:HookTypeHooksHolder__BehaviorDescriptor.java:Hook__BehaviorDescriptor.java:RelationOperationHolder__BehaviorDescriptor.java:Relation__BehaviorDescriptor.java" />
 </product>
 

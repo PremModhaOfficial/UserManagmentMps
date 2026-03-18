@@ -24,6 +24,8 @@
         <child id="5635644816138776929" name="postHooks" index="2W3ehS" />
         <child id="7669448123827596422" name="operations" index="1eqfrD" />
         <child id="7669448123827596420" name="fields" index="1eqfrF" />
+        <child id="3116777608844443116" name="preHooksNamed" index="3wkn_k" />
+        <child id="3116777608844443117" name="postHooksNamed" index="3wkn_l" />
         <child id="2381836673919336058" name="relations" index="3WY4mJ" />
       </concept>
       <concept id="7669448123827596410" name="UserManagement.structure.FieldTypeHolder" flags="ng" index="1eqfol">
@@ -51,6 +53,13 @@
       <concept id="7669448123827596444" name="UserManagement.structure.RelationOperationHolder" flags="ng" index="1eqfrN">
         <property id="7669448123827596446" name="relationOperation" index="1eqfrL" />
       </concept>
+      <concept id="3116777608844443113" name="UserManagement.structure.HookTypeHooksHolder" flags="ng" index="3wkn_h">
+        <child id="3116777608844443114" name="Hooks" index="3wkn_i" />
+      </concept>
+      <concept id="3116777608844443115" name="UserManagement.structure.Hook" flags="ng" index="3wkn_j">
+        <property id="3116777608849254510" name="priority" index="3w6eNm" />
+        <property id="3116777608852549623" name="isAsync" index="3wNiHf" />
+      </concept>
     </language>
     <language id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core">
       <concept id="1133920641626" name="jetbrains.mps.lang.core.structure.BaseConcept" flags="ng" index="2VYdi">
@@ -65,6 +74,86 @@
     <property role="TrG5h" value="User" />
     <property role="3GE5qa" value="usrmng" />
     <ref role="1elhiA" node="FY3t2vXu$C" />
+    <node concept="3wkn_h" id="2H11bzbPixN" role="3wkn_l">
+      <property role="1eqfr$" value="6DJmAW$1ULq/update" />
+      <node concept="3wkn_j" id="2H11bzbPixO" role="3wkn_i">
+        <property role="TrG5h" value="invalidate" />
+        <property role="3w6eNm" value="1" />
+        <property role="3wNiHf" value="true" />
+      </node>
+    </node>
+    <node concept="3wkn_h" id="2H11bzbPixJ" role="3wkn_l">
+      <property role="1eqfr$" value="6DJmAW$1ULu/get" />
+      <node concept="3wkn_j" id="2H11bzbPixK" role="3wkn_i">
+        <property role="TrG5h" value="filterPII" />
+        <property role="3w6eNm" value="3" />
+      </node>
+      <node concept="3wkn_j" id="2H11bzbPixL" role="3wkn_i">
+        <property role="TrG5h" value="cacheResult" />
+        <property role="3w6eNm" value="2" />
+        <property role="3wNiHf" value="true" />
+      </node>
+      <node concept="3wkn_j" id="2H11bzbPixM" role="3wkn_i">
+        <property role="TrG5h" value="enrichData" />
+        <property role="3w6eNm" value="1" />
+      </node>
+    </node>
+    <node concept="3wkn_h" id="2H11bzbPixG" role="3wkn_l">
+      <property role="1eqfr$" value="6DJmAW$1ULo/create" />
+      <node concept="3wkn_j" id="2H11bzbPixH" role="3wkn_i">
+        <property role="TrG5h" value="notifyAdmin" />
+        <property role="3w6eNm" value="2" />
+        <property role="3wNiHf" value="true" />
+      </node>
+      <node concept="3wkn_j" id="2H11bzbPixI" role="3wkn_i">
+        <property role="TrG5h" value="sendWelcome" />
+        <property role="3w6eNm" value="1" />
+        <property role="3wNiHf" value="true" />
+      </node>
+    </node>
+    <node concept="3wkn_h" id="2H11bzbPixE" role="3wkn_l">
+      <property role="1eqfr$" value="6DJmAW$1ULr/delete" />
+      <node concept="3wkn_j" id="2H11bzbPixF" role="3wkn_i">
+        <property role="TrG5h" value="mustDelete" />
+        <property role="3w6eNm" value="2" />
+      </node>
+    </node>
+    <node concept="3wkn_h" id="2H11bzbdXrh" role="3wkn_k">
+      <property role="1eqfr$" value="6DJmAW$1ULo/create" />
+      <node concept="3wkn_j" id="2H11bzbgdPT" role="3wkn_i">
+        <property role="TrG5h" value="D" />
+        <property role="3w6eNm" value="4" />
+      </node>
+      <node concept="3wkn_j" id="2H11bzbgdPS" role="3wkn_i">
+        <property role="TrG5h" value="C" />
+        <property role="3w6eNm" value="3" />
+        <property role="3wNiHf" value="true" />
+      </node>
+      <node concept="3wkn_j" id="2H11bzbgdPR" role="3wkn_i">
+        <property role="TrG5h" value="B" />
+        <property role="3w6eNm" value="2" />
+      </node>
+      <node concept="3wkn_j" id="2H11bzbgdPQ" role="3wkn_i">
+        <property role="TrG5h" value="A" />
+        <property role="3w6eNm" value="1" />
+        <property role="3wNiHf" value="true" />
+      </node>
+    </node>
+    <node concept="3wkn_h" id="2H11bzb9tl7" role="3wkn_k">
+      <property role="1eqfr$" value="6DJmAW$1ULr/delete" />
+      <node concept="3wkn_j" id="2H11bzb9tlb" role="3wkn_i">
+        <property role="TrG5h" value="Xyz" />
+        <property role="3w6eNm" value="5" />
+      </node>
+      <node concept="3wkn_j" id="2H11bzb9tla" role="3wkn_i">
+        <property role="TrG5h" value="Abc" />
+        <property role="3w6eNm" value="4" />
+      </node>
+      <node concept="3wkn_j" id="2H11bzb9tl8" role="3wkn_i">
+        <property role="TrG5h" value="validateTen" />
+        <property role="3w6eNm" value="3" />
+      </node>
+    </node>
     <node concept="1eqfrA" id="4SPPhBMfxZK" role="2W3ehS">
       <property role="1eqfr$" value="6DJmAW$1ULr/delete" />
     </node>
@@ -123,6 +212,15 @@
         <property role="1eqfor" value="6DJmAW$1UL9/required" />
       </node>
     </node>
+    <node concept="1eqfo7" id="7zsXmWDbmfx" role="1eqfrF">
+      <property role="TrG5h" value="userMail" />
+      <node concept="1eqfos" id="7zsXmWDbmfz" role="1eqfop">
+        <property role="1eqfor" value="6DJmAW$1ULe/unique" />
+      </node>
+      <node concept="1eqfol" id="7zsXmWDbmfy" role="1eo4CD">
+        <property role="1eqfok" value="6DJmAW$aDaN/email" />
+      </node>
+    </node>
     <node concept="1eqfo7" id="6DJmAW$fl94" role="1eqfrF">
       <property role="TrG5h" value="createdAt" />
       <node concept="1eqfol" id="6DJmAW$fl95" role="1eo4CD">
@@ -130,15 +228,6 @@
       </node>
       <node concept="1eqfos" id="6DJmAW$fZls" role="1eqfop">
         <property role="1eqfor" value="6DJmAW$1ULk/auto" />
-      </node>
-    </node>
-    <node concept="1eqfo7" id="7zsXmWDbmfx" role="1eqfrF">
-      <property role="TrG5h" value="userMail" />
-      <node concept="1eqfol" id="7zsXmWDbmfy" role="1eo4CD">
-        <property role="1eqfok" value="6DJmAW$aDaN/email" />
-      </node>
-      <node concept="1eqfos" id="7zsXmWDbmfz" role="1eqfop">
-        <property role="1eqfor" value="6DJmAW$1ULe/unique" />
       </node>
     </node>
     <node concept="1eqfrA" id="6DJmAW$fl8Z" role="1eqfrD">
@@ -161,6 +250,27 @@
     </node>
     <node concept="1eqfrA" id="4SPPhBMfxZJ" role="2W0Y9z">
       <property role="1eqfr$" value="6DJmAW$1ULr/delete" />
+    </node>
+    <node concept="3wkn_h" id="2H11bzbPixA" role="3wkn_k">
+      <property role="1eqfr$" value="6DJmAW$1ULq/update" />
+      <node concept="3wkn_j" id="2H11bzbmuxH" role="3wkn_i">
+        <property role="TrG5h" value="notifyCache" />
+        <property role="3w6eNm" value="2" />
+        <property role="3wNiHf" value="true" />
+      </node>
+      <node concept="3wkn_j" id="2H11bzbPixz" role="3wkn_i">
+        <property role="TrG5h" value="auditLog" />
+        <property role="3w6eNm" value="1" />
+        <property role="3wNiHf" value="true" />
+      </node>
+    </node>
+    <node concept="3wkn_h" id="2H11bzbPixC" role="3wkn_k">
+      <property role="1eqfr$" value="6DJmAW$1ULu/get" />
+      <node concept="3wkn_j" id="2H11bzbPixD" role="3wkn_i">
+        <property role="TrG5h" value="traceAcces" />
+        <property role="3w6eNm" value="1" />
+        <property role="3wNiHf" value="true" />
+      </node>
     </node>
   </node>
   <node concept="1eqfoh" id="6DJmAW$fZlt">
